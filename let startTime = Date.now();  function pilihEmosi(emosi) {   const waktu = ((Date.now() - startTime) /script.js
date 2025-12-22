@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbzb0NPr4Mi7mCIVP0SErMJyO2M8DVf1FzmTKAmqpRTLAj916-qCNmN0WoGIibx5F86H/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxWbYaorkUtJ7LFvgJve_PGtY6UbFNLpot-HqLLLDVkfnd5RYmgPQWd2PQywlq52N-M/exec";
 
 let startTime = Date.now();
 const namaAnak = "A01";
