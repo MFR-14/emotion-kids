@@ -1,15 +1,20 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbxalTMNvzoVZ9PeYQ3LfkPhOVaUOh2xDdpy5MWK4envM3Ntsfp2fZIBNgwCUb54qHIr/exec";
 
 let startTime = Date.now();
-const namaAnak = "A01";   // ganti manual bila perlu
+const namaAnak = "A01";
 const sesi = "S1";
 let soal = 1;
 
 function pilihEmosi(emosi) {
+  console.log("Klik emosi:", emosi);
+
   const waktu = ((Date.now() - startTime) / 1000).toFixed(2);
 
   fetch(API_URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       nama: namaAnak,
       sesi: sesi,
@@ -18,13 +23,14 @@ function pilihEmosi(emosi) {
       waktu: waktu
     })
   })
-  .then(res => res.json())
-  .then(() => {
+  .then(res => res.text())
+  .then(res => {
+    console.log("Response API:", res);
     soal++;
     startTime = Date.now();
   })
   .catch(err => {
+    console.error("FETCH ERROR:", err);
     alert("Gagal menyimpan data");
-    console.error(err);
   });
 }
