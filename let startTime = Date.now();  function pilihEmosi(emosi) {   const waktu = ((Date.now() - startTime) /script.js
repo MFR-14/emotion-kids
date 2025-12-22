@@ -5,23 +5,15 @@ const namaAnak = "A01";
 const sesi = "S1";
 let soal = 1;
 
-function pilihEmosi(emosi) {
+window.pilihEmosi = function(emosi) {
   console.log("Klik emosi:", emosi);
 
   const waktu = ((Date.now() - startTime) / 1000).toFixed(2);
 
   fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      nama: namaAnak,
-      sesi: sesi,
-      soal: soal,
-      emosi: emosi,
-      waktu: waktu
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nama: namaAnak, sesi: sesi, soal, emosi, waktu })
   })
   .then(res => res.text())
   .then(res => {
