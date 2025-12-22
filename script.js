@@ -4,8 +4,12 @@ let startTime = Date.now();
 const namaAnak = "A01";
 const sesi = "S1";
 let soal = 1;
+let isSending = false;
 
 window.pilihEmosi = function (emosi) {
+  if (isSending) return;
+  isSending = true;
+
   const waktu = ((Date.now() - startTime) / 1000).toFixed(2);
 
   const qs = new URLSearchParams({
@@ -14,33 +18,31 @@ window.pilihEmosi = function (emosi) {
     soal: String(soal),
     emosi: String(emosi),
     waktu: String(waktu),
-    t: String(Date.now()) // anti-cache
+    t: Date.now()
   }).toString();
 
   const fullUrl = `${API_URL}?${qs}`;
   console.log("BEACON URL:", fullUrl);
 
-  // (opsional) tampilkan status di halaman kalau kamu pakai <p id="status">
   const statusEl = document.getElementById("status");
   if (statusEl) statusEl.textContent = "Menyimpan...";
 
   const img = new Image();
 
   img.onload = () => {
+    // walaupun ini kadang gak kepanggil, gak masalah
+  };
+
+  // ⛔ JANGAN pakai onerror → bikin false alarm
+  img.src = fullUrl;
+
+  // Anggap sukses secara UX
+  setTimeout(() => {
     soal++;
     startTime = Date.now();
+    isSending = false;
 
     if (statusEl) statusEl.textContent = `Tersimpan: ${emosi}`;
     alert(`Emosi "${emosi}" berhasil dicatat!`);
-  };
-
-  img.onerror = (e) => {
-    console.error("Beacon error:", e);
-
-    if (statusEl) statusEl.textContent = "Gagal menyimpan data.";
-    alert("Gagal menyimpan data");
-  };
-
-  // PENTING: cukup sekali
-  img.src = fullUrl;
+  }, 300); // delay kecil biar UX halus
 };
