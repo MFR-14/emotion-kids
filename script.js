@@ -27,6 +27,9 @@ window.pilihEmosi = function (emosi) {
     console.error("Beacon error:", e);
     alert("Gagal menyimpan data");
   };
+const fullUrl = `${API_URL}?${qs}`;
+console.log("BEACON URL:", fullUrl);
+img.src = fullUrl;
 
   img.src = `${API_URL}?${qs}`;
 };
