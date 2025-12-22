@@ -1,1 +1,14 @@
+{
+  "name": "Emotion Kids",
+  "short_name": "EmotionKids",
+  "start_url": "/emotion-kids/",
+  "scope": "/emotion-kids/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/emotion-kids/img/12.jpg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "/emotion-kids/img/12.jpg", "sizes": "512x512", "type": "image/jpeg" }
+  ]
+}
 
