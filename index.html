@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emotion Kids</title>
 
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#ffffff" />
+
+  <!-- Style -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -21,12 +24,13 @@
     <div class="emotions" id="emotionsGrid"></div>
 
     <div class="nav">
-      <button id="prevBtn" onclick="prevPage()">⬅ Sebelumnya</button>
-      <button id="nextBtn" onclick="nextPage()">Berikutnya ➡</button>
+      <button id="prevBtn" type="button" onclick="prevPage()">⬅ Sebelumnya</button>
+      <button id="nextBtn" type="button" onclick="nextPage()">Berikutnya ➡</button>
     </div>
   </main>
 
   <script src="script.js"></script>
+
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js");
@@ -34,7 +38,36 @@
   </script>
 
   <script>
-    const TOTAL_EMOSI = 25;
+    // 25 label emosi (Indonesia)
+    // Kalau urutan gambar kamu beda, tinggal tukar labelnya di sini
+    const EMOTIONS = [
+      "Gugup",
+      "Takut",
+      "Bangga",
+      "Malu",
+      "Khawatir",
+      "Dicintai",
+      "Kesepian",
+      "Senang",
+      "Bosan",
+      "Kecewa",
+      "Marah",
+      "Lelah",
+      "Cemas",
+      "Frustrasi",
+      "Sedih",
+      "Biasa Saja",
+      "Tenang",
+      "Semangat",
+      "Kaget",
+      "Jijik",
+      "Sakit Hati",
+      "Iri",
+      "Rindu",
+      "Bersyukur",
+      "Percaya Diri"
+    ];
+
     const PER_PAGE = 12;
     let currentPage = 0;
 
@@ -42,24 +75,34 @@
       const grid = document.getElementById("emotionsGrid");
       grid.innerHTML = "";
 
-      const start = currentPage * PER_PAGE + 1;
-      const end = Math.min(start + PER_PAGE - 1, TOTAL_EMOSI);
+      const startIndex = currentPage * PER_PAGE;
+      const endIndex = Math.min(startIndex + PER_PAGE, EMOTIONS.length);
 
-      for (let i = start; i <= end; i++) {
+      for (let idx = startIndex; idx < endIndex; idx++) {
+        const nomorGambar = idx + 1;
+        const label = EMOTIONS[idx];
+
         const btn = document.createElement("button");
         btn.className = "emotion";
-        btn.onclick = () => pilihEmosi(`Emosi ${i}`);
+        btn.type = "button";
+        btn.setAttribute("aria-label", label);
+        btn.onclick = () => pilihEmosi(label);
 
         const img = document.createElement("img");
-        img.src = `img/emotion_${i}.png`;
-        img.alt = `Emosi ${i}`;
+        img.src = `img/emotion_${nomorGambar}.png`;
+        img.alt = label;
+
+        const cap = document.createElement("div");
+        cap.className = "caption";
+        cap.textContent = label;
 
         btn.appendChild(img);
+        btn.appendChild(cap);
         grid.appendChild(btn);
       }
 
       document.getElementById("prevBtn").disabled = currentPage === 0;
-      document.getElementById("nextBtn").disabled = end >= TOTAL_EMOSI;
+      document.getElementById("nextBtn").disabled = endIndex >= EMOTIONS.length;
     }
 
     function nextPage() {
