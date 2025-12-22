@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emotion Kids</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <main class="container">
+    <h1>Bagaimana perasaanmu?</h1>
 
-  <h1>Bagaimana perasaanmu?</h1>
+    <img src="img/12.jpg" alt="Gambar" class="gambar" width="300" height="300" />
 
-  <img src="img/12.jpg" alt="Gambar" width="300" height="300">
+    <p id="status" class="status">Klik salah satu emosi.</p>
 
-  <div class="emotions">
-    <div class="emotion" onclick="pilihEmosi('Senang')">😊</div>
-    <div class="emotion" onclick="pilihEmosi('Biasa')">😐</div>
-    <div class="emotion" onclick="pilihEmosi('Sedih')">😢</div>
-  </div>
+    <div class="emotions">
+      <button class="emotion" type="button" onclick="pilihEmosi('Senang')" aria-label="Senang">😊</button>
+      <button class="emotion" type="button" onclick="pilihEmosi('Biasa')" aria-label="Biasa">😐</button>
+      <button class="emotion" type="button" onclick="pilihEmosi('Sedih')" aria-label="Sedih">😢</button>
+    </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
