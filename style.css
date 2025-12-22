@@ -7,24 +7,26 @@ body {
 }
 
 .container {
-  max-width: 480px;
+  max-width: 520px;
   margin: auto;
   padding: 16px;
 }
 
 h1 {
   color: #333;
-  margin-bottom: 12px;
+  margin: 10px 0 14px;
 }
 
 .gambar {
-  max-width: 100%;
+  width: 100%;
+  max-width: 360px;
   border-radius: 16px;
-  margin-bottom: 12px;
+  margin: 0 auto 10px;
+  display: block;
 }
 
 .status {
-  margin: 12px 0;
+  margin: 10px 0;
   font-size: 16px;
   font-weight: bold;
 }
@@ -32,38 +34,48 @@ h1 {
 .emotions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
 .emotion {
-  background: #fff;
-  border-radius: 20px;
-  padding: 14px;
+  background: white;
   border: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 18px;
+  padding: 14px 10px 10px;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
 }
 
 .emotion img {
-  width: 100%;
-  max-width: 110px;
+  width: 110px;          /* ini bikin ikon gede */
+  max-width: 100%;
   height: auto;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.caption {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
 }
 
 .emotion:active {
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
 
 .nav {
-  margin-top: 24px;
+  margin-top: 18px;
   display: flex;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .nav button {
+  flex: 1;
   font-size: 16px;
-  padding: 10px 16px;
+  padding: 10px 12px;
   border-radius: 12px;
   border: none;
   background: #4caf50;
@@ -72,5 +84,6 @@ h1 {
 }
 
 .nav button:disabled {
-  background: #ccc;
+  background: #cfcfcf;
+  cursor: not-allowed;
 }
