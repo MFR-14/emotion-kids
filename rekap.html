@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emotion Kids - Rekap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="container">
+    <h1>Rekapan Final</h1>
+
+    <div class="card">
+      <div class="row"><div class="k">Nama Anak</div><div class="v" id="rekapNama">-</div></div>
+      <div class="row"><div class="k">Sesi</div><div class="v" id="rekapSesi">-</div></div>
+      <div class="row"><div class="k">Jumlah Jawaban</div><div class="v" id="rekapJumlah">0</div></div>
+      <div class="row"><div class="k">Rata-rata Waktu</div><div class="v" id="rekapRata2">0 dtk</div></div>
+      <div class="row"><div class="k">Emosi Teratas</div><div class="v" id="rekapTop">-</div></div>
+    </div>
+
+    <div class="card">
+      <h2 class="h2">Detail</h2>
+      <div id="rekapList" class="list"></div>
+    </div>
+
+    <div class="nav2">
+      <button class="btnPrimary" onclick="resetAll()">Mulai Tes Baru</button>
+      <button class="btnGhost" onclick="goHome()">Kembali</button>
+    </div>
+  </main>
+
+  <script src="rekap.js"></script>
+</body>
+</html>
 
