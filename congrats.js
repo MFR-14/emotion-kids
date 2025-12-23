@@ -9,7 +9,7 @@ function pickAvatarByName(nama){
 
 function spawnConfetti(){
   const wrap = document.getElementById("confetti");
-  if (!wrap) return; // ✅ biar ga error & tombol tetap hidup
+  if (!wrap) return;
 
   const colors = ["#ffb703","#ffd27d","#2b3a55","#8ecae6","#90be6d","#f94144"];
   const count = 90;
@@ -28,12 +28,14 @@ function spawnConfetti(){
 }
 
 window.addEventListener("DOMContentLoaded", ()=>{
-  // console.log("congrats1.js jalan ✅");
+  const url = new URL(window.location.href);
+  const p = url.searchParams;
 
-  const nama   = localStorage.getItem("ek_nama") || "Teman";
-  const sesi   = localStorage.getItem("ek_sesi") || "-";
-  const skor   = localStorage.getItem("ek_level1_skor") || "0";
-  const alasan = localStorage.getItem("ek_level1_alasan") || "Selesai";
+  // ✅ Ambil dari URL dulu
+  const nama   = p.get("nama")   || localStorage.getItem("ek_nama") || "Teman";
+  const sesi   = p.get("sesi")   || localStorage.getItem("ek_sesi") || "-";
+  const skor   = p.get("skor")   || localStorage.getItem("ek_level1_skor") || "0";
+  const alasan = p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai";
 
   const cgName   = document.getElementById("cgName");
   const cgMeta   = document.getElementById("cgMeta");
@@ -49,21 +51,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
 Terima kasih sudah bermain, ${nama}!
 Besok main lagi biar makin jago ya 😄`;
   if (cgMsg) cgMsg.textContent = msg;
-
-  const btnUlang = document.getElementById("btnUlang");
-  const btnHome  = document.getElementById("btnHome");
-
-  if (btnUlang){
-    btnUlang.addEventListener("click", () => {
-      window.location.href = "./level1.html";
-    });
-  }
-
-  if (btnHome){
-    btnHome.addEventListener("click", () => {
-      window.location.href = "./index.html";
-    });
-  }
 
   spawnConfetti();
 });
