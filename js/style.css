@@ -1,91 +1,27 @@
-body {
-  margin: 0;
-  font-family: "Comic Sans MS", "Poppins", sans-serif;
-  background: #fdf6ec;
-  color: #2b3a55;
+/* ===== LEVEL 1 FORCE FIX (taruh paling bawah) ===== */
+body.level-page { 
+  margin: 0; 
+  background: #fdf6ec; 
+  color: #2b3a55; 
+  font-family: "Poppins","Comic Sans MS",sans-serif;
 }
 
-.container {
-  display: flex;
-  height: 100vh;
-  padding: 40px;
-  box-sizing: border-box;
-}
-
-.left {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mascot {
-  width: 260px;
-}
-
-.right {
-  flex: 1.2;
-}
-
-h1 {
-  font-size: 48px;
-  margin-bottom: 20px;
-}
-
-.rules {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-
-.rules li {
-  margin-bottom: 10px;
-}
-
-.levels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.levels button {
-  padding: 16px;
-  border-radius: 16px;
-  border: none;
-  background: #ffd27d;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.levels button:hover {
-  background: #ffb703;
-  transform: scale(1.05);
-}
-.level-page{
-  margin:0;
-  background:#fdf6ec;
-  font-family: "Poppins", sans-serif;
-  color:#2b3a55;
-}
-
-.hud{
+body.level-page .hud{
   display:flex;
   gap:14px;
   align-items:center;
-  justify-content:flex-start;
   padding:16px 20px;
 }
 
-.timer, .score{
-  background:#ffffff;
+body.level-page .timer, 
+body.level-page .score{
+  background:#fff;
   border-radius:16px;
   padding:10px 14px;
   font-weight:700;
 }
 
-.btn-selesai{
+body.level-page .btn-selesai{
   margin-left:auto;
   background:#ffb703;
   border:none;
@@ -95,21 +31,20 @@ h1 {
   cursor:pointer;
 }
 
-.lvl1-wrap{
+body.level-page .lvl1-wrap{
   display:flex;
   gap:24px;
   padding:10px 20px 30px;
-  box-sizing:border-box;
 }
 
-.cards{
+body.level-page .cards{
   width:55%;
   display:grid;
   grid-template-columns: repeat(4, 1fr);
   gap:18px;
 }
 
-.emotion-card{
+body.level-page .emotion-card{
   background:#ffd27d;
   border-radius:22px;
   height:120px;
@@ -117,113 +52,27 @@ h1 {
   align-items:center;
   justify-content:center;
   font-weight:900;
-  letter-spacing:1px;
   cursor:grab;
   user-select:none;
 }
 
-.question{
+body.level-page .question{
   width:45%;
   display:flex;
-  align-items:flex-start;
   justify-content:center;
 }
 
-.question-card{
+body.level-page .question-card{
   width:100%;
   background:#fff;
   border-radius:26px;
   padding:16px;
-  box-sizing:border-box;
 }
 
-.question-title{
-  font-weight:800;
-  margin-bottom:12px;
-}
-
-.question-img{
+body.level-page .question-img{
   width:100%;
   max-height:260px;
   object-fit:contain;
   border-radius:18px;
   background:#f7f2e6;
-  display:block;
-}
-
-.dropzone{
-  margin-top:14px;
-  height:120px;
-  border-radius:22px;
-  border:3px dashed #2b3a55;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  background:#fdf6ec;
-}
-
-.hint{
-  margin-top:10px;
-  font-weight:700;
-}
-
-.shake{
-  animation: shake .35s;
-}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-8px)}
-  50%{transform:translateX(8px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
-}
-
-.ok{
-  animation: okFlash .35s;
-}
-@keyframes okFlash{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.04)}
-  100%{transform:scale(1)}
-}
-
-/* Giveaway */
-.giveaway{
-  position:fixed;
-  inset:0;
-  background:rgba(255,255,255,.92);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-
-.giveaway.hidden{ display:none; }
-
-.giveaway-box{
-  background:#fff;
-  padding:22px;
-  border-radius:26px;
-  width:min(520px, 92vw);
-  text-align:center;
-}
-
-.giveaway-emoji{
-  font-size:64px;
-}
-
-.giveaway-text{
-  font-weight:900;
-  white-space:pre-line;
-  margin:10px 0 16px;
-}
-
-.giveaway-btn{
-  background:#ffb703;
-  border:none;
-  border-radius:16px;
-  padding:10px 18px;
-  font-weight:900;
-  cursor:pointer;
 }
