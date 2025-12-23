@@ -1,24 +1,167 @@
-/* ===== LEVEL 1 FORCE FIX (taruh paling bawah) ===== */
-body.level-page { 
-  margin: 0; 
-  background: #fdf6ec; 
-  color: #2b3a55; 
-  font-family: "Poppins","Comic Sans MS",sans-serif;
+/* ===== RESET BIAR NGGAK HANCUR ===== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+img { max-width: 100%; display: block; }
+
+/* ===== INDEX (boleh tetap) ===== */
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Poppins", sans-serif;
+  background: #fdf6ec;
+  color: #2b3a55;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot {
+  width: 260px;
+  height: auto;
+  object-fit: contain;
+}
+
+.right {
+  flex: 1.2;
+}
+
+h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.rules {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.rules li {
+  margin-bottom: 10px;
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.levels button {
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  background: #ffd27d;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.levels button:hover {
+  background: #ffb703;
+  transform: scale(1.05);
+}
+
+/* ===== UTIL ===== */
+.hidden { display: none !important; }
+
+/* ===== INTRO LEVEL 1 ===== */
+.intro{
+  position:fixed;
+  inset:0;
+  background:#fdf6ec;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9998;
+}
+
+.intro-card{
+  width:min(720px, 92vw);
+  background:#fdf6ec;
+  border-radius:28px;
+  text-align:center;
+  padding:34px 26px;
+}
+
+.intro-title{
+  font-size:64px;
+  font-weight:900;
+  color:#1f2a44;
+  margin-bottom:10px;
+}
+
+.intro-subtitle{
+  display:inline-block;
+  background:#ffd27d;
+  padding:18px 28px;
+  border-radius:24px;
+  font-size:28px;
+  font-weight:900;
+  color:#1f2a44;
+  margin-bottom:26px;
+}
+
+.intro-form{
+  width:min(420px, 92%);
+  margin:0 auto;
+  text-align:left;
+  display:grid;
+  gap:10px;
+}
+
+.intro-form label{ font-weight:800; }
+
+.intro-form input{
+  padding:12px 14px;
+  border-radius:14px;
+  border:2px solid #e9d9b8;
+  outline:none;
+  font-size:16px;
+}
+
+#btnMulai{
+  margin-top:8px;
+  padding:14px 16px;
+  border:none;
+  border-radius:16px;
+  background:#ffb703;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* ===== LEVEL 1 ===== */
+body.level-page{
+  margin:0;
+  background:#fdf6ec;
+  font-family: "Poppins","Comic Sans MS", sans-serif;
+  color:#2b3a55;
 }
 
 body.level-page .hud{
   display:flex;
   gap:14px;
   align-items:center;
+  justify-content:flex-start;
   padding:16px 20px;
 }
 
-body.level-page .timer, 
+body.level-page .timer,
 body.level-page .score{
-  background:#fff;
+  background:#ffffff;
   border-radius:16px;
   padding:10px 14px;
-  font-weight:700;
+  font-weight:800;
 }
 
 body.level-page .btn-selesai{
@@ -27,7 +170,7 @@ body.level-page .btn-selesai{
   border:none;
   border-radius:16px;
   padding:10px 16px;
-  font-weight:800;
+  font-weight:900;
   cursor:pointer;
 }
 
@@ -35,6 +178,8 @@ body.level-page .lvl1-wrap{
   display:flex;
   gap:24px;
   padding:10px 20px 30px;
+  box-sizing:border-box;
+  align-items:flex-start;
 }
 
 body.level-page .cards{
@@ -52,6 +197,7 @@ body.level-page .emotion-card{
   align-items:center;
   justify-content:center;
   font-weight:900;
+  letter-spacing:1px;
   cursor:grab;
   user-select:none;
 }
@@ -59,6 +205,7 @@ body.level-page .emotion-card{
 body.level-page .question{
   width:45%;
   display:flex;
+  align-items:flex-start;
   justify-content:center;
 }
 
@@ -69,6 +216,11 @@ body.level-page .question-card{
   padding:16px;
 }
 
+body.level-page .question-title{
+  font-weight:900;
+  margin-bottom:12px;
+}
+
 body.level-page .question-img{
   width:100%;
   max-height:260px;
@@ -76,3 +228,13 @@ body.level-page .question-img{
   border-radius:18px;
   background:#f7f2e6;
 }
+
+body.level-page .dropzone{
+  margin-top:14px;
+  height:120px;
+  border-radius:22px;
+  border:3px dashed #2b3a55;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
