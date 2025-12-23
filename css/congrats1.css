@@ -1,5 +1,6 @@
 *{box-sizing:border-box}
 html,body{height:100%}
+
 body.cg{
   margin:0;
   background:#fdf6ec;
@@ -14,6 +15,8 @@ body.cg{
   align-items:center;
   justify-content:center;
   padding:24px;
+  position:relative;
+  z-index:10;
 }
 
 .cg-card{
@@ -23,6 +26,7 @@ body.cg{
   padding:26px 22px;
   text-align:center;
   position:relative;
+  z-index:20;
   box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
@@ -83,7 +87,7 @@ body.cg{
   gap:12px;
   justify-content:center;
   flex-wrap:wrap;
-  margin-top:6px;
+  margin-top:10px;
 }
 
 .cg-btns button{
@@ -93,23 +97,23 @@ body.cg{
   font-weight:900;
   cursor:pointer;
   min-width:150px;
+  transition:.15s;
+}
+
+.cg-btns button:hover{
+  transform: translateY(-1px);
 }
 
 #btnUlang{ background:#ffb703; }
 #btnHome{ background:#ffd27d; }
 
-/* ===== confetti ===== */
+/* ===== confetti (ANTI NYOLONG KLIK) ===== */
 .confetti{
   position:fixed;
   inset:0;
-  pointer-events:none; /* ini yang bikin tombol bisa diklik */
+  pointer-events:none !important;
   z-index:1;
 }
-.cg-wrap, .cg-card{
-  position:relative;
-  z-index:5; /* card di atas confetti */
-}
-
 
 .piece{
   position:absolute;
