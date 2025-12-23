@@ -1,69 +1,46 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Emotion Kids</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#ffffff" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>GESYA - Cara Bermain</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+<body class="home">
 
-<body>
-  <main class="container">
-    <h1>Emotion Kids</h1>
-    <p class="status">Pilih level untuk mulai.</p>
+  <div class="container">
+    <!-- KIRI -->
+    <div class="left">
+      <img src="img/mascot/biru.png" class="mascot">
+    </div>
 
-    <div class="topbar">
-      <div class="field">
-        <div class="label">Nama Anak</div>
-        <input id="namaInput" class="input" value="A01" />
+    <!-- KANAN -->
+    <div class="right">
+      <h1>Cara Bermain</h1>
+
+      <ul class="rules">
+        <li>Anak mencocokkan berbagai emosi sesuai dengan level yang tersedia</li>
+        <li>Klik atau geser jawaban sesuai dengan pertanyaan</li>
+        <li>Bermain sesuai waktu yang disediakan</li>
+        <li>Setiap level memiliki nilai</li>
+        <li>Selesaikan semua level untuk mendapat lencana <b>Ahli Emosi GESYA</b></li>
+      </ul>
+
+      <div class="levels">
+        <button onclick="goLevel(1)">Level 1</button>
+        <button onclick="goLevel(2)">Level 2</button>
+        <button onclick="goLevel(3)">Level 3</button>
+        <button onclick="goLevel(4)">Level 4</button>
+        <button onclick="goLevel(5)">Level 5</button>
+        <button onclick="goLevel(6)">Level 6</button>
       </div>
-      <div class="field">
-        <div class="label">Sesi</div>
-        <input id="sesiInput" class="input" value="S1" />
-      </div>
     </div>
-
-    <div class="levelGrid">
-      <button class="btnPrimary" onclick="goLevel(1)">Level 1</button>
-      <button class="btnPrimary" onclick="goLevel(2)">Level 2</button>
-      <button class="btnPrimary" onclick="goLevel(3)">Level 3</button>
-      <button class="btnPrimary" onclick="goLevel(4)">Level 4</button>
-      <button class="btnPrimary" onclick="goLevel(5)">Level 5</button>
-      <button class="btnPrimary" onclick="goLevel(6)">Level 6</button>
-    </div>
-
-    <div class="nav2">
-      <button class="btnGhost" onclick="goRekap()">Lihat Rekap</button>
-    </div>
-  </main>
+  </div>
 
   <script>
-    function saveProfile() {
-      const nama = (document.getElementById("namaInput").value || "A01").trim();
-      const sesi = (document.getElementById("sesiInput").value || "S1").trim();
-      localStorage.setItem("ek_nama", nama);
-      localStorage.setItem("ek_sesi", sesi);
+    function goLevel(lvl){
+      window.location.href = `level${lvl}.html`;
     }
-
-    function goLevel(level) {
-      saveProfile();
-      window.location.href = `level.html?level=${level}`;
-    }
-
-    function goRekap() {
-      saveProfile();
-      window.location.href = "rekap.html";
-    }
-
-    // isi otomatis dari localStorage
-    (function init(){
-      const nama = localStorage.getItem("ek_nama");
-      const sesi = localStorage.getItem("ek_sesi");
-      if (nama) document.getElementById("namaInput").value = nama;
-      if (sesi) document.getElementById("sesiInput").value = sesi;
-    })();
   </script>
+
 </body>
 </html>
