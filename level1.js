@@ -125,7 +125,7 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("ek_level1_alasan", message || "Selesai");
 
     // pindah ke halaman congrats terpisah
-    window.location.href = "./congrats.html";
+    window.location.href = "./congrats1.html";
   }
 
   function startTimer() {
