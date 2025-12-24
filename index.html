@@ -1,46 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>GESYA - Cara Bermain</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GESYA - Level 1</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./js/style.css?v=10" />
 </head>
-<body class="home">
 
-  <div class="container">
-    <!-- KIRI -->
-    <div class="left">
-  <img src="./img/12.jpg" class="mascot" alt="Maskot GESYA">
-    </div>
+<body class="level-page">
 
-    <!-- KANAN -->
-    <div class="right">
-      <h1>Cara Bermain</h1>
+  <!-- INTRO SCREEN -->
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="intro-title">Level 1</div>
+      <div class="intro-subtitle">Petualangan Wajah Emosi</div>
 
-      <ul class="rules">
-        <li>Anak mencocokkan berbagai emosi sesuai dengan level yang tersedia</li>
-        <li>Klik atau geser jawaban sesuai dengan pertanyaan</li>
-        <li>Bermain sesuai waktu yang disediakan</li>
-        <li>Setiap level memiliki nilai</li>
-        <li>Selesaikan semua level untuk mendapat lencana <b>Ahli Emosi GESYA</b></li>
-      </ul>
+      <div class="intro-form">
+        <label>Nama Anak</label>
+        <input id="namaAnak" type="text" placeholder="contoh: Andi" />
 
-      <div class="levels">
-        <button onclick="goLevel(1)">Level 1</button>
-        <button onclick="goLevel(2)">Level 2</button>
-        <button onclick="goLevel(3)">Level 3</button>
-        <button onclick="goLevel(4)">Level 4</button>
-        <button onclick="goLevel(5)">Level 5</button>
-        <button onclick="goLevel(6)">Level 6</button>
+        <label>Sesi</label>
+        <input id="sesiAnak" type="text" placeholder="contoh: S1" />
+
+        <button id="btnMulai" type="button">Mulai</button>
       </div>
     </div>
   </div>
 
-  <script>
-    function goLevel(lvl){
-      window.location.href = `level${lvl}.html`;
-    }
-  </script>
+  <!-- GAME -->
+  <div id="game" class="hidden">
 
+    <!-- HUD -->
+    <div class="hud">
+      <div class="timer" id="timer">02:00</div>
+      <div class="score" id="score">Skor: 0 / 8</div>
+      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+    </div>
+
+    <main class="lvl1-layout">
+
+  <!-- ATAS: soal kiri + space kanan -->
+  <section class="top-area">
+    <div class="question">
+      <div class="question-card">
+        <div class="question-title" id="questionTitle">Tarik gambar ke emosi yang benar</div>
+
+        <div class="drag-area">
+          <img id="questionImg" class="question-img drag-img" draggable="true" src="./img/12.jpg" alt="Soal" />
+        </div>
+
+        <div class="hint" id="hint"></div>
+      </div>
+    </div>
+
+    <div class="top-space"></div>
+  </section>
+
+  <!-- BAWAH: kartu emosi -->
+  <section class="bottom-area">
+    <section class="cards drop-cards" id="dropCards">
+      <div class="emotion-card drop-target" data-emosi="BAHAGIA">BAHAGIA</div>
+      <div class="emotion-card drop-target" data-emosi="SEDIH">SEDIH</div>
+      <div class="emotion-card drop-target" data-emosi="TAKUT">TAKUT</div>
+      <div class="emotion-card drop-target" data-emosi="TERKEJUT">TERKEJUT</div>
+      <div class="emotion-card drop-target" data-emosi="BINGUNG">BINGUNG</div>
+      <div class="emotion-card drop-target" data-emosi="MALU">MALU</div>
+      <div class="emotion-card drop-target" data-emosi="MARAH">MARAH</div>
+      <div class="emotion-card drop-target" data-emosi="CINTA">CINTA</div>
+    </section>
+  </section>
+
+</main>
+
+  </div>
+
+  <!-- Giveaway overlay -->
+  <div class="giveaway hidden" id="giveaway">
+    <div class="giveaway-box">
+      <div class="giveaway-emoji" id="giveEmoji">🎉</div>
+      <div class="giveaway-text" id="giveText">Hebat!</div>
+      <button class="giveaway-btn" id="giveBtn" type="button">Lanjut</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="./level1.js"></script>
 </body>
 </html>
