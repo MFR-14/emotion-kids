@@ -22,7 +22,7 @@ function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
 // =====================
 // KONFIG LEVEL 2
 // =====================
-const DURATION_SEC = 10 * 60 ; // 03:38
+const DURATION_SEC = 10 * 60 + 0; // 03:38
 const FEEDBACK_DELAY_MS = 700;
 
 const QUESTIONS = [
