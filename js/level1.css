@@ -1,5 +1,5 @@
 /* =========================
-   BASE GLOBAL (khusus level1)
+   BASE
 ========================= */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
@@ -9,12 +9,10 @@ body{
   background:#fdf6ec;
   color:#2b3a55;
 }
-
-/* util */
 .hidden{ display:none !important; }
 
 /* =========================
-   INTRO SCREEN
+   INTRO
 ========================= */
 .intro{
   min-height:100vh;
@@ -23,7 +21,6 @@ body{
   justify-content:center;
   padding:24px;
 }
-
 .intro-card{
   width:min(560px,92vw);
   background:#fff;
@@ -32,13 +29,11 @@ body{
   box-shadow:0 10px 30px rgba(0,0,0,.08);
   text-align:center;
 }
-
 .intro-title{
   font-size:48px;
   font-weight:900;
   margin:0 0 10px;
 }
-
 .intro-subtitle{
   display:inline-block;
   background:#ffd27d;
@@ -47,17 +42,12 @@ body{
   font-weight:900;
   margin-bottom:18px;
 }
-
 .intro-form{
   display:grid;
   gap:10px;
   text-align:left;
 }
-
-.intro-form label{
-  font-weight:900;
-}
-
+.intro-form label{ font-weight:900; }
 .intro-form input{
   width:100%;
   padding:14px 16px;
@@ -67,7 +57,6 @@ body{
   font-size:16px;
   outline:none;
 }
-
 .intro-form button{
   margin-top:8px;
   width:100%;
@@ -80,7 +69,7 @@ body{
 }
 
 /* =========================
-   HUD (timer/score/selesai)
+   HUD
 ========================= */
 .hud{
   display:flex;
@@ -88,7 +77,6 @@ body{
   gap:14px;
   padding:14px 16px;
 }
-
 .timer, .score{
   background:#fff;
   padding:10px 14px;
@@ -96,7 +84,6 @@ body{
   font-weight:900;
   box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
-
 .btn-selesai{
   margin-left:auto;
   border:none;
@@ -109,8 +96,8 @@ body{
 
 /* =========================
    LAYOUT KONSEP KAMU
-   ATAS: soal kiri + space kanan
-   BAWAH: kartu 4x2 di bawah
+   ATAS: Soal kiri + space kanan
+   BAWAH: Kartu 4x2 di bawah
 ========================= */
 .lvl1-layout{
   padding: 8px 16px 20px;
@@ -126,6 +113,7 @@ body{
   gap:18px;
   align-items:start;
 }
+.top-space{ min-height:330px; }
 
 /* soal */
 .question-card{
@@ -135,19 +123,16 @@ body{
   padding:16px;
   box-shadow:0 10px 26px rgba(0,0,0,.06);
 }
-
 .question-title{
   font-weight:900;
   margin-bottom:10px;
 }
-
 .drag-area{
   display:flex;
   align-items:center;
   justify-content:center;
   margin:10px 0;
 }
-
 .question-img{
   width:100%;
   max-width:320px;
@@ -158,24 +143,17 @@ body{
   user-select:none;
 }
 
-/* space kanan */
-.top-space{
-  min-height:330px;
-}
-
-/* BAWAH: kartu emosi */
+/* BAWAH */
 .bottom-area{
   display:flex;
   justify-content:flex-start;
 }
-
 .cards{
   width:min(560px,100%);
   display:grid;
   grid-template-columns:repeat(4, minmax(0,1fr));
   gap:16px;
 }
-
 .emotion-card{
   background:#ffd27d;
   border-radius:18px;
@@ -202,7 +180,7 @@ body{
 }
 
 /* =========================
-   NOTIF (HINT) - besar
+   HINT / NOTIF (gede)
 ========================= */
 .hint{
   margin-top:10px;
@@ -211,12 +189,11 @@ body{
   text-align:center;
   white-space:pre-line;
 }
-
 .hint.good{ color:#1b7f3a; }
 .hint.bad{ color:#b42318; }
 
 /* =========================
-   ANIMASI kecil
+   ANIMASI
 ========================= */
 @keyframes shake{
   0%,100%{ transform:translateX(0); }
@@ -238,12 +215,17 @@ body{
 @media (max-width:900px){
   .top-area{ grid-template-columns:1fr; }
   .top-space{ display:none; }
+
   .cards{
     width:100%;
     grid-template-columns:repeat(2, minmax(0,1fr));
     gap:12px;
   }
-  .emotion-card{ height:78px; font-size:14px; }
+  .emotion-card{
+    height:78px;
+    font-size:14px;
+  }
+
   .question-img{ max-width:240px; }
   .hint{ font-size:18px; }
 }
