@@ -1,13 +1,10 @@
 // =====================
-// KONFIG LEVEL 2
-// =====================
-// =====================
 // GAS WebApp URL (/exec) - SAMAIN DENGAN LEVEL 1
 // =====================
 const GAS_URL =
   "https://script.google.com/macros/s/AKfycbwlKHW60fkzcickncJz6xHOSSxYaNVOUMPR2X-tnz12ia6UtOfp7Tbh6aYxLk2oSBVo/exec";
 
-// kirim rekap ke GAS (anti CORS, pakai Image beacon)
+// kirim rekap ke GAS (anti CORS pakai Image beacon)
 function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
   if (!GAS_URL) return;
 
@@ -22,7 +19,9 @@ function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
   beacon.src = u.toString();
 }
 
-
+// =====================
+// KONFIG LEVEL 2
+// =====================
 const DURATION_SEC = 3 * 60 + 38; // 03:38
 const FEEDBACK_DELAY_MS = 700;
 
@@ -88,7 +87,7 @@ const QUESTIONS = [
     correctIndex: 0
   },
   {
-    text: "Ketika kamu datang ke sekolah dan tidak ada teman yang menyapamu, kamu merasa…",
+    text: "Ketika kamu datang ke sekolah dan tidak ada teman yang menyapumu, kamu merasa…",
     options: ["a) Sedih", "b) Senang", "c) Marah", "d) Tenang"],
     emosiMap: ["SEDIH", "SENANG", "MARAH", "TENANG"],
     correctIndex: 0
@@ -149,7 +148,6 @@ const QUESTIONS = [
   }
 ];
 
-
 // ====== STATE ======
 let idx = 0;
 let score = 0;
@@ -181,13 +179,16 @@ function pad(n){ return String(n).padStart(2, "0"); }
 function renderTimer(){
   const m = Math.floor(timeLeft / 60);
   const s = timeLeft % 60;
-  document.getElementById("timer").textContent = `${pad(m)}:${pad(s)}`;
+  const el = document.getElementById("timer");
+  if (el) el.textContent = `${pad(m)}:${pad(s)}`;
 }
 function renderScore(){
-  document.getElementById("score").textContent = `Skor: ${score} / ${QUESTIONS.length}`;
+  const el = document.getElementById("score");
+  if (el) el.textContent = `Skor: ${score} / ${QUESTIONS.length}`;
 }
 function setFeedback(text, type){
   const el = document.getElementById("feedback");
+  if (!el) return;
   el.classList.remove("good", "bad");
   if (type) el.classList.add(type);
   el.textContent = text || "";
@@ -201,10 +202,13 @@ function setQuestion(){
   setFeedback("", "");
 
   const q = QUESTIONS[idx];
-  document.getElementById("qTitle").textContent = `Question ${idx + 1}`;
-  document.getElementById("qText").textContent = q.text;
+  const t1 = document.getElementById("qTitle");
+  const t2 = document.getElementById("qText");
+  if (t1) t1.textContent = `Question ${idx + 1}`;
+  if (t2) t2.textContent = q.text;
 
   const wrap = document.getElementById("options");
+  if (!wrap) return;
   wrap.innerHTML = "";
 
   q.options.forEach((label, i) => {
@@ -216,7 +220,9 @@ function setQuestion(){
     wrap.appendChild(btn);
   });
 
-  document.getElementById("btnNext").classList.add("hidden");
+  const btnNext = document.getElementById("btnNext");
+  if (btnNext) btnNext.classList.add("hidden");
+
   soalStart = Date.now();
 }
 
@@ -225,7 +231,7 @@ function chooseAnswer(pickIndex, btnEl){
   locked = true;
 
   clearSelected();
-  btnEl.classList.add("selected");
+  if (btnEl) btnEl.classList.add("selected");
 
   const q = QUESTIONS[idx];
   const benar = pickIndex === q.correctIndex;
@@ -233,14 +239,28 @@ function chooseAnswer(pickIndex, btnEl){
   // hitung waktu respon
   const waktuRespon = ((Date.now() - soalStart) / 1000).toFixed(2);
 
-  // emosi yang dipilih untuk rekap
-  const emosiDipilih = (q.emosiMap && q.emosiMap[pickIndex]) ? q.emosiMap[pickIndex] : "UNKNOWN";
+  // emosi dipilih
+  const emosiDipilih =
+    (q.emosiMap && q.emosiMap[pickIndex]) ? q.emosiMap[pickIndex] : "UNKNOWN";
 
-  // ✅ simpan ke ek_answers (dipakai rekap.js)
+  // ✅ simpan ke local (buat rekap.html)
   saveAnswer({
     emosi: emosiDipilih,
     level: 2,
     soal: idx + 1,
+    waktu: waktuRespon
+  });
+
+  // ✅ kirim ke GAS (buat Google Sheet) kayak Level 1
+  const nama = localStorage.getItem("ek_nama") || "";
+  const sesi = localStorage.getItem("ek_sesi") || "";
+  const status = benar ? "BENAR" : "SALAH";
+
+  sendRekapToGAS({
+    nama,
+    sesi,
+    soal: idx + 1,
+    emosi: `L2 - ${emosiDipilih} (${status})`,
     waktu: waktuRespon
   });
 
@@ -252,7 +272,8 @@ function chooseAnswer(pickIndex, btnEl){
     setFeedback("❌ Salah!", "bad");
   }
 
-  document.getElementById("btnNext").classList.remove("hidden");
+  const btnNext = document.getElementById("btnNext");
+  if (btnNext) btnNext.classList.remove("hidden");
 }
 
 function nextStep(){
@@ -304,10 +325,10 @@ function startTimer(){
 
       setFeedback("⏳ Waktu habis!", "bad");
 
-      // ✅ auto ke congrats (tanpa klik)
       setTimeout(() => finishLevel("Waktu habis!"), 800);
       return;
     }
+
     renderTimer();
   }, 1000);
 }
@@ -326,24 +347,23 @@ window.addEventListener("DOMContentLoaded", () => {
   // auto isi dari localStorage
   const namaLS = (localStorage.getItem("ek_nama") || "").trim();
   const sesiLS = (localStorage.getItem("ek_sesi") || "").trim();
-  if (namaLS) namaInput.value = namaLS;
-  if (sesiLS) sesiInput.value = sesiLS;
+  if (namaInput && namaLS) namaInput.value = namaLS;
+  if (sesiInput && sesiLS) sesiInput.value = sesiLS;
 
   function startGame(){
-    const nama = (namaInput.value || "").trim();
-    const sesi = (sesiInput.value || "").trim();
+    const nama = (namaInput?.value || "").trim();
+    const sesi = (sesiInput?.value || "").trim();
 
     if (!nama || !sesi){
       alert("Nama dan sesi wajib diisi ya 🙂");
       return;
     }
 
-    // ✅ simpan biar congrats2 & rekap kebaca
     localStorage.setItem("ek_nama", nama);
     localStorage.setItem("ek_sesi", sesi);
 
-    introEl.classList.add("hidden");
-    gameEl.classList.remove("hidden");
+    if (introEl) introEl.classList.add("hidden");
+    if (gameEl)  gameEl.classList.remove("hidden");
 
     idx = 0;
     score = 0;
@@ -356,7 +376,11 @@ window.addEventListener("DOMContentLoaded", () => {
     startTimer();
   }
 
-  btnMulai.addEventListener("click", startGame);
-  btnNext.addEventListener("click", nextStep);
-  btnSelesai.addEventListener("click", () => finishLevel("Diselesaikan manual"));
+  if (btnMulai) btnMulai.addEventListener("click", startGame);
+  if (btnNext)  btnNext.addEventListener("click", nextStep);
+  if (btnSelesai) btnSelesai.addEventListener("click", () => finishLevel("Diselesaikan manual"));
+
+  // init tampilan
+  renderTimer();
+  renderScore();
 });
