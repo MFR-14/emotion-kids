@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GESYA - Level 1</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./js/level1.css?v=11" />
+</head>
+
+<body class="level-page">
+
+  <!-- INTRO SCREEN -->
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="intro-title">Level 3</div>
+      <div class="intro-subtitle">Petualangan Wajah Emosi</div>
+
+      <div class="intro-form">
+        <label>Nama Anak</label>
+        <input id="namaAnak" type="text" placeholder="contoh: Andi" />
+
+        <label>Sesi</label>
+        <input id="sesiAnak" type="text" placeholder="contoh: S1" />
+
+        <button id="btnMulai" type="button">Mulai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game" class="hidden">
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="timer" id="timer">02:00</div>
+      <div class="score" id="score">Skor: 0 / 8</div>
+      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+    </div>
+
+    <main class="lvl3-layout">
+
+      <!-- LEVEL 2: TEMPel WAJAH -->
+<section class="lvl2-wrap">
+  <!-- BANK WAJAH (yang di-drag) -->
+  <div class="face-bank" id="faceBank">
+    <div class="face-item" draggable="true" data-face="A">
+      <img src="./img/face_a.png" alt="Wajah A">
+    </div>
+    <div class="face-item" draggable="true" data-face="B">
+      <img src="./img/face_b.png" alt="Wajah B">
+    </div>
+    <div class="face-item" draggable="true" data-face="C">
+      <img src="./img/face_c.png" alt="Wajah C">
+    </div>
+    <div class="face-item" draggable="true" data-face="D">
+      <img src="./img/face_d.png" alt="Wajah D">
+    </div>
+  </div>
+
+  <!-- Papan KEPALA KOSONG (drop zone) -->
+  <div class="head-board" id="headBoard">
+    <div class="head-slot drop-head" data-need="A">
+      <img class="head-base" src="./img/head_blank_a.png" alt="Kepala A">
+      <div class="face-holder"></div>
+    </div>
+
+    <div class="head-slot drop-head" data-need="B">
+      <img class="head-base" src="./img/head_blank_b.png" alt="Kepala B">
+      <div class="face-holder"></div>
+    </div>
+
+    <div class="head-slot drop-head" data-need="C">
+      <img class="head-base" src="./img/head_blank_c.png" alt="Kepala C">
+      <div class="face-holder"></div>
+    </div>
+
+    <div class="head-slot drop-head" data-need="D">
+      <img class="head-base" src="./img/head_blank_d.png" alt="Kepala D">
+      <div class="face-holder"></div>
+    </div>
+  </div>
+
+  <!-- notif / hint (kamu sudah punya di level1, boleh pakai yang itu) -->
+  <div class="hint" id="hint">Tarik wajah ke kepala yang cocok</div>
+  <div class="answer-feedback" id="answerFeedback"></div>
+</section>
+
+
+    </main>
+  </div>
+
+  <!-- JS -->
+  <script src="./level1.js?v=2025"></script>
+</body>
+</html>
