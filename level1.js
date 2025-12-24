@@ -85,6 +85,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const scoreEl    = document.getElementById("score");
   const imgEl      = document.getElementById("questionImg");
   const hintEl     = document.getElementById("hint");
+  const feedbackEl = document.getElementById("answerFeedback");
   const btnSelesai = document.getElementById("btnSelesai");
 
   if (!introEl || !gameEl || !namaInput || !sesiInput || !btnMulai || !timerEl || !scoreEl || !imgEl || !hintEl) {
@@ -117,18 +118,29 @@ window.addEventListener("DOMContentLoaded", () => {
       : "Tarik / tap gambar ke emosi yang benar";
   }
 
-  function setQuestion() {
-    const q = pool[idx];
-    imgEl.src = q.img + "?v=" + Date.now(); // cache buster github pages
-    imgEl.alt = `Soal ${idx + 1}`;
+ function setQuestion() {
+  const q = pool[idx];
+  imgEl.src = q.img + "?v=" + Date.now(); // cache buster github pages
+  imgEl.alt = `Soal ${idx + 1}`;
 
-    lockInput = false;
-    setPicked(false);
-    hintEl.classList.remove("good", "bad");
-    hintEl.textContent = "Tarik / tap gambar ke emosi yang benar";
+  // buka input lagi untuk soal baru
+  lockInput = false;
 
-    soalStart = Date.now();
+  // reset mode pilih gambar (HP)
+  setPicked(false);
+
+  // reset instruksi kecil
+  hintEl.classList.remove("good", "bad");
+  hintEl.textContent = "Tarik / tap gambar ke emosi yang benar";
+
+  // ✅ reset tulisan besar BENAR/SALAH (biar gak kebawa)
+  if (feedbackEl) {
+    feedbackEl.className = "answer-feedback"; // balik ke default
+    feedbackEl.textContent = "";
   }
+
+  soalStart = Date.now();
+}
 
   function finishGame(message) {
     if (gameEnded) return;
