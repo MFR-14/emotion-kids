@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Level 3</title>
 
-<link rel="stylesheet" href="./js/level1.css?v=11" />
-<link rel="stylesheet" href="./js/level3.css?v=1" />
-
-
+  <!-- CSS base (intro + hud + hint + feedback) -->
+  <link rel="stylesheet" href="./js/level1.css?v=11" />
+  <!-- CSS khusus level 3 (tempel muka) -->
+  <link rel="stylesheet" href="./js/level3.css?v=1" />
 </head>
 
 <body class="level-page">
@@ -37,36 +37,29 @@
     <!-- HUD -->
     <div class="hud">
       <div class="timer" id="timer">03:00</div>
-      <div class="score" id="score">Skor: 0 / 1</div>
+      <div class="score" id="score">Skor: 0 / 8</div>
       <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
     </div>
 
     <main class="lvl3-layout">
+      <section class="lvl3-wrap">
 
-      <section class="lvl2-wrap">
+        <!-- Judul ronde -->
+        <div class="lvl3-round" id="roundTitle">Soal 1 / 8</div>
 
         <!-- BANK WAJAH -->
-        <div class="face-bank" id="faceBank">
-          <div class="face-item" draggable="true" data-face="bahagia">
-            <img src="./img/muka-bahagia.jpg" alt="Muka Bahagia">
-          </div>
-        </div>
+        <div class="face-bank" id="faceBank"></div>
 
         <!-- BOARD KEPALA -->
-        <div class="head-board" id="headBoard">
-          <div class="head-slot drop-head" data-need="bahagia">
-            <img class="head-base" src="./img/bahagia-L3.jpg" alt="Kepala Bahagia">
-            <div class="face-holder"></div>
-          </div>
-        </div>
+        <div class="head-board" id="headBoard"></div>
 
+        <!-- notif kecil & besar (reuse style dari level1.css) -->
         <div class="hint" id="hint">Tarik muka ke kepala yang cocok</div>
         <div class="answer-feedback" id="answerFeedback"></div>
-
       </section>
     </main>
   </div>
 
-  <script src="./level3.js?v=1"></script>
+  <script src="./js/level3.js?v=1"></script>
 </body>
 </html>
