@@ -135,13 +135,24 @@ function startTimer(){
     if (ended) return;
     timeLeft--;
 
-    if (timeLeft <= 0){
-      timeLeft = 0;
-      renderTimer();
-      setFeedback("⏳ Waktu habis!", "bad");
-      locked = true;
-      setTimeout(() => finishLevel("Waktu habis!"), 700);
-      return;
+   if (timeLeft <= 0){
+  timeLeft = 0;
+  renderTimer();
+
+  locked = true;
+  ended  = true;
+  clearInterval(timerId);
+
+  setFeedback("⏳ Waktu habis!", "bad");
+
+  // ⬇️ LANGSUNG KE CONGRATS (tanpa klik)
+  setTimeout(() => {
+    finishLevel("Waktu habis!");
+  }, 800);
+
+  return;
+}
+
     }
     renderTimer();
   }, 1000);
