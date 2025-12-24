@@ -31,11 +31,11 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const url = new URL(window.location.href);
   const p = url.searchParams;
 
-  // ✅ Ambil dari URL dulu
-  const nama   = p.get("nama")   || localStorage.getItem("ek_nama") || "Teman";
-  const sesi   = p.get("sesi")   || localStorage.getItem("ek_sesi") || "-";
-  const skor   = p.get("skor")   || localStorage.getItem("ek_level1_skor") || "0";
-  const alasan = p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai";
+  // Ambil dari URL dulu, kalau kosong baru dari localStorage
+  const nama   = (p.get("nama")   || localStorage.getItem("ek_nama") || "Teman").trim();
+  const sesi   = (p.get("sesi")   || localStorage.getItem("ek_sesi") || "-").trim();
+  const skor   = (p.get("skor")   || localStorage.getItem("ek_level1_skor") || "0").trim();
+  const alasan = (p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai").trim();
 
   const cgName   = document.getElementById("cgName");
   const cgMeta   = document.getElementById("cgMeta");
@@ -50,7 +50,16 @@ window.addEventListener("DOMContentLoaded", ()=>{
 `${alasan}
 Terima kasih sudah bermain, ${nama}!
 Besok main lagi biar makin jago ya 😄`;
-  if (cgMsg) cgMsg.textContent = msg;
+
+  // ✅ ini yang bikin \n jadi baris baru (bukan tampil "\n")
+  if (cgMsg) cgMsg.innerHTML = msg.replace(/\n/g, "<br>");
+
+  // ✅ tombol biar pasti jalan
+  const btnUlang = document.getElementById("btnUlang");
+  const btnHome  = document.getElementById("btnHome");
+
+  if (btnUlang) btnUlang.addEventListener("click", ()=> window.location.href = "./level1.html");
+  if (btnHome)  btnHome.addEventListener("click", ()=> window.location.href = "./index.html");
 
   spawnConfetti();
 });
