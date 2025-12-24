@@ -257,3 +257,39 @@ body{
   .question-img{ max-width:240px; }
   .hint{ font-size:18px; }
 }
+/* ===============================
+   TEKS BENAR / SALAH (ANAK-STYLE)
+=============================== */
+.answer-feedback{
+  margin-top:10px;
+  font-size:38px;        /* GEDE */
+  font-weight:900;
+  text-align:center;
+  line-height:1.2;
+  opacity:0;
+  transform:scale(0.8);
+  transition:all .25s ease;
+}
+
+/* muncul */
+.answer-feedback.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* BENAR */
+.answer-feedback.good{
+  color:#0f6b2f;
+}
+
+/* SALAH */
+.answer-feedback.bad{
+  color:#b42318;
+}
+
+/* HP */
+@media (max-width:900px){
+  .answer-feedback{
+    font-size:28px;
+  }
+}
