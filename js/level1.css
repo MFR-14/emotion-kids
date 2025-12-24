@@ -293,3 +293,30 @@ body{
     font-size:28px;
   }
 }
+.answer-feedback{
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 22px;          /* gede buat anak */
+  text-align: center;
+  line-height: 1.2;
+  background: #fff;
+  border: 3px solid #2b3a55;
+}
+
+.answer-feedback.good{
+  background: #eaffea;
+  border-color: #2f9e44;
+}
+
+.answer-feedback.bad{
+  background: #ffecec;
+  border-color: #e03131;
+}
+
+@media (max-width: 600px){
+  .answer-feedback{
+    font-size: 20px;
+  }
+}
