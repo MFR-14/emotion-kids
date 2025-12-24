@@ -211,18 +211,36 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     if (pickedEmosi === correctEmosi) {
-      score++;
-      renderScore();
-      hintEl.classList.remove("bad");
-      hintEl.classList.add("good");
-      hintEl.textContent = "✅ Benar! Mantap 😄";
-      flashOk(targetEl);
-    } else {
-      hintEl.classList.remove("good");
-      hintEl.classList.add("bad");
-      hintEl.textContent = "❌ Salah. Gak apa-apa, lanjut ya 🙂";
-      shake(targetEl);
-    }
+  score++;
+  renderScore();
+
+  // hint kecil
+  hintEl.classList.remove("bad");
+  hintEl.classList.add("good");
+  hintEl.textContent = "✅ Benar!";
+
+  // 🔥 NOTIF BESAR
+  if (feedbackEl) {
+    feedbackEl.className = "answer-feedback good";
+    feedbackEl.textContent = "YEEEAAAY! KAMU BENAR!!! 🎉🎉";
+  }
+
+  flashOk(targetEl);
+
+} else {
+  hintEl.classList.remove("good");
+  hintEl.classList.add("bad");
+  hintEl.textContent = "❌ Salah";
+
+  // 🔥 NOTIF BESAR
+  if (feedbackEl) {
+    feedbackEl.className = "answer-feedback bad";
+    feedbackEl.textContent = "YAAAHH… SALAH 😅 COBA LAGI YA!";
+  }
+
+  shake(targetEl);
+}
+
 
     idx++;
     setPicked(false);
