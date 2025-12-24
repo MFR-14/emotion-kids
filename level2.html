@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GESYA - Level 2</title>
+
+  <link rel="stylesheet" href="./js/level2.css?v=1">
+</head>
+<body>
+
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-left">
+      <div class="timer-pill">
+        <span class="timer-icon">⏱</span>
+        <span id="timer">03:38</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <main class="page">
+    <h1 class="title" id="qTitle">Question 1</h1>
+
+    <section class="question-wrap">
+      <div class="question-box">
+        <div class="question-text" id="qText">
+          Ketika aku sakit, aku merasa ...
+        </div>
+
+        <div class="options" id="options">
+          <!-- diisi dari JS -->
+        </div>
+      </div>
+    </section>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button class="btn-next hidden" id="btnNext" type="button">Lanjut</button>
+  </main>
+
+  <script src="./level2.js?v=1"></script>
+</body>
+</html>
