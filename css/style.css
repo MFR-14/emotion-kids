@@ -138,4 +138,77 @@ h1 {
     font-size:14px;
   }
 }
+/* =========================
+   LAYOUT KHUSUS LEVEL 1
+   (atas: soal kiri + space kanan)
+   (bawah: kartu 4x2)
+========================= */
+.lvl1-layout{
+  padding: 14px 16px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* area atas 2 kolom */
+.top-area{
+  display:grid;
+  grid-template-columns: 520px 1fr; /* kiri fixed, kanan fleksibel */
+  gap:18px;
+  align-items:start;
+}
+
+/* kartu soal kiri */
+.top-area .question{
+  width:100% !important;
+  display:block !important;
+}
+
+/* space kanan (kosong) */
+.top-space{
+  min-height: 320px; /* biar kelihatan “lega” kayak contoh */
+  background: transparent;
+}
+
+/* area bawah (kartu emosi) */
+.bottom-area{
+  display:flex;
+  justify-content:flex-start;
+}
+
+/* grid kartu 4x2 */
+.bottom-area .cards{
+  width: 520px;            /* sejajar dengan lebar soal kiri */
+  display:grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap:16px;
+}
+
+/* ukuran kartu */
+.bottom-area .emotion-card{
+  height: 92px;
+  border-radius: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+
+/* responsive HP: atas jadi 1 kolom, kartu jadi 2 kolom */
+@media (max-width: 900px){
+  .top-area{
+    grid-template-columns: 1fr;
+  }
+  .top-space{
+    display:none;
+  }
+  .bottom-area .cards{
+    width:100%;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .bottom-area .emotion-card{
+    height: 78px;
+    font-size: 14px;
+  }
+}
 
