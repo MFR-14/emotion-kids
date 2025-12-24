@@ -265,3 +265,129 @@ body.level-page .lvl1-wrap.reverse{
   transition:.12s;
 }
 
+  /* =========================
+   RESPONSIVE FIX (HP-friendly)
+   Tempel di paling bawah CSS
+========================= */
+
+/* Biar elemen ga bikin layar melebar */
+.level-page, .lvl1-wrap, .question-card, .cards { max-width: 100%; }
+img { max-width: 100%; height: auto; }
+
+/* Desktop tetap oke */
+.lvl1-wrap{
+  align-items:flex-start;
+}
+
+/* Gambar soal jangan bikin tumpang tindih */
+.question-card{
+  overflow:hidden;
+}
+
+.question-img{
+  width:100%;
+  height:auto;
+  max-height:320px;     /* desktop */
+  object-fit:contain;
+}
+
+/* Kartu emosi fleksibel */
+.cards{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.emotion-card{
+  height:110px;
+  font-size:18px;
+  text-align:center;
+  padding:10px;
+}
+
+/* ====== TABLET ====== */
+@media (max-width: 900px){
+  .container, .lvl1-wrap{
+    padding:16px;
+  }
+
+  .lvl1-wrap{
+    flex-direction:column; /* jadi atas-bawah */
+    gap:16px;
+  }
+
+  .cards{
+    width:100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap:12px;
+  }
+
+  .question{
+    width:100%;
+  }
+
+  .question-img{
+    max-height:260px;
+  }
+}
+
+/* ====== HP ====== */
+@media (max-width: 600px){
+  .hud{
+    padding:10px 12px;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .timer, .score{
+    padding:8px 10px;
+    border-radius:14px;
+    font-size:14px;
+  }
+
+  .btn-selesai{
+    margin-left:0;
+    width:100%;
+    padding:10px 14px;
+  }
+
+  .lvl1-wrap{
+    padding:10px 12px 18px;
+  }
+
+  .cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 kolom biar lega */
+    gap:10px;
+  }
+
+  .emotion-card{
+    height:86px;
+    border-radius:18px;
+    font-size:14px;
+    letter-spacing:.5px;
+  }
+
+  .question-card{
+    border-radius:22px;
+    padding:12px;
+  }
+
+  .question-title{
+    font-size:14px;
+  }
+
+  .question-img{
+    max-height:200px;
+    border-radius:14px;
+  }
+
+  .hint{
+    font-size:14px;
+  }
+}
+
+/* ====== HP kecil banget ====== */
+@media (max-width: 360px){
+  .emotion-card{ font-size:13px; height:78px; }
+  .question-img{ max-height:170px; }
+}
+
+
