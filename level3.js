@@ -179,24 +179,22 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function finishGame(message) {
-    if (gameEnded) return;
-    gameEnded = true;
+  if (gameEnded) return;
+  gameEnded = true;
 
-    clearInterval(timerId);
+  clearInterval(timerId);
 
-    const nama = localStorage.getItem("ek_nama") || "";
-    const sesi = localStorage.getItem("ek_sesi") || "";
+  const nama = localStorage.getItem("ek_nama") || "";
+  const sesi = localStorage.getItem("ek_sesi") || "";
 
-    // simpan khusus level3
-    localStorage.setItem("ek_level3_skor", String(score));
-    localStorage.setItem("ek_level3_selesai", "1");
-    localStorage.setItem("ek_level3_alasan", message || "Selesai");
+  localStorage.setItem("ek_level3_skor", String(score));
+  localStorage.setItem("ek_level3_selesai", "1");
+  localStorage.setItem("ek_level3_alasan", message || "Selesai");
 
-    // sementara: belum ada congrats3, jadi cukup alert + balik index
-    // Kalau kamu nanti buat congrats3.html, tinggal ganti redirect di sini.
-    alert(`Level 3 selesai! Skor: ${score}/${TOTAL}`);
-    window.location.href = "./index.html";
-  }
+  // redirect ke congrats3
+  window.location.href = "/GESYA/congrats3.html";
+}
+
 
   function startTimer() {
     renderTimer();
