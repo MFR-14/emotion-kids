@@ -5,10 +5,68 @@ body{
   margin:0;
   font-family:"Comic Sans MS","Poppins",sans-serif;
   background:#fdf6ec;
-  color:#24324a;
+  color:#2b3a55;
+}
+.hidden{ display:none !important; }
+
+/* =========================
+   INTRO (copy vibe Level 1)
+========================= */
+.intro{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.intro-card{
+  width:min(720px,92vw);
+  background:#fff;
+  border-radius:24px;
+  padding:30px 26px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  text-align:center;
+}
+.intro-title{
+  font-size:56px;
+  font-weight:900;
+  margin:0 0 12px;
+}
+.intro-subtitle{
+  display:inline-block;
+  background:#ffd27d;
+  padding:10px 18px;
+  border-radius:16px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+.intro-form{
+  display:grid;
+  gap:10px;
+  text-align:left;
+}
+.intro-form label{ font-weight:900; }
+.intro-form input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:2px solid #e7e0d2;
+  background:#eef5ff;
+  font-size:16px;
+  outline:none;
+}
+.intro-form button{
+  margin-top:10px;
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  border-radius:16px;
+  background:#ffb703;
+  font-weight:900;
+  cursor:pointer;
 }
 
-/* ============ HUD (Timer kiri atas) ============ */
+/* ============ HUD ============ */
 .hud{
   position:fixed;
   top:12px;
@@ -16,18 +74,27 @@ body{
   right:12px;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   z-index:10;
+  gap:10px;
 }
-.timer-pill{
+
+.timer-pill,
+.score-pill{
   display:flex;
   align-items:center;
   gap:10px;
-  background:#bfe9f7;
+  background:#fff;
   border-radius:16px;
   padding:10px 14px;
   font-weight:900;
   box-shadow:0 8px 18px rgba(0,0,0,.08);
 }
+
+.timer-pill{
+  background:#bfe9f7;
+}
+
 .timer-icon{
   width:26px;
   height:26px;
@@ -38,10 +105,26 @@ body{
   background:#ffffffb0;
 }
 
-/* ============ LAYOUT ============ */
+.hud-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn-selesai{
+  border:none;
+  border-radius:16px;
+  padding:10px 14px;
+  background:#ffb703;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+/* ============ LAYOUT GAME ============ */
 .page{
   min-height:100vh;
-  padding:76px 18px 30px;
+  padding:92px 18px 30px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -54,7 +137,7 @@ body{
   color:#24324a;
 }
 
-/* ============ BOX SOAL (pixel + border kuning) ============ */
+/* ============ BOX SOAL (mirip gambar) ============ */
 .question-wrap{
   width:min(980px, 96vw);
   display:flex;
@@ -68,24 +151,8 @@ body{
   padding:28px 22px 24px;
   position:relative;
   box-shadow:0 14px 30px rgba(0,0,0,.08);
-  outline:10px solid #ffea00; /* border kuning tebel */
+  outline:10px solid #ffea00;      /* border kuning tebel */
   outline-offset:10px;
-}
-
-/* efek pixelish di pinggir (simple) */
-.question-box::before,
-.question-box::after{
-  content:"";
-  position:absolute;
-  inset:-18px;
-  border-radius:22px;
-  pointer-events:none;
-  box-shadow:
-    18px 0 0 #ffea00,
-    -18px 0 0 #ffea00,
-    0 18px 0 #ffea00,
-    0 -18px 0 #ffea00;
-  opacity:.35;
 }
 
 .question-text{
@@ -114,16 +181,15 @@ body{
   font-size:26px;
   padding:18px 18px;
   border-radius:16px;
-  background:#7d7288;        /* unselected (ungu abu) */
+  background:#7d7288;        /* unselected */
   color:#fff;
   box-shadow:0 10px 0 rgba(0,0,0,.18);
   transition:transform .06s ease, filter .15s ease;
   text-align:left;
 }
 .option:active{ transform:translateY(3px); filter:brightness(.98); }
-
 .option.selected{
-  background:#3b95ff;        /* selected (biru) */
+  background:#3b95ff;        /* selected biru */
   box-shadow:0 10px 0 rgba(0,0,0,.12);
 }
 
@@ -152,10 +218,9 @@ body{
 }
 .btn-next:active{ transform:translateY(3px); }
 
-.hidden{ display:none !important; }
-
 /* ============ RESPONSIVE ============ */
 @media (max-width: 720px){
+  .intro-title{ font-size:44px; }
   .title{ font-size:42px; }
   .question-text{ font-size:28px; }
   .option{ font-size:18px; padding:16px 14px; }
