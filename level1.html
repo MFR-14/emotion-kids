@@ -39,43 +39,41 @@
       <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
     </div>
 
-    <!-- KONTEN GAME (VERTIKAL) -->
-    <main class="lvl1-wrap vertical">
+    <main class="lvl1-layout">
 
-      <!-- ATAS: gambar soal -->
-      <section class="question">
-        <div class="question-card">
-          <div class="question-title" id="questionTitle">
-            Tarik gambar ke emosi yang benar
-          </div>
+  <!-- ATAS: soal kiri + space kanan -->
+  <section class="top-area">
+    <div class="question">
+      <div class="question-card">
+        <div class="question-title" id="questionTitle">Tarik gambar ke emosi yang benar</div>
 
-          <div class="drag-area">
-            <img
-              id="questionImg"
-              class="question-img drag-img"
-              draggable="true"
-              src="./img/12.jpg"
-              alt="Soal"
-            />
-          </div>
-
-          <div class="hint" id="hint"></div>
+        <div class="drag-area">
+          <img id="questionImg" class="question-img drag-img" draggable="true" src="./img/12.jpg" alt="Soal" />
         </div>
-      </section>
 
-      <!-- BAWAH: kartu emosi (DROP TARGET) -->
-      <section class="cards drop-cards" id="dropCards">
-        <div class="emotion-card drop-target" data-emosi="BAHAGIA">BAHAGIA</div>
-        <div class="emotion-card drop-target" data-emosi="SEDIH">SEDIH</div>
-        <div class="emotion-card drop-target" data-emosi="TAKUT">TAKUT</div>
-        <div class="emotion-card drop-target" data-emosi="TERKEJUT">TERKEJUT</div>
-        <div class="emotion-card drop-target" data-emosi="BINGUNG">BINGUNG</div>
-        <div class="emotion-card drop-target" data-emosi="MALU">MALU</div>
-        <div class="emotion-card drop-target" data-emosi="MARAH">MARAH</div>
-        <div class="emotion-card drop-target" data-emosi="CINTA">CINTA</div>
-      </section>
+        <div class="hint" id="hint"></div>
+      </div>
+    </div>
 
-    </main>
+    <div class="top-space"></div>
+  </section>
+
+  <!-- BAWAH: kartu emosi -->
+  <section class="bottom-area">
+    <section class="cards drop-cards" id="dropCards">
+      <div class="emotion-card drop-target" data-emosi="BAHAGIA">BAHAGIA</div>
+      <div class="emotion-card drop-target" data-emosi="SEDIH">SEDIH</div>
+      <div class="emotion-card drop-target" data-emosi="TAKUT">TAKUT</div>
+      <div class="emotion-card drop-target" data-emosi="TERKEJUT">TERKEJUT</div>
+      <div class="emotion-card drop-target" data-emosi="BINGUNG">BINGUNG</div>
+      <div class="emotion-card drop-target" data-emosi="MALU">MALU</div>
+      <div class="emotion-card drop-target" data-emosi="MARAH">MARAH</div>
+      <div class="emotion-card drop-target" data-emosi="CINTA">CINTA</div>
+    </section>
+  </section>
+
+</main>
+
   </div>
 
   <!-- Giveaway overlay -->
