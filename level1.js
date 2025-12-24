@@ -6,7 +6,7 @@ const GAS_URL =
 
 // ====== KONFIG GAME ======
 const TOTAL = 8;
-const DURATION_SEC = 120;        // 2 menit
+const DURATION_SEC = 180;        // 3 menit
 const FEEDBACK_DELAY_MS = 2200;  // lama tampil notif benar/salah
 
 const ROUNDS = [
