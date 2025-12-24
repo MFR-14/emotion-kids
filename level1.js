@@ -214,14 +214,14 @@ window.addEventListener("DOMContentLoaded", () => {
   score++;
   renderScore();
 
-  // hint kecil
   hintEl.classList.remove("bad");
   hintEl.classList.add("good");
   hintEl.textContent = "✅ Benar!";
 
-  // 🔥 NOTIF BESAR
+  // ✅ NOTIF BESAR
   if (feedbackEl) {
-    feedbackEl.className = "answer-feedback good";
+    feedbackEl.classList.remove("bad");
+    feedbackEl.classList.add("good");
     feedbackEl.textContent = "YEEEAAAY! KAMU BENAR!!! 🎉🎉";
   }
 
@@ -232,14 +232,16 @@ window.addEventListener("DOMContentLoaded", () => {
   hintEl.classList.add("bad");
   hintEl.textContent = "❌ Salah";
 
-  // 🔥 NOTIF BESAR
+  // ✅ NOTIF BESAR
   if (feedbackEl) {
-    feedbackEl.className = "answer-feedback bad";
-    feedbackEl.textContent = "YAAAHH… SALAH 😅 COBA LAGI YA!";
+    feedbackEl.classList.remove("good");
+    feedbackEl.classList.add("bad");
+    feedbackEl.textContent = "YAAAHH… SALAAAHHH!!! 😭";
   }
 
   shake(targetEl);
 }
+
 
 
     idx++;
