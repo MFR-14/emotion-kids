@@ -57,12 +57,13 @@ function flashOk(el) {
 }
 
 // ====== REKAP KE GAS (anti CORS) ======
-function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
+function sendRekapToGAS({ nama, umur, sekolah, soal, emosi, waktu }) {
   if (!GAS_URL) return;
 
   const u = new URL(GAS_URL);
   u.searchParams.set("nama", nama);
-  u.searchParams.set("sesi", sesi);
+  u.searchParams.set("umur", String(umur));
+  u.searchParams.set("sekolah", sekolah);
   u.searchParams.set("soal", String(soal));
   u.searchParams.set("emosi", emosi);
   u.searchParams.set("waktu", String(waktu));
@@ -75,8 +76,15 @@ function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
 window.addEventListener("DOMContentLoaded", () => {
   const introEl    = document.getElementById("intro");
   const gameEl     = document.getElementById("game");
-  const namaInput  = document.getElementById("namaAnak");
-  const sesiInput  = document.getElementById("sesiAnak");
+
+  // input: versi baru
+  const namaInput       = document.getElementById("namaAnak");
+  const umurInput       = document.getElementById("umurAnak");
+  const sekolahInput    = document.getElementById("namaSekolah");
+
+  // fallback (kalau HTML lama masih kepakai)
+  const sesiInputLegacy = document.getElementById("sesiAnak");
+
   const btnMulai   = document.getElementById("btnMulai");
 
   const timerEl    = document.getElementById("timer");
@@ -86,16 +94,28 @@ window.addEventListener("DOMContentLoaded", () => {
   const feedbackEl = document.getElementById("answerFeedback");
   const btnSelesai = document.getElementById("btnSelesai");
 
-  if (!introEl || !gameEl || !namaInput || !sesiInput || !btnMulai || !timerEl || !scoreEl || !imgEl || !hintEl || !feedbackEl) {
-    alert("Ada elemen HTML yang tidak ketemu. Cek id: intro, game, namaAnak, sesiAnak, btnMulai, timer, score, questionImg, hint, answerFeedback.");
+  if (!introEl || !gameEl || !namaInput || !btnMulai || !timerEl || !scoreEl || !imgEl || !hintEl || !feedbackEl) {
+    alert("Ada elemen HTML yang tidak ketemu. Cek id: intro, game, namaAnak, umurAnak, namaSekolah, btnMulai, timer, score, questionImg, hint, answerFeedback.");
     return;
   }
 
-  // isi otomatis dari localStorage
-  const namaLS = (localStorage.getItem("ek_nama") || "").trim();
-  const sesiLS = (localStorage.getItem("ek_sesi") || "").trim();
+  // helper ambil nilai sekolah (baru > legacy)
+  function getSekolahValue() {
+    const vNew = (sekolahInput && sekolahInput.value ? sekolahInput.value : "").trim();
+    if (vNew) return vNew;
+    const vOld = (sesiInputLegacy && sesiInputLegacy.value ? sesiInputLegacy.value : "").trim();
+    return vOld;
+  }
+
+  // ====== isi otomatis dari localStorage ======
+  const namaLS    = (localStorage.getItem("ek_nama") || "").trim();
+  const umurLS    = (localStorage.getItem("ek_umur") || "").trim();
+  const sekolahLS = (localStorage.getItem("ek_sekolah") || "").trim();
+
   if (namaLS) namaInput.value = namaLS;
-  if (sesiLS) sesiInput.value = sesiLS;
+  if (umurInput && umurLS) umurInput.value = umurLS;
+  if (sekolahInput && sekolahLS) sekolahInput.value = sekolahLS;
+  if (sesiInputLegacy && sekolahLS) sesiInputLegacy.value = sekolahLS; // biar legacy juga kebaca
 
   function renderTimer() {
     const m = Math.floor(timeLeft / 60);
@@ -120,7 +140,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function resetFeedback() {
     feedbackEl.className = "answer-feedback";
     feedbackEl.textContent = "";
-    // paksa visible (jaga-jaga ada CSS lain yang nyempil)
     feedbackEl.style.display = "block";
     feedbackEl.style.opacity = "1";
     feedbackEl.style.visibility = "visible";
@@ -148,16 +167,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
     clearInterval(timerId);
 
-    const nama = localStorage.getItem("ek_nama") || "";
-    const sesi = localStorage.getItem("ek_sesi") || "";
+    const nama    = localStorage.getItem("ek_nama") || "";
+    const umur    = localStorage.getItem("ek_umur") || "";
+    const sekolah = localStorage.getItem("ek_sekolah") || "";
 
     localStorage.setItem("ek_level1_skor", String(score));
     localStorage.setItem("ek_level1_selesai", "1");
     localStorage.setItem("ek_level1_alasan", message || "Selesai");
 
+    // querystring untuk halaman congrats
     const qs = new URLSearchParams({
       nama,
-      sesi,
+      umur,
+      sekolah,
       skor: String(score),
       alasan: message || "Selesai"
     });
@@ -195,14 +217,16 @@ window.addEventListener("DOMContentLoaded", () => {
     const correctEmosi = pool[idx].emosi;
     const waktuRespon = ((Date.now() - soalStart) / 1000).toFixed(2);
 
-    const nama = localStorage.getItem("ek_nama") || "";
-    const sesi = localStorage.getItem("ek_sesi") || "";
+    const nama    = localStorage.getItem("ek_nama") || "";
+    const umur    = localStorage.getItem("ek_umur") || "";
+    const sekolah = localStorage.getItem("ek_sekolah") || "";
 
     const status = pickedEmosi === correctEmosi ? "BENAR" : "SALAH";
 
     sendRekapToGAS({
       nama,
-      sesi,
+      umur,
+      sekolah,
       soal: idx + 1,
       emosi: `${pickedEmosi} (${status})`,
       waktu: waktuRespon
@@ -215,7 +239,7 @@ window.addEventListener("DOMContentLoaded", () => {
     hintEl.classList.add(isBenar ? "good" : "bad");
     hintEl.textContent = isBenar ? "✅ Benar!" : "❌ Salah";
 
-    // notif besar (paksa tampil)
+    // notif besar
     resetFeedback();
     feedbackEl.classList.add(isBenar ? "good" : "bad");
     feedbackEl.textContent = isBenar
@@ -317,15 +341,29 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function startGame() {
     const nama = (namaInput.value || "").trim();
-    const sesi = (sesiInput.value || "").trim();
+    const umurRaw = (umurInput && umurInput.value ? umurInput.value : "").trim();
+    const sekolah = getSekolahValue();
 
-    if (!nama || !sesi) {
-      alert("Nama dan sesi wajib diisi ya 🙂");
+    // validasi
+    const umur = Number(umurRaw);
+
+    if (!nama) {
+      alert("Nama anak wajib diisi ya 🙂");
+      return;
+    }
+    if (!umurRaw || Number.isNaN(umur) || umur < 1 || umur > 18) {
+      alert("Umur wajib diisi dan harus angka 1–18 ya 🙂");
+      return;
+    }
+    if (!sekolah) {
+      alert("Nama sekolah wajib diisi ya 🙂");
       return;
     }
 
+    // simpan
     localStorage.setItem("ek_nama", nama);
-    localStorage.setItem("ek_sesi", sesi);
+    localStorage.setItem("ek_umur", String(umur));
+    localStorage.setItem("ek_sekolah", sekolah);
 
     introEl.classList.add("hidden");
     gameEl.classList.remove("hidden");
