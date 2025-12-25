@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Selamat!</title>
 
-  <link rel="stylesheet" href="./css/congrats1.css?v=100" />
+  <!-- cache buster biar gak nyangkut versi lama -->
+  <link rel="stylesheet" href="./css/congrats1.css?v=99">
   <style>
+    /* tombol link biar kayak tombol (kalau kamu pakai <a>) */
     .cg-btn{
       display:inline-flex;
       align-items:center;
@@ -35,7 +37,7 @@
       <div class="cg-badge">
         <div class="cg-avatar" id="cgAvatar">🙂</div>
         <div class="cg-name" id="cgName">NAMA</div>
-        <div class="cg-mini" id="cgMeta">Umur • Sekolah • Skor</div>
+        <div class="cg-mini" id="cgMeta">Sesi - Skor</div>
       </div>
 
       <div class="cg-msg" id="cgMsg">Kamu hebat!</div>
@@ -50,7 +52,56 @@
   <!-- confetti -->
   <div class="confetti" id="confetti"></div>
 
-  <!-- JS -->
-  <script src="./congrats1.js?v=100"></script>
+  <!-- ✅ JS INLINE: pasti kebaca -->
+  <script>
+    function pickAvatarByName(nama){
+      const h = (nama && nama.trim()[0] ? nama.trim()[0] : "🙂").toUpperCase();
+      if ("ABCDE".includes(h)) return "🦁";
+      if ("FGHIJ".includes(h)) return "🐼";
+      if ("KLMNO".includes(h)) return "🦊";
+      if ("PQRST".includes(h)) return "🐯";
+      return "⭐";
+    }
+
+    function spawnConfetti(){
+      const wrap = document.getElementById("confetti");
+      if (!wrap) return;
+
+      const colors = ["#ffb703","#ffd27d","#2b3a55","#8ecae6","#90be6d","#f94144"];
+      const count = 90;
+
+      for (let i=0;i<count;i++){
+        const d = document.createElement("div");
+        d.className = "piece";
+        d.style.left = (Math.random()*100) + "vw";
+        d.style.background = colors[Math.floor(Math.random()*colors.length)];
+        d.style.animationDuration = (2.2 + Math.random()*2.0) + "s";
+        d.style.animationDelay = (Math.random()*0.5) + "s";
+        d.style.transform = "translateY(0) rotate(" + (Math.random()*360) + "deg)";
+        wrap.appendChild(d);
+        setTimeout(()=> d.remove(), 5200);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", ()=>{
+      // ambil dari URL dulu (paling pasti), kalau kosong baru localStorage
+      const url = new URL(location.href);
+      const p = url.searchParams;
+
+      const nama   = p.get("nama")   || localStorage.getItem("ek_nama") || "Teman";
+      const sesi   = p.get("sesi")   || localStorage.getItem("ek_sesi") || "-";
+      const skor   = p.get("skor")   || localStorage.getItem("ek_level1_skor") || "0";
+      const alasan = p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai";
+
+      document.getElementById("cgName").textContent = nama.toUpperCase();
+      document.getElementById("cgMeta").textContent = "Sesi " + sesi + " • Skor " + skor + "/8";
+      document.getElementById("cgAvatar").textContent = pickAvatarByName(nama);
+
+      document.getElementById("cgMsg").textContent =
+        alasan + "\nTerima kasih sudah bermain, " + nama + "!\nBesok main lagi biar makin jago ya 😄";
+
+      spawnConfetti();
+    });
+  </script>
 </body>
 </html>
