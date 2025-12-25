@@ -31,15 +31,18 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const url = new URL(window.location.href);
   const p = url.searchParams;
 
-  // ambil dari URL dulu, kalau kosong baru localStorage
+  // Ambil dari URL dulu (paling pasti), kalau kosong baru dari localStorage
   const nama   = (p.get("nama")   || localStorage.getItem("ek_nama") || "Teman").trim();
-  const sesi   = (p.get("sesi")   || localStorage.getItem("ek_sesi") || "-").trim();
+  const level  = (p.get("level")  || localStorage.getItem("ek_last_level") || "1").trim();
 
-  // skor level 2
-  const skor   = (p.get("skor")   || localStorage.getItem("ek_level2_skor") || "0").trim();
-  const total  = (p.get("total")  || localStorage.getItem("ek_level2_total") || "0").trim();
+  // skor bisa beda tiap level, jadi fallback-nya kita cek berdasarkan level terakhir
+  const skorUrl = (p.get("skor") || "").trim();
+  const skorLs  = (level === "1")
+    ? (localStorage.getItem("ek_level1_skor") || "0")
+    : (localStorage.getItem(`ek_level${level}_skor`) || "0");
 
-  const alasan = (p.get("alasan") || localStorage.getItem("ek_level2_alasan") || "Selesai").trim();
+  const skor   = (skorUrl || skorLs).trim();
+  const alasan = (p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai").trim();
 
   const cgName   = document.getElementById("cgName");
   const cgMeta   = document.getElementById("cgMeta");
@@ -47,7 +50,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const cgMsg    = document.getElementById("cgMsg");
 
   if (cgName) cgName.textContent = nama.toUpperCase();
-  if (cgMeta) cgMeta.textContent = `Sesi ${sesi} • Skor ${skor}/${total}`;
+  if (cgMeta) cgMeta.textContent = `Level ${level} • Skor ${skor}/8`;
   if (cgAvatar) cgAvatar.textContent = pickAvatarByName(nama);
 
   const msg =
@@ -55,7 +58,26 @@ window.addEventListener("DOMContentLoaded", ()=>{
 Terima kasih sudah bermain, ${nama}!
 Besok main lagi biar makin jago ya 😄`;
 
+  // ✅ ini yang bikin \n jadi baris baru
   if (cgMsg) cgMsg.innerHTML = msg.replace(/\n/g, "<br>");
+
+  // ✅ tombol pintar: ulang sesuai level terakhir
+  const btnUlang = document.getElementById("btnUlang");
+  const btnHome  = document.getElementById("btnHome");
+
+  if (btnUlang) {
+    btnUlang.addEventListener("click", (e)=>{
+      e.preventDefault();
+      window.location.href = `./level${level}.html`;
+    });
+  }
+
+  if (btnHome) {
+    btnHome.addEventListener("click", (e)=>{
+      e.preventDefault();
+      window.location.href = "./index.html";
+    });
+  }
 
   spawnConfetti();
 });
