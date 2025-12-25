@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Level 5</title>
 
-  <link rel="stylesheet" href="./js/level1.css?v=1" />
   <link rel="stylesheet" href="./js/level5.css?v=1" />
 </head>
 
@@ -18,13 +17,13 @@
       <div class="intro-subtitle">Aku Pilih Apa Kalau Begini?</div>
 
       <div class="intro-form">
-        <label>Nama Anak</label>
+        <label for="namaAnak">Nama Anak</label>
         <input id="namaAnak" type="text" placeholder="contoh: Andi" />
 
-        <label>Umur</label>
-        <input id="umurAnak" type="number" inputmode="numeric" placeholder="contoh: 7" />
+        <label for="umurAnak">Umur</label>
+        <input id="umurAnak" type="number" inputmode="numeric" min="1" max="18" placeholder="contoh: 7" />
 
-        <label>Nama Sekolah</label>
+        <label for="namaSekolah">Nama Sekolah</label>
         <input id="namaSekolah" type="text" placeholder="contoh: SDN Sukabumi 1" />
 
         <button id="btnMulai" type="button">Mulai</button>
@@ -37,34 +36,41 @@
 
     <!-- HUD -->
     <div class="hud">
-      <div class="timer" id="timer">10:00</div>
-      <div class="score" id="score">Skor: 0</div>
-      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+      <div class="hud-left">
+        <div class="timer-pill">
+          <span class="timer-icon">⏱</span>
+          <span id="timer">10:00</span>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="score-pill" id="score">Skor: 0</div>
+        <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+      </div>
     </div>
 
-    <main class="lvl5-layout">
-      <section class="lvl5-wrap">
+    <!-- CONTENT -->
+    <main class="page">
+      <h1 class="title" id="roundTitle">Soal 1 / 10</h1>
 
-        <div class="lvl5-round" id="roundTitle">Soal 1 / 10</div>
+      <section class="question-wrap">
+        <div class="question-box">
+          <!-- pertanyaan -->
+          <div class="question-text" id="qTitle">...</div>
 
-        <!-- KARTU SITUASI -->
-        <div class="lvl5-card" id="qCard">
-          <div class="q-emoji" id="qEmoji">😢</div>
-          <div class="q-title" id="qTitle">Kamu sedih karena nilai ulanganmu jelek.</div>
-          <div class="q-mini" id="qMini">Pilih yang paling cocok kamu lakukan.</div>
+          <!-- opsi: JS kamu isi tombol di sini -->
+          <div class="options" id="options"></div>
         </div>
-
-        <!-- PILIHAN -->
-        <div class="lvl5-options" id="options"></div>
-
-        <!-- notif -->
-        <div class="hint" id="hint">Pilih satu jawaban ya 👇</div>
-        <div class="answer-feedback" id="answerFeedback"></div>
-
       </section>
+
+      <!-- feedback: kita pakai element lama kamu -->
+      <div class="feedback" id="answerFeedback"></div>
+
+      <!-- HINT kalau masih kamu pakai -->
+      <div class="feedback" id="hint" style="margin-top:6px;"></div>
     </main>
   </div>
 
-  <script src="./level5.js?v=1"></script>
+  <script src="./level5.js?v=UI2"></script>
 </body>
 </html>
