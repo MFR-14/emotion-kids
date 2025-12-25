@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GESYA - Level 4</title>
+
+  <!-- reuse style umum level (kalau kamu mau) -->
+  <link rel="stylesheet" href="./js/level1.css?v=1" />
+  <link rel="stylesheet" href="./js/level4.css?v=4" />
+</head>
+
+<body class="level-page">
+
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="intro-title">Level 4</div>
+      <div class="intro-subtitle">Aku Bisa Kendalikan Apa?</div>
+
+      <div class="intro-form">
+        <label>Nama Anak</label>
+        <input id="namaAnak" type="text" placeholder="contoh: Andi" />
+
+        <label>Umur</label>
+        <input id="umurAnak" type="number" inputmode="numeric" placeholder="contoh: 7" />
+
+        <label>Nama Sekolah</label>
+        <input id="namaSekolah" type="text" placeholder="contoh: SDN Sukabumi 1" />
+
+        <button id="btnMulai" type="button">Mulai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game" class="hidden">
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="timer" id="timer">03:00</div>
+      <div class="score" id="score">Skor: 0</div>
+      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+    </div>
+
+    <main class="lvl4-layout">
+      <section class="lvl4-wrap">
+
+        <div class="lvl4-round" id="roundTitle">Soal 1 / 8</div>
+
+        <!-- KARTU SITUASI -->
+        <div class="situation-card" id="situationCard" draggable="true">
+          <div class="sit-emoji" id="sitEmoji">☔</div>
+          <div class="sit-text" id="sitText">HUJAN</div>
+          <div class="sit-mini" id="sitMini">Tarik ke lingkaran yang tepat</div>
+        </div>
+
+        <!-- AREA PILIHAN (BISA / TIDAK) -->
+        <div class="choice-area">
+          <div class="choice-circle drop-zone" id="zoneBisa" data-zone="BISA">
+            <div class="cz-emoji">🟢</div>
+            <div class="cz-title">BISA AKU ATUR</div>
+            <div class="cz-mini">contoh: sikap, pilihan</div>
+          </div>
+
+          <div class="choice-circle drop-zone" id="zoneTidak" data-zone="TIDAK">
+            <div class="cz-emoji">🔵</div>
+            <div class="cz-title">TIDAK BISA</div>
+            <div class="cz-mini">contoh: cuaca, orang lain</div>
+          </div>
+        </div>
+
+        <!-- PANEL SIKAP (muncul kalau masuk "TIDAK") -->
+        <div class="attitude-panel hidden" id="attitudePanel">
+          <div class="att-title">Kalau ini terjadi, aku bisa pilih sikap:</div>
+          <div class="att-options" id="attOptions"></div>
+        </div>
+
+        <!-- notif -->
+        <div class="hint" id="hint">Tarik kartu ke lingkaran yang benar</div>
+        <div class="answer-feedback" id="answerFeedback"></div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="./level4.js?v=4"></script>
+</body>
+</html>
