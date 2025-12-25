@@ -1,182 +1,99 @@
-/* ================= BASE ================= */
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
-body{
-  margin:0;
-  font-family:"Comic Sans MS","Poppins",sans-serif;
-  background:#fdf6ec;
-  color:#2b3a55;
-}
-.hidden{ display:none !important; }
+/* =========================
+   GESYA - Level 5 CSS
+   Pilih respon (anak SD friendly)
+   ========================= */
 
-/* ================= INTRO ================= */
-.intro{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
+.lvl5-layout{ padding: 8px 16px 20px; }
+
+.lvl5-wrap{
+  display:grid;
+  gap:16px;
+  justify-items:center;
 }
-.intro-card{
-  width:min(720px,92vw);
+
+.lvl5-round{
+  width:min(560px, 96vw);
   background:#fff;
-  border-radius:24px;
-  padding:30px 26px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  border-radius:18px;
+  padding:12px 16px;
+  font-weight:900;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
   text-align:center;
 }
-.intro-title{ font-size:48px; font-weight:900; }
-.intro-subtitle{
-  display:inline-block;
-  background:#ffd27d;
-  padding:10px 18px;
-  border-radius:16px;
-  font-weight:900;
-  margin-bottom:18px;
-}
-.intro-form{
-  display:grid;
-  gap:10px;
-  text-align:left;
-}
-.intro-form label{ font-weight:900; }
-.intro-form input{
-  width:100%;
-  padding:14px 16px;
-  border-radius:14px;
-  border:2px solid #e7e0d2;
-  background:#eef5ff;
-  font-size:16px;
-}
-.intro-form button{
-  margin-top:10px;
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:16px;
-  background:#ffb703;
-  font-weight:900;
-}
 
-/* ================= HUD ================= */
-.hud{
-  position:fixed;
-  top:12px;
-  left:12px;
-  right:12px;
-  display:flex;
-  justify-content:space-between;
-  z-index:10;
-}
-.timer-pill,.score-pill{
+.lvl5-card{
+  width:min(560px, 96vw);
   background:#fff;
-  padding:8px 12px;
-  border-radius:14px;
-  font-weight:900;
-}
-.timer-pill{ background:#bfe9f7; }
-
-/* ================= PAGE ================= */
-.page{
-  min-height:100vh;
-  padding:90px 16px 24px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-.title{
-  font-size:36px;
-  font-weight:900;
-  margin-bottom:14px;
-}
-
-/* ================= QUESTION BOX ================= */
-.question-wrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
-}
-.question-box{
-  width:100%;
-  max-width:900px;
-  background:#f0b67a;
-  border-radius:18px;
-  padding:20px 14px;
-  outline:8px solid #ffea00;
-  outline-offset:8px;
+  border-radius:22px;
+  padding:14px 14px 12px;
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
+  display:grid;
+  justify-items:center;
+  gap:8px;
+  user-select:none;
 }
 
 .q-emoji{
-  text-align:center;
-  font-size:44px;
-  margin-bottom:6px;
-}
-.question-text{
-  text-align:center;
-  font-size:22px;
-  font-weight:900;
-  color:#fff;
-  line-height:1.25;
-}
-.q-mini{
-  text-align:center;
-  font-size:13px;
-  font-weight:900;
-  color:#fff;
-  margin:8px 0 12px;
+  font-size:56px;
+  line-height:1;
 }
 
-/* ================= OPTIONS (INI KUNCI) ================= */
-.options{
+.q-title{
+  font-weight:950;
+  font-size:17px;
+  text-align:center;
+  line-height:1.25;
+}
+
+.q-mini{
+  font-size:13px;
+  opacity:.75;
+  text-align:center;
+}
+
+/* opsi */
+.lvl5-options{
+  width:min(560px, 96vw);
   display:grid;
-  grid-template-columns:1fr;
   gap:12px;
 }
 
-/* RESET TOTAL BUTTON */
 .opt-btn{
-  all:unset;                /* ⬅️ INI KUNCI */
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  background:#7d7288;
-  color:#fff;
+  width:100%;
+  border:none;
+  background:#fff;
+  border-radius:18px;
   padding:14px 12px;
-  border-radius:14px;
-  font-weight:900;
-  font-size:14px;
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
   cursor:pointer;
-
-  box-shadow:0 8px 0 rgba(0,0,0,.18);
-}
-
-.opt-btn:active{
-  transform:translateY(3px);
-  box-shadow:0 5px 0 rgba(0,0,0,.18);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  text-align:left;
 }
 
 .opt-btn .emo{
-  width:32px;
-  height:32px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.25);
-  font-size:18px;
-  flex-shrink:0;
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:#f6f6f6;
+  font-size:24px;
+  flex:0 0 44px;
 }
 
-.opt-btn.good{ outline:3px solid #2ecc71; }
-.opt-btn.bad{ outline:3px solid #e74c3c; }
-
-/* ================= FEEDBACK ================= */
-.feedback{
-  margin-top:12px;
-  font-size:13px;
+.opt-btn .txt{
   font-weight:900;
-  text-align:center;
+  font-size:14px;
+  line-height:1.25;
 }
-.feedback.good{ color:#0f6b2f; }
-.feedback.bad{ color:#b42318; }
+
+.opt-btn:active{ transform:scale(.99); }
+
+.opt-btn.good{ outline:4px solid rgba(27,127,58,.35); }
+.opt-btn.bad { outline:4px solid rgba(249,65,68,.28); }
+
+@media (max-width:420px){
+  .opt-btn .txt{ font-size:13px; }
+}
