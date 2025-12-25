@@ -5,7 +5,29 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Level 5</title>
 
+  <!-- boleh tetap pakai css global kamu -->
   <link rel="stylesheet" href="./js/level5.css?v=1" />
+
+  <!-- patch kecil biar qEmoji/qMini kebaca cantik walau css level2 -->
+  <style>
+    /* kalau belum ada class ini di css kamu, aman */
+    .q-emoji{ text-align:center; margin-bottom:8px; font-size:56px; }
+    .q-mini{
+      text-align:center;
+      margin:10px 0 14px;
+      font-weight:900;
+      color:#fff;
+      opacity:.92;
+      text-shadow:0 2px 0 rgba(0,0,0,.18);
+      font-size:22px;
+      line-height:1.2;
+    }
+    @media (max-width:420px){
+      .q-emoji{ font-size:44px; margin-bottom:6px; }
+      .q-mini{ font-size:12px; margin:8px 0 10px; }
+      #hint, #answerFeedback{ font-size:12px; }
+    }
+  </style>
 </head>
 
 <body class="level-page">
@@ -51,27 +73,35 @@
 
     <!-- CONTENT -->
     <main class="page">
+      <!-- wajib: roundTitle -->
       <h1 class="title" id="roundTitle">Soal 1 / 10</h1>
 
       <section class="question-wrap">
         <div class="question-box">
 
-  <!-- emoji (biar menarik) -->
-  <div id="qEmoji" class="q-emoji" style="text-align:center;margin-bottom:8px;font-size:56px;">🙂</div>
+          <!-- wajib: qEmoji -->
+          <div id="qEmoji" class="q-emoji">🙂</div>
 
-  <!-- pertanyaan -->
-  <div class="question-text" id="qTitle">...</div>
+          <!-- wajib: qTitle -->
+          <div class="question-text" id="qTitle">...</div>
 
-  <!-- mini text -->
-  <div id="qMini" class="q-mini" style="text-align:center;margin:10px 0 14px;font-weight:900;color:#fff;opacity:.9;">
-    Pilih yang paling cocok kamu lakukan.
+          <!-- wajib: qMini -->
+          <div id="qMini" class="q-mini">Pilih yang paling cocok kamu lakukan.</div>
+
+          <!-- wajib: options -->
+          <div class="options" id="options"></div>
+
+        </div>
+      </section>
+
+      <!-- wajib: answerFeedback -->
+      <div class="feedback" id="answerFeedback"></div>
+
+      <!-- wajib: hint -->
+      <div class="feedback" id="hint" style="margin-top:6px;"></div>
+    </main>
   </div>
 
-  <!-- opsi -->
-  <div class="options" id="options"></div>
-</div>
-
-
-  <script src="./level5.js?v=UI2"></script>
+  <script src="./level5.js?v=UI2FIX"></script>
 </body>
 </html>
