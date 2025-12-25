@@ -1,16 +1,20 @@
 // =====================
-// GAS WebApp URL (/exec) - SAMAIN DENGAN LEVEL 1
+// GAS WebApp URL (/exec) - SAMA DENGAN LEVEL 1
 // =====================
 const GAS_URL =
   "https://script.google.com/macros/s/AKfycbwlKHW60fkzcickncJz6xHOSSxYaNVOUMPR2X-tnz12ia6UtOfp7Tbh6aYxLk2oSBVo/exec";
 
+const LEVEL = 2;
+
 // kirim rekap ke GAS (anti CORS pakai Image beacon)
-function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
+function sendRekapToGAS({ level, nama, umur, sekolah, soal, emosi, waktu }) {
   if (!GAS_URL) return;
 
   const u = new URL(GAS_URL);
+  u.searchParams.set("level", String(level));
   u.searchParams.set("nama", nama);
-  u.searchParams.set("sesi", sesi);
+  u.searchParams.set("umur", String(umur));
+  u.searchParams.set("sekolah", sekolah);
   u.searchParams.set("soal", String(soal));
   u.searchParams.set("emosi", emosi);
   u.searchParams.set("waktu", String(waktu));
@@ -22,9 +26,7 @@ function sendRekapToGAS({ nama, sesi, soal, emosi, waktu }) {
 // =====================
 // KONFIG LEVEL 2
 // =====================
-const DURATION_SEC = 10 * 60 + 0; // 03:38
-const FEEDBACK_DELAY_MS = 700;
-
+const DURATION_SEC = 10 * 60 + 0; // 10:00
 const QUESTIONS = [
   {
     text: "Ketika teman mengambil pensilmu tanpa izin, kamu merasa…",
@@ -33,10 +35,10 @@ const QUESTIONS = [
     correctIndex: 0
   },
   {
-    text: "Saat kamu bermain di luar, tiba-tiba turun hujan, kamu merasa…",
+    text: "Kamu menolong teman yang membutuhkan bantuan, kamu merasa…",
     options: ["a) Terkejut", "b) Senang", "c) Marah", "d) Kecewa"],
     emosiMap: ["TERKEJUT", "SENANG", "MARAH", "KECEWA"],
-    correctIndex: 0
+    correctIndex: 1
   },
   {
     text: "Saat temanmu tidak mau bermain denganmu, kamu merasa…",
@@ -45,9 +47,9 @@ const QUESTIONS = [
     correctIndex: 0
   },
   {
-    text: "Saat kamu kalah dalam lomba, kamu merasa…",
-    options: ["a) Kecewa", "b) Takut", "c) Marah", "d) Tidak peduli"],
-    emosiMap: ["KECEWA", "TAKUT", "MARAH", "TIDAK PEDULI"],
+    text: "Saat kamu mendapat nilai bagus di ujian apa yg kamu rasakan…",
+    options: ["a) Bahagia", "b) Takut", "c) Marah", "d) Tidak peduli"],
+    emosiMap: ["BAHAGIA", "TAKUT", "MARAH", "TIDAK PEDULI"],
     correctIndex: 0
   },
   {
@@ -81,10 +83,10 @@ const QUESTIONS = [
     correctIndex: 0
   },
   {
-    text: "Saat kamu bertengkar dengan sahabatmu, kamu merasa…",
+    text: "Temanmu mengajakmu bermain, kamu merasa…",
     options: ["a) Sedih", "b) Senang", "c) Tenang", "d) Terkejut"],
     emosiMap: ["SEDIH", "SENANG", "TENANG", "TERKEJUT"],
-    correctIndex: 0
+    correctIndex: 1
   },
   {
     text: "Ketika kamu datang ke sekolah dan tidak ada teman yang menyapumu, kamu merasa…",
@@ -105,10 +107,10 @@ const QUESTIONS = [
     correctIndex: 0
   },
   {
-    text: "Jika kamu diminta mengulang pekerjaan karena salah, kamu merasa…",
+    text: "Papa mama memujimu karena kamu mau membantu pekerjaan rumah, kamu merasa…",
     options: ["a) Kecewa", "b) Bahagia", "c) Terkejut", "d) Tenang"],
     emosiMap: ["KECEWA", "BAHAGIA", "TERKEJUT", "TENANG"],
-    correctIndex: 0
+    correctIndex: 1
   },
   {
     text: "Saat hujan deras membuatmu terlambat pulang sekolah, kamu merasa…",
@@ -127,22 +129,6 @@ let locked = false;
 let ended = false;
 let soalStart = 0;
 
-// ====== REKAP LOCAL (ek_answers) ======
-function getAnswers() {
-  return JSON.parse(localStorage.getItem("ek_answers") || "[]");
-}
-function saveAnswer({ emosi, level, soal, waktu }) {
-  const answers = getAnswers();
-  answers.push({
-    emosi,
-    level,
-    soal,
-    waktu: String(waktu),
-    ts: Date.now()
-  });
-  localStorage.setItem("ek_answers", JSON.stringify(answers));
-}
-
 // ====== UTIL ======
 function pad(n){ return String(n).padStart(2, "0"); }
 
@@ -152,10 +138,12 @@ function renderTimer(){
   const el = document.getElementById("timer");
   if (el) el.textContent = `${pad(m)}:${pad(s)}`;
 }
+
 function renderScore(){
   const el = document.getElementById("score");
   if (el) el.textContent = `Skor: ${score} / ${QUESTIONS.length}`;
 }
+
 function setFeedback(text, type){
   const el = document.getElementById("feedback");
   if (!el) return;
@@ -163,6 +151,7 @@ function setFeedback(text, type){
   if (type) el.classList.add(type);
   el.textContent = text || "";
 }
+
 function clearSelected(){
   document.querySelectorAll(".option").forEach(b => b.classList.remove("selected"));
 }
@@ -206,31 +195,26 @@ function chooseAnswer(pickIndex, btnEl){
   const q = QUESTIONS[idx];
   const benar = pickIndex === q.correctIndex;
 
-  // hitung waktu respon
   const waktuRespon = ((Date.now() - soalStart) / 1000).toFixed(2);
 
-  // emosi dipilih
   const emosiDipilih =
     (q.emosiMap && q.emosiMap[pickIndex]) ? q.emosiMap[pickIndex] : "UNKNOWN";
 
-  // ✅ simpan ke local (buat rekap.html)
-  saveAnswer({
-    emosi: emosiDipilih,
-    level: 2,
-    soal: idx + 1,
-    waktu: waktuRespon
-  });
+  // identitas dari localStorage
+  const nama    = localStorage.getItem("ek_nama") || "";
+  const umur    = localStorage.getItem("ek_umur") || "";
+  const sekolah = localStorage.getItem("ek_sekolah") || "";
 
-  // ✅ kirim ke GAS (buat Google Sheet) kayak Level 1
-  const nama = localStorage.getItem("ek_nama") || "";
-  const sesi = localStorage.getItem("ek_sesi") || "";
   const status = benar ? "BENAR" : "SALAH";
 
+  // kirim ke GAS (rekap sheet)
   sendRekapToGAS({
+    level: LEVEL,
     nama,
-    sesi,
+    umur,
+    sekolah,
     soal: idx + 1,
-    emosi: `L2 - ${emosiDipilih} (${status})`,
+    emosi: `${emosiDipilih} (${status})`,
     waktu: waktuRespon
   });
 
@@ -261,17 +245,24 @@ function finishLevel(alasan){
   ended = true;
   clearInterval(timerId);
 
-  const nama = localStorage.getItem("ek_nama") || "";
-  const sesi = localStorage.getItem("ek_sesi") || "";
+  const nama    = localStorage.getItem("ek_nama") || "";
+  const umur    = localStorage.getItem("ek_umur") || "";
+  const sekolah = localStorage.getItem("ek_sekolah") || "";
 
   localStorage.setItem("ek_level2_skor", String(score));
   localStorage.setItem("ek_level2_total", String(QUESTIONS.length));
   localStorage.setItem("ek_level2_selesai", "1");
   localStorage.setItem("ek_level2_alasan", alasan || "Selesai");
 
+  // penanda level terakhir
+  localStorage.setItem("ek_last_level", String(LEVEL));
+  localStorage.setItem("ek_last_level_time", new Date().toISOString());
+
   const qs = new URLSearchParams({
+    level: String(LEVEL),
     nama,
-    sesi,
+    umur,
+    sekolah,
     skor: String(score),
     total: String(QUESTIONS.length),
     alasan: alasan || "Selesai"
@@ -308,29 +299,46 @@ window.addEventListener("DOMContentLoaded", () => {
   const introEl = document.getElementById("intro");
   const gameEl  = document.getElementById("game");
 
-  const namaInput = document.getElementById("namaAnak");
-  const sesiInput = document.getElementById("sesiAnak");
-  const btnMulai  = document.getElementById("btnMulai");
-  const btnNext   = document.getElementById("btnNext");
-  const btnSelesai= document.getElementById("btnSelesai");
+  const namaInput    = document.getElementById("namaAnak");
+  const umurInput    = document.getElementById("umurAnak");
+  const sekolahInput = document.getElementById("namaSekolah");
+
+  const btnMulai   = document.getElementById("btnMulai");
+  const btnNext    = document.getElementById("btnNext");
+  const btnSelesai = document.getElementById("btnSelesai");
 
   // auto isi dari localStorage
-  const namaLS = (localStorage.getItem("ek_nama") || "").trim();
-  const sesiLS = (localStorage.getItem("ek_sesi") || "").trim();
+  const namaLS    = (localStorage.getItem("ek_nama") || "").trim();
+  const umurLS    = (localStorage.getItem("ek_umur") || "").trim();
+  const sekolahLS = (localStorage.getItem("ek_sekolah") || "").trim();
+
   if (namaInput && namaLS) namaInput.value = namaLS;
-  if (sesiInput && sesiLS) sesiInput.value = sesiLS;
+  if (umurInput && umurLS) umurInput.value = umurLS;
+  if (sekolahInput && sekolahLS) sekolahInput.value = sekolahLS;
 
   function startGame(){
     const nama = (namaInput?.value || "").trim();
-    const sesi = (sesiInput?.value || "").trim();
+    const umurRaw = (umurInput?.value || "").trim();
+    const sekolah = (sekolahInput?.value || "").trim();
 
-    if (!nama || !sesi){
-      alert("Nama dan sesi wajib diisi ya 🙂");
+    const umur = Number(umurRaw);
+
+    if (!nama) {
+      alert("Nama anak wajib diisi ya 🙂");
+      return;
+    }
+    if (!umurRaw || Number.isNaN(umur) || umur < 1 || umur > 18) {
+      alert("Umur wajib diisi dan harus angka 1–18 ya 🙂");
+      return;
+    }
+    if (!sekolah) {
+      alert("Nama sekolah wajib diisi ya 🙂");
       return;
     }
 
     localStorage.setItem("ek_nama", nama);
-    localStorage.setItem("ek_sesi", sesi);
+    localStorage.setItem("ek_umur", String(umur));
+    localStorage.setItem("ek_sekolah", sekolah);
 
     if (introEl) introEl.classList.add("hidden");
     if (gameEl)  gameEl.classList.remove("hidden");
