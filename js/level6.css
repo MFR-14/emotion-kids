@@ -1,126 +1,307 @@
+/* ============ BASE ============ */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family:"Comic Sans MS","Poppins",sans-serif;
+  background:#fdf6ec;
+  color:#2b3a55;
+}
+.hidden{ display:none !important; }
+
 /* =========================
-   GESYA - Level 6 CSS
-   Reframing (ubah jadi positif)
-   ========================= */
-
-.lvl6-layout{ padding: 8px 16px 20px; }
-
-.lvl6-wrap{
-  display:grid;
-  gap:16px;
-  justify-items:center;
-}
-
-.lvl6-round{
-  width:min(560px, 96vw);
-  background:#fff;
-  border-radius:18px;
-  padding:12px 16px;
-  font-weight:900;
-  box-shadow:0 10px 26px rgba(0,0,0,.06);
-  text-align:center;
-}
-
-.lvl6-card{
-  width:min(560px, 96vw);
-  background:#fff;
-  border-radius:22px;
-  padding:14px 14px 12px;
-  box-shadow:0 10px 26px rgba(0,0,0,.08);
-  display:grid;
-  justify-items:center;
-  gap:10px;
-  user-select:none;
-}
-
-.q-emoji{ font-size:56px; line-height:1; }
-
-.q-title{
-  font-weight:950;
-  font-size:17px;
-  text-align:center;
-  line-height:1.25;
-}
-
-.q-box{
-  width:100%;
-  background: rgba(255,210,125,.22);
-  border-radius:18px;
-  padding:10px 12px;
-  display:grid;
-  gap:6px;
-}
-
-.q-label{
-  font-size:12px;
-  font-weight:900;
-  opacity:.75;
-}
-
-.q-neg{
-  font-weight:950;
-  line-height:1.25;
-}
-
-.q-mini{
-  font-size:13px;
-  opacity:.75;
-  text-align:center;
-}
-
-/* opsi */
-.lvl6-options{
-  width:min(560px, 96vw);
-  display:grid;
-  gap:12px;
-}
-
-.opt-btn{
-  width:100%;
-  border:none;
-  background:#fff;
-  border-radius:18px;
-  padding:14px 12px;
-  box-shadow:0 10px 22px rgba(0,0,0,.06);
-  cursor:pointer;
+   INTRO (copy vibe Level 1)
+========================= */
+.intro{
+  min-height:100vh;
   display:flex;
-  gap:12px;
   align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.intro-card{
+  width:min(720px,92vw);
+  background:#fff;
+  border-radius:24px;
+  padding:30px 26px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  text-align:center;
+}
+.intro-title{
+  font-size:56px;
+  font-weight:900;
+  margin:0 0 12px;
+}
+.intro-subtitle{
+  display:inline-block;
+  background:#ffd27d;
+  padding:10px 18px;
+  border-radius:16px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+.intro-form{
+  display:grid;
+  gap:10px;
   text-align:left;
 }
-
-.opt-btn .emo{
-  width:44px;
-  height:44px;
+.intro-form label{ font-weight:900; }
+.intro-form input{
+  width:100%;
+  padding:14px 16px;
   border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:#f6f6f6;
-  font-size:24px;
-  flex:0 0 44px;
+  border:2px solid #e7e0d2;
+  background:#eef5ff;
+  font-size:16px;
+  outline:none;
 }
-
-.opt-btn .txt{
+.intro-form button{
+  margin-top:10px;
+  width:100%;
+  padding:14px 16px;
+  border:none;
+  border-radius:16px;
+  background:#ffb703;
   font-weight:900;
-  font-size:14px;
-  line-height:1.25;
+  cursor:pointer;
 }
 
-.opt-btn:active{ transform:scale(.99); }
+/* ============ HUD ============ */
+.hud{
+  position:fixed;
+  top:12px;
+  left:12px;
+  right:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:10;
+  gap:10px;
+}
 
-.opt-btn.good{ outline:4px solid rgba(27,127,58,.35); }
-.opt-btn.bad { outline:4px solid rgba(249,65,68,.28); }
+.timer-pill,
+.score-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  border-radius:16px;
+  padding:10px 14px;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
 
-/* tujuan */
-.lvl6-goal{
-  width:min(560px, 96vw);
-  font-size:12px;
-  opacity:.75;
+.timer-pill{
+  background:#bfe9f7;
+}
+
+.timer-icon{
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  background:#ffffffb0;
+}
+
+.hud-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn-selesai{
+  border:none;
+  border-radius:16px;
+  padding:10px 14px;
+  background:#ffb703;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+/* ============ LAYOUT GAME ============ */
+.page{
+  min-height:100vh;
+  padding:92px 18px 30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.title{
+  margin:0 0 18px;
+  font-size:54px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#24324a;
+}
+
+/* ============ BOX SOAL (mirip gambar) ============ */
+.question-wrap{
+  width:min(980px, 96vw);
+  display:flex;
+  justify-content:center;
+}
+
+.question-box{
+  width:100%;
+  background:#f0b67a;
+  border-radius:18px;
+  padding:28px 22px 24px;
+  position:relative;
+  box-shadow:0 14px 30px rgba(0,0,0,.08);
+  outline:10px solid #ffea00;      /* border kuning tebel */
+  outline-offset:10px;
+}
+
+.question-text{
   text-align:center;
-  margin-top:4px;
-  line-height:1.35;
+  font-size:40px;
+  font-weight:900;
+  color:#fff;
+  text-shadow:0 2px 0 rgba(0,0,0,.18);
+  margin-bottom:22px;
+  line-height:1.2;
 }
 
-@media (max-width:420px){
-  .opt-btn .txt{ font-size:13px; }
+/* ============ PILIHAN ============ */
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  padding:0 8px;
+}
+
+.option{
+  border:none;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:900;
+  font-size:26px;
+  padding:18px 18px;
+  border-radius:16px;
+  background:#7d7288;        /* unselected */
+  color:#fff;
+  box-shadow:0 10px 0 rgba(0,0,0,.18);
+  transition:transform .06s ease, filter .15s ease;
+  text-align:left;
+}
+.option:active{ transform:translateY(3px); filter:brightness(.98); }
+.option.selected{
+  background:#3b95ff;        /* selected biru */
+  box-shadow:0 10px 0 rgba(0,0,0,.12);
+}
+
+/* ============ FEEDBACK ============ */
+.feedback{
+  margin-top:18px;
+  font-size:26px;
+  font-weight:900;
+  min-height:34px;
+  text-align:center;
+}
+.feedback.good{ color:#0f6b2f; }
+.feedback.bad{ color:#b42318; }
+
+/* ============ NEXT BUTTON ============ */
+.btn-next{
+  margin-top:10px;
+  border:none;
+  border-radius:16px;
+  padding:14px 20px;
+  background:#ffb703;
+  font-weight:900;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 10px 0 rgba(0,0,0,.16);
+}
+.btn-next:active{ transform:translateY(3px); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 720px){
+  .intro-title{ font-size:44px; }
+  .title{ font-size:42px; }
+  .question-text{ font-size:28px; }
+  .option{ font-size:18px; padding:16px 14px; }
+  .question-box{ outline-width:8px; outline-offset:8px; }
+}
+/* ====== HP TUNING (Level 6) ====== */
+@media (max-width: 420px){
+
+  .lvl6-layout{ padding: 6px 12px 14px; }
+  .lvl6-wrap{ gap: 12px; }
+
+  .lvl6-card{
+    padding: 12px 12px 10px;
+    border-radius: 18px;
+  }
+
+  .q-emoji{ font-size: 44px; }
+
+  .q-title{
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .q-box{
+    padding: 9px 10px;
+    border-radius: 16px;
+  }
+
+  .q-label{
+    font-size: 11px;
+  }
+
+  .q-neg{
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .q-mini{
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .lvl6-options{ gap: 10px; }
+
+  .opt-btn{
+    padding: 12px 10px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .opt-btn .emo{
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 20px;
+    flex: 0 0 38px;
+  }
+
+  .opt-btn .txt{
+    font-size: 12.5px;
+    line-height: 1.2;
+  }
+
+  .hint{
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .answer-feedback{
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .lvl6-goal{
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .hud{ gap: 8px; }
+  .timer, .score{ font-size: 13px; }
+  .btn-selesai{ padding: 8px 10px; font-size: 12px; }
 }
