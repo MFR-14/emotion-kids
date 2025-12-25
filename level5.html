@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GESYA - Level 5</title>
+
+  <link rel="stylesheet" href="./js/level1.css?v=1" />
+  <link rel="stylesheet" href="./js/level5.css?v=1" />
+</head>
+
+<body class="level-page">
+
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <div class="intro-title">Level 5</div>
+      <div class="intro-subtitle">Aku Pilih Apa Kalau Begini?</div>
+
+      <div class="intro-form">
+        <label>Nama Anak</label>
+        <input id="namaAnak" type="text" placeholder="contoh: Andi" />
+
+        <label>Umur</label>
+        <input id="umurAnak" type="number" inputmode="numeric" placeholder="contoh: 7" />
+
+        <label>Nama Sekolah</label>
+        <input id="namaSekolah" type="text" placeholder="contoh: SDN Sukabumi 1" />
+
+        <button id="btnMulai" type="button">Mulai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game" class="hidden">
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="timer" id="timer">10:00</div>
+      <div class="score" id="score">Skor: 0</div>
+      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+    </div>
+
+    <main class="lvl5-layout">
+      <section class="lvl5-wrap">
+
+        <div class="lvl5-round" id="roundTitle">Soal 1 / 10</div>
+
+        <!-- KARTU SITUASI -->
+        <div class="lvl5-card" id="qCard">
+          <div class="q-emoji" id="qEmoji">😢</div>
+          <div class="q-title" id="qTitle">Kamu sedih karena nilai ulanganmu jelek.</div>
+          <div class="q-mini" id="qMini">Pilih yang paling cocok kamu lakukan.</div>
+        </div>
+
+        <!-- PILIHAN -->
+        <div class="lvl5-options" id="options"></div>
+
+        <!-- notif -->
+        <div class="hint" id="hint">Pilih satu jawaban ya 👇</div>
+        <div class="answer-feedback" id="answerFeedback"></div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="./level5.js?v=1"></script>
+</body>
+</html>
