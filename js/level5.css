@@ -294,3 +294,8 @@ body{
   .timer, .score{ font-size: 13px; }
   .btn-selesai{ padding: 8px 10px; font-size: 12px; }
 }
+@media (max-width:420px){
+  .q-emoji{ font-size:44px !important; margin-bottom:6px !important; }
+  .q-mini{ font-size:12px !important; margin:8px 0 10px !important; }
+  #hint, #answerFeedback{ font-size:12px; }
+}
