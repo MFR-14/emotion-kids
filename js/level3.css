@@ -1,113 +1,164 @@
+/* =========================
+   GESYA - Level 3 CSS
+   Tempel Wajah Emosi
+   ========================= */
+
 /* layout level 3 */
-.lvl3-layout{ padding: 8px 16px 20px; }
+.lvl3-layout{
+  padding: 8px 16px 20px;
+}
 
 .lvl3-wrap{
-  display:grid;
-  gap:16px;
-  justify-items:center;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
 }
 
 .lvl3-round{
-  width:min(520px, 96vw);
-  background:#fff;
-  border-radius:18px;
-  padding:12px 16px;
-  font-weight:900;
-  box-shadow:0 10px 26px rgba(0,0,0,.06);
-  text-align:center;
+  width: min(520px, 96vw);
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 16px;
+  font-weight: 900;
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+  text-align: center;
 }
 
-/* bank muka */
+/* =========================
+   BANK MUKA (3 pilihan)
+   ========================= */
 .face-bank{
-  width:min(520px, 96vw);
-  display:flex;
-  justify-content:center;
+  width: min(520px, 96vw);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* ini kuncinya biar 3 muka pasti tampil rapi */
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
+/* item muka */
 .face-item{
-  width:130px;
-  height:130px;
-  border-radius:20px;
-  background:#fff;
-  box-shadow:0 10px 26px rgba(0,0,0,.06);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:grab;
-  user-select:none;
+  width: 130px;
+  height: 130px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
 }
 
+.face-item:active{
+  cursor: grabbing;
+}
+
+/* gambar muka */
 .face-item img{
-  width:110px;
-  height:110px;
-  object-fit:contain;
-  pointer-events:none;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  pointer-events: none;
 }
 
+/* dipilih (mode tap HP) */
+.face-item.selected{
+  outline: 4px solid #4caf50;
+  outline-offset: 2px;
+  transform: scale(1.03);
+}
+
+/* setelah jawaban benar (kita disable) */
 .face-item.used{
-  opacity:.35;
-  filter:grayscale(1);
-  cursor:not-allowed;
+  opacity: .35;
+  filter: grayscale(1);
+  cursor: not-allowed;
+  transform: none;
 }
 
-/* board kepala */
+/* =========================
+   BOARD KEPALA
+   ========================= */
 .head-board{
-  width:min(520px, 96vw);
-  display:flex;
-  justify-content:center;
+  width: min(520px, 96vw);
+  display: flex;
+  justify-content: center;
 }
 
 .head-slot{
-  position:relative;
-  width:min(340px, 92vw);
-  border-radius:20px;
-  background:#fff;
-  box-shadow:0 10px 26px rgba(0,0,0,.06);
-  overflow:hidden;
+  position: relative;
+  width: min(340px, 92vw);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.06);
+  overflow: hidden;
 }
 
 .head-slot.over{
-  outline:4px solid #ffb703;
-  transform:scale(1.01);
+  outline: 4px solid #ffb703;
+  transform: scale(1.01);
 }
 
 .head-base{
-  width:100%;
-  height:auto;
-  display:block;
-  user-select:none;
-  pointer-events:none;
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* tempat tempel muka */
 .face-holder{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
-/* ukuran & posisi tempel (bisa kamu adjust dikit kalau perlu) */
+/* ukuran & posisi tempel */
 .face-holder img{
-  width:58%;
-  height:auto;
-  object-fit:contain;
+  width: 58%;
+  height: auto;
+  object-fit: contain;
   transform: translateY(6%);
 }
 
-/* animasi reuse (kalau level1.css gak include shake/ok, ini jadi backup) */
-@keyframes shake{
-  0%,100%{ transform:translateX(0); }
-  25%{ transform:translateX(-6px); }
-  50%{ transform:translateX(6px); }
-  75%{ transform:translateX(-6px); }
+/* =========================
+   RESPONSIVE: HP kecil
+   ========================= */
+@media (max-width: 420px){
+  .face-item{
+    width: 108px;
+    height: 108px;
+    border-radius: 18px;
+  }
+  .face-item img{
+    width: 92px;
+    height: 92px;
+  }
 }
-.shake{ animation:shake .35s ease; }
+
+/* =========================
+   ANIMASI (backup)
+   ========================= */
+@keyframes shake{
+  0%,100%{ transform: translateX(0); }
+  25%{ transform: translateX(-6px); }
+  50%{ transform: translateX(6px); }
+  75%{ transform: translateX(-6px); }
+}
+.shake{ animation: shake .35s ease; }
 
 @keyframes okflash{
-  from{ box-shadow:0 0 0 rgba(0,0,0,0); }
-  to{ box-shadow:0 0 0 6px rgba(27,127,58,.25); }
+  from{ box-shadow: 0 0 0 rgba(0,0,0,0); }
+  to{ box-shadow: 0 0 0 6px rgba(27,127,58,.25); }
 }
-.ok{ animation:okflash .45s ease; }
+.ok{ animation: okflash .45s ease; }
