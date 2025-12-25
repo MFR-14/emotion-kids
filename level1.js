@@ -8,6 +8,7 @@ const GAS_URL =
 const TOTAL = 8;
 const DURATION_SEC = 180;        // 3 menit
 const FEEDBACK_DELAY_MS = 2200;  // lama tampil notif benar/salah
+const LEVEL = 1;
 
 const ROUNDS = [
   { emosi: "BAHAGIA",  img: "./img/bahagia.jpg" },
@@ -79,9 +80,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const gameEl     = document.getElementById("game");
 
   // input: versi baru
-  const namaInput       = document.getElementById("namaAnak");
-  const umurInput       = document.getElementById("umurAnak");
-  const sekolahInput    = document.getElementById("namaSekolah");
+  const namaInput    = document.getElementById("namaAnak");
+  const umurInput    = document.getElementById("umurAnak");
+  const sekolahInput = document.getElementById("namaSekolah");
 
   // fallback (kalau HTML lama masih kepakai)
   const sesiInputLegacy = document.getElementById("sesiAnak");
@@ -116,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (namaLS) namaInput.value = namaLS;
   if (umurInput && umurLS) umurInput.value = umurLS;
   if (sekolahInput && sekolahLS) sekolahInput.value = sekolahLS;
-  if (sesiInputLegacy && sekolahLS) sesiInputLegacy.value = sekolahLS; // biar legacy juga kebaca
+  if (sesiInputLegacy && sekolahLS) sesiInputLegacy.value = sekolahLS;
 
   function renderTimer() {
     const m = Math.floor(timeLeft / 60);
@@ -162,30 +163,28 @@ window.addEventListener("DOMContentLoaded", () => {
     soalStart = Date.now();
   }
 
- function finishGame(message) {
-  if (gameEnded) return;
-  gameEnded = true;
+  function finishGame(message) {
+    if (gameEnded) return;
+    gameEnded = true;
 
-  clearInterval(timerId);
+    clearInterval(timerId);
 
-  const nama    = localStorage.getItem("ek_nama") || "";
-  const umur    = localStorage.getItem("ek_umur") || "";
-  const sekolah = localStorage.getItem("ek_sekolah") || "";
+    const nama    = localStorage.getItem("ek_nama") || "";
+    const umur    = localStorage.getItem("ek_umur") || "";
+    const sekolah = localStorage.getItem("ek_sekolah") || "";
 
-  localStorage.setItem("ek_level1_skor", String(score));
-  localStorage.setItem("ek_level1_selesai", "1");
-  localStorage.setItem("ek_level1_alasan", message || "Selesai");
+    // simpan skor level
+    localStorage.setItem("ek_level1_skor", String(score));
+    localStorage.setItem("ek_level1_selesai", "1");
+    localStorage.setItem("ek_level1_alasan", message || "Selesai");
 
-  // ✅ penanda level terakhir
-  localStorage.setItem("ek_last_level", "1");
-  localStorage.setItem("ek_last_level_time", new Date().toISOString());
-
-  // ...lanjutan redirect kamu tetap
-}
-
+    // penanda level terakhir
+    localStorage.setItem("ek_last_level", String(LEVEL));
+    localStorage.setItem("ek_last_level_time", new Date().toISOString());
 
     // querystring untuk halaman congrats
     const qs = new URLSearchParams({
+      level: String(LEVEL),
       nama,
       umur,
       sekolah,
@@ -232,15 +231,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const status = pickedEmosi === correctEmosi ? "BENAR" : "SALAH";
 
+    // kirim rekap + level
     sendRekapToGAS({
-  level: 1,
-  nama,
-  umur,
-  sekolah,
-  soal: idx + 1,
-  emosi: `${pickedEmosi} (${status})`,
-  waktu: waktuRespon
-});
+      level: LEVEL,
+      nama,
+      umur,
+      sekolah,
+      soal: idx + 1,
+      emosi: `${pickedEmosi} (${status})`,
+      waktu: waktuRespon
+    });
 
     const isBenar = pickedEmosi === correctEmosi;
 
@@ -354,7 +354,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const umurRaw = (umurInput && umurInput.value ? umurInput.value : "").trim();
     const sekolah = getSekolahValue();
 
-    // validasi
     const umur = Number(umurRaw);
 
     if (!nama) {
@@ -370,7 +369,7 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // simpan
+    // simpan identitas
     localStorage.setItem("ek_nama", nama);
     localStorage.setItem("ek_umur", String(umur));
     localStorage.setItem("ek_sekolah", sekolah);
