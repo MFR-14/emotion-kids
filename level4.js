@@ -258,8 +258,8 @@ window.addEventListener("DOMContentLoaded", () => {
       alasan: alasan || "Selesai"
     });
 
-    // congrats4 nanti belakangan
-    window.location.href = "./index.html?" + qs.toString();
+    // congrats4 
+    window.location.href = "./congrats4.html?" + qs.toString();
   }
 
   function startTimer(){
