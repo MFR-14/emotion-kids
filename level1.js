@@ -162,19 +162,27 @@ window.addEventListener("DOMContentLoaded", () => {
     soalStart = Date.now();
   }
 
-  function finishGame(message) {
-    if (gameEnded) return;
-    gameEnded = true;
+ function finishGame(message) {
+  if (gameEnded) return;
+  gameEnded = true;
 
-    clearInterval(timerId);
+  clearInterval(timerId);
 
-    const nama    = localStorage.getItem("ek_nama") || "";
-    const umur    = localStorage.getItem("ek_umur") || "";
-    const sekolah = localStorage.getItem("ek_sekolah") || "";
+  const nama    = localStorage.getItem("ek_nama") || "";
+  const umur    = localStorage.getItem("ek_umur") || "";
+  const sekolah = localStorage.getItem("ek_sekolah") || "";
 
-    localStorage.setItem("ek_level1_skor", String(score));
-    localStorage.setItem("ek_level1_selesai", "1");
-    localStorage.setItem("ek_level1_alasan", message || "Selesai");
+  localStorage.setItem("ek_level1_skor", String(score));
+  localStorage.setItem("ek_level1_selesai", "1");
+  localStorage.setItem("ek_level1_alasan", message || "Selesai");
+
+  // ✅ penanda level terakhir
+  localStorage.setItem("ek_last_level", "1");
+  localStorage.setItem("ek_last_level_time", new Date().toISOString());
+
+  // ...lanjutan redirect kamu tetap
+}
+
 
     // querystring untuk halaman congrats
     const qs = new URLSearchParams({
