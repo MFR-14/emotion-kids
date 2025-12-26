@@ -152,6 +152,13 @@
           <span class="txt">Level 6<br><small>Situasi</small></span>
           <span class="emo">🔥</span>
         </button>
+
+        <!-- ✅ MENU SERTIFIKAT (TERKUNCI SAMPAI 6 LEVEL SELESAI) -->
+        <button class="lvl" id="btnReward" onclick="goReward()" disabled style="opacity:.55">
+          <span class="no">🏅</span>
+          <span class="txt">Pencapaian<br><small>Sertifikat</small></span>
+          <span class="emo">📜</span>
+        </button>
       </div>
 
       <div class="bottom-note" id="progressNote">Tips: isi nama, umur, dan sekolah di Level 1 dulu ya ✨</div>
@@ -214,11 +221,30 @@
       window.location.href = `level${lvl}.html`;
     }
 
+    function isAllLevelDone(){
+      for (let i = 1; i <= 6; i++){
+        const done = localStorage.getItem(`ek_level${i}_selesai`);
+        if (done !== "1") return false;
+      }
+      return true;
+    }
+
+    function goReward(){
+      if (!isAllLevelDone()){
+        alert("Selesaikan dulu sampai Level 6 ya, baru sertifikatnya kebuka 😁");
+        return;
+      }
+      window.location.href = "reward.html";
+    }
+
     // ======= PROGRES / IDENTITAS =======
     const s1 = parseInt(localStorage.getItem("ek_level1_skor") || "0", 10);
     const s2 = parseInt(localStorage.getItem("ek_level2_skor") || "0", 10);
     const s3 = parseInt(localStorage.getItem("ek_level3_skor") || "0", 10);
-    const total = s1 + s2 + s3;
+    const s4 = parseInt(localStorage.getItem("ek_level4_skor") || "0", 10);
+    const s5 = parseInt(localStorage.getItem("ek_level5_skor") || "0", 10);
+    const s6 = parseInt(localStorage.getItem("ek_level6_skor") || "0", 10);
+    const total = s1 + s2 + s3 + s4 + s5 + s6;
 
     const nama = (localStorage.getItem("ek_nama") || "").trim();
     const umur = (localStorage.getItem("ek_umur") || "").trim();
@@ -232,6 +258,18 @@
       const umurTampil = umur ? `${umur} tahun` : "-";
       const sekolahTampil = sekolah || "-";
       note.textContent = `Halo ${namaTampil}! Umur ${umurTampil} • Sekolah ${sekolahTampil} • Skor sementara ${total} ⭐`;
+    }
+
+    // ✅ AKTIFKAN TOMBOL SERTIFIKAT KALAU SUDAH SELESAI LEVEL 1-6
+    const btnReward = document.getElementById("btnReward");
+    if (btnReward){
+      if (isAllLevelDone()){
+        btnReward.disabled = false;
+        btnReward.style.opacity = "1";
+      } else {
+        btnReward.disabled = true;
+        btnReward.style.opacity = ".55";
+      }
     }
 
     // ======= RESET =======
