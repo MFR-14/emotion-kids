@@ -192,17 +192,55 @@ body.home{ overflow-x:hidden; }
   gap:4px;
   min-width:0;
 }
-.lulusWord{
-  font-size:56px;
-  line-height:1;
-  font-weight:1100;
-  letter-spacing:1px;
-  background: linear-gradient(90deg, #16a34a, #10b981, #22c55e);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  text-shadow: 0 18px 34px rgba(16,185,129,.18);
+/* PRINT: 1 lembar + full color kayak layar */
+@page { size: A4 portrait; margin: 8mm; }
+
+@media print{
+  /* jangan matiin background/gradient biar tetap full color */
+  body{
+    background: #fff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* confetti mending dimatiin biar rapi */
+  .confetti{ display:none !important; }
+
+  /* hero boleh dimatiin biar fokus sertifikat dan gak kepotong */
+  .hero{ display:none !important; }
+
+  /* tombol disembunyikan (biar sertifikat clean) */
+  .actions{ display:none !important; }
+
+  /* biar gak pecah halaman */
+  .cert-wrap, .cert{
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* PENTING: gradient text sering hilang saat print → kasih fallback solid */
+  .lulusWord{
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    color: #16a34a !important;       /* solid hijau */
+    text-shadow: none !important;
+    font-weight: 900 !important;
+  }
+
+  /* biar border glow & warna tetep muncul */
+  .cert{
+    box-shadow: 0 26px 65px rgba(0,0,0,.14) !important;
+  }
+  .cert::before{
+    filter: blur(10px) !important;
+    opacity:.55 !important;
+  }
+  .cert::after{
+    display:block !important;
+  }
 }
+
 .lulusSub{
   margin:0;
   font-weight:1000;
