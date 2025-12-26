@@ -7,15 +7,15 @@
     return;
   }
 
-  function isAllLevelDone(){
-    for (let i = 1; i <= 6; i++){
+  function isAllLevelDone() {
+    for (let i = 1; i <= 6; i++) {
       const done = localStorage.getItem(`ek_level${i}_selesai`);
       if (done !== "1") return false;
     }
     return true;
   }
 
-  if (!isAllLevelDone()){
+  if (!isAllLevelDone()) {
     window.location.href = "index.html";
     return;
   }
@@ -41,8 +41,7 @@
   const s5 = parseInt(localStorage.getItem("ek_level5_skor") || "0", 10);
   const s6 = parseInt(localStorage.getItem("ek_level6_skor") || "0", 10);
 
-  // bintang 5 (mapping aman)
-  function toStars(score){
+  function toStars(score) {
     let n = 0;
     if (score <= 0) n = 0;
     else if (score <= 2) n = 1;
@@ -52,43 +51,75 @@
     else n = 5;
 
     const on = "★".repeat(n);
-    const off = "★".repeat(5-n);
+    const off = "★".repeat(5 - n);
     return `<span class="on">${on}</span><span class="off">${off}</span>`;
   }
 
-  const map = [
+  [
     ["star1", s1],
     ["star2", s2],
     ["star3", s3],
     ["star4", s4],
     ["star5", s5],
     ["star6", s6],
-  ];
-
-  map.forEach(([id, val]) => {
+  ].forEach(([id, val]) => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = toStars(val);
   });
 
-  // tanggal
+  // ===== Tanggal =====
   const elDate = document.getElementById("cDate");
   const now = new Date();
-  const tgl = now.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
+  const tgl = now.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
   if (elDate) elDate.textContent = `📅 Tanggal: ${tgl}`;
 
-  // confetti
+  // ===== PRINT SAFETY (cuma bantu fallback) =====
+  function prepareForPrint() {
+    const cert = document.getElementById("certBox");
+    if (cert) {
+      cert.style.opacity = "1";
+      cert.style.transform = "none";
+    }
+
+    // fallback ekstra: kalau browser ngeyel gradient text pas print
+    const lulus = document.querySelector(".lulusWord");
+    if (lulus) {
+      lulus.style.background = "none";
+      lulus.style.color = "#16a34a";
+      lulus.style.webkitTextFillColor = "#16a34a";
+      lulus.style.textShadow = "none";
+    }
+  }
+
+  window.addEventListener("beforeprint", prepareForPrint);
+
+  // bikin tombol print lebih stabil di HP
+  const btnPrint = document.querySelector('.btn.btn-yellow[onclick*="window.print"]');
+  if (btnPrint) {
+    btnPrint.onclick = (e) => {
+      e.preventDefault();
+      prepareForPrint();
+      setTimeout(() => window.print(), 150);
+    };
+  }
+
+  // ===== CONFETTI (MERIAH LAGI, tapi nanti disembunyikan saat print oleh CSS) =====
   const confetti = document.getElementById("confetti");
-  if (confetti){
-    const colors = ["#ffb703","#3b82f6","#10b981","#ef4444","#a855f7","#f59e0b"];
-    for (let i=0; i<40; i++){
+  if (confetti) {
+    const colors = ["#ffb703", "#3b82f6", "#10b981", "#ef4444", "#a855f7", "#f59e0b"];
+    for (let i = 0; i < 40; i++) {
       const p = document.createElement("i");
-      p.style.left = (Math.random()*100) + "vw";
-      p.style.animationDuration = (4 + Math.random()*4.5) + "s";
-      p.style.animationDelay = (Math.random()*2.2) + "s";
-      p.style.width  = (7 + Math.random()*7) + "px";
-      p.style.height = (10 + Math.random()*12) + "px";
-      p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      p.style.opacity = (0.65 + Math.random()*0.35).toFixed(2);
+      p.style.left = (Math.random() * 100) + "vw";
+      p.style.animationDuration = (4 + Math.random() * 4.5) + "s";
+      p.style.animationDelay = (Math.random() * 2.2) + "s";
+      p.style.width = (7 + Math.random() * 7) + "px";
+      p.style.height = (10 + Math.random() * 12) + "px";
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.opacity = (0.65 + Math.random() * 0.35).toFixed(2);
       confetti.appendChild(p);
     }
   }
