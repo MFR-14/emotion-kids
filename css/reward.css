@@ -380,3 +380,88 @@ body.home{ overflow-x:hidden; }
   }
   .cert::before{ filter:none !important; opacity:.25 !important; }
 }
+/* =========================================================
+   NO ANIMATION (biar clean, nggak goyang-goyang)
+   ========================================================= */
+*{
+  animation: none !important;
+  transition: none !important;
+}
+
+/* matiin confetti total (kalau memang gak dipakai lagi) */
+.confetti{ display:none !important; }
+
+/* hilangkan state awal yang bikin cert sempet transparan */
+.cert{
+  transform:none !important;
+  opacity:1 !important;
+}
+
+/* beberapa efek animasi yang sebelumnya dipakai */
+.hero .mascot,
+.badge,
+.checkBadge,
+.checkBadge::before,
+.lvlRow,
+.cert::before{
+  animation:none !important;
+}
+
+/* =========================================================
+   BOLD yang aman (font-weight 1000/1100 kadang gak kebaca di printer)
+   ========================================================= */
+.brand .t1,
+.brand .t2,
+.badge,
+.lulusSub,
+.info .k,
+.info .v,
+.levelsBox h3,
+.lvlRow .left,
+.pill,
+.stars,
+.chip,
+.btn{
+  font-weight: 800 !important; /* aman, kebanyakan font support */
+}
+
+.lulusWord{
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   PRINT SETTINGS: full color + LULUS gak hilang
+   ========================================================= */
+@media print{
+  /* paksa browser mempertahankan warna */
+  *{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* tetep sembunyiin elemen yang gak perlu saat print */
+  .fx-bg,.confetti,.hero,.actions{ display:none !important; }
+
+  body{ background:#fff !important; }
+
+  /* Biar cert tetap keliatan "full color" tanpa animasi */
+  .cert{
+    box-shadow:none !important;
+    border-radius:0 !important;
+    padding:18px !important;
+  }
+
+  /* FIX UTAMA: gradient text sering jadi transparan saat print */
+  .lulusWord{
+    background: none !important;
+    color: #16a34a !important;
+    -webkit-text-fill-color: #16a34a !important; /* penting buat Chrome/Safari */
+    text-shadow: none !important;
+  }
+
+  /* opsional: kalau kamu mau badge tetap pekat di print */
+  .badge{
+    background:#0f172a !important;
+    color:#fff !important;
+  }
+}
