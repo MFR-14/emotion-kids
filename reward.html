@@ -6,354 +6,7 @@
   <title>GESYA - Sertifikat</title>
 
   <link rel="stylesheet" href="./css/menu.css?v=3">
-
-  <style>
-    :root{
-      --dark:#0f172a;
-      --gold:#ffb703;
-      --line:#e2e8f0;
-      --soft:#f8fafc;
-      --ok:#10b981;
-      --blue:#3b82f6;
-    }
-
-    /* ======== PRINT FULL COLOR ======== */
-    *{
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    body.home{ overflow-x:hidden; }
-
-    /* ======== Latar meriah tapi gak ganggu print ======== */
-    .fx-bg{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:1;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255,183,3,.20), transparent 45%),
-        radial-gradient(circle at 90% 80%, rgba(59,130,246,.16), transparent 50%),
-        radial-gradient(circle at 70% 20%, rgba(16,185,129,.14), transparent 45%);
-    }
-
-    /* confetti ringan */
-    .confetti{
-      pointer-events:none;
-      position:fixed;
-      inset:0;
-      z-index:2;
-      overflow:hidden;
-    }
-    .confetti i{
-      position:absolute;
-      top:-12vh;
-      width:10px;
-      height:16px;
-      border-radius:3px;
-      opacity:.95;
-      animation: fall linear infinite;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));
-    }
-    @keyframes fall{
-      0%{ transform:translateY(-15vh) rotate(0deg); }
-      100%{ transform:translateY(120vh) rotate(360deg); }
-    }
-
-    /* ======== HERO (gambar diperkecil) ======== */
-    .hero{ position:relative; z-index:3; }
-    .hero .mascot{
-      width:120px;
-      height:auto;
-      border-radius:18px;
-      border:6px solid rgba(255,183,3,.25);
-      box-shadow:0 16px 36px rgba(0,0,0,.14);
-      animation: floaty 4.6s ease-in-out infinite;
-    }
-    @keyframes floaty{
-      0%,100%{ transform:translateY(0); }
-      50%{ transform:translateY(-10px); }
-    }
-
-    /* ======== CARD SERTIFIKAT ======== */
-    .cert-wrap{
-      max-width:900px;
-      margin:10px auto 44px;
-      padding:16px;
-      position:relative;
-      z-index:4;
-    }
-
-    .cert{
-      position:relative;
-      overflow:hidden;
-      border-radius:28px;
-      padding:26px;
-      background:#fff;
-      box-shadow:0 26px 65px rgba(0,0,0,.14);
-      transform:translateY(10px);
-      opacity:0;
-      animation: enter .7s ease-out forwards;
-    }
-    @keyframes enter{ to{ transform:translateY(0); opacity:1; } }
-
-    /* border glow meriah */
-    .cert::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius:30px;
-      background: linear-gradient(90deg,
-        rgba(255,183,3,.95),
-        rgba(59,130,246,.85),
-        rgba(16,185,129,.80),
-        rgba(255,183,3,.95)
-      );
-      background-size: 300% 300%;
-      animation: glow 4s ease infinite;
-      z-index:0;
-      filter: blur(10px);
-      opacity:.55;
-    }
-    @keyframes glow{
-      0%{ background-position: 0% 50%; }
-      50%{ background-position: 100% 50%; }
-      100%{ background-position: 0% 50%; }
-    }
-
-    .cert::after{
-      content:"";
-      position:absolute;
-      inset:8px;
-      border-radius:22px;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(255,183,3,.18), transparent 40%),
-        radial-gradient(circle at 85% 90%, rgba(59,130,246,.14), transparent 42%),
-        #ffffff;
-      z-index:0;
-    }
-    .cert > *{ position:relative; z-index:1; }
-
-    .topRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
-    }
-
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-    .brand .t1{ font-weight:1000; letter-spacing:.3px; }
-    .brand .t2{ font-size:12px; color:#64748b; font-weight:800; }
-
-    .badge{
-      font-weight:1000;
-      padding:10px 14px;
-      border-radius:999px;
-      background:var(--dark);
-      color:#fff;
-      font-size:12px;
-      letter-spacing:.6px;
-      box-shadow:0 14px 30px rgba(15,23,42,.22);
-      animation: wiggle 2.8s ease-in-out infinite;
-      white-space:nowrap;
-    }
-    @keyframes wiggle{
-      0%,100%{ transform:rotate(0deg) scale(1); }
-      40%{ transform:rotate(-3deg) scale(1.02); }
-      70%{ transform:rotate(3deg) scale(1.02); }
-    }
-
-    /* ======== LULUS GEDE BANGET ======== */
-    .lulusBig{
-      margin:10px 0 6px;
-      font-weight:1100;
-      letter-spacing:1px;
-      font-size:46px;
-      line-height:1;
-      color:#065f46;
-      text-shadow: 0 10px 24px rgba(16,185,129,.18);
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .lulusBig .seal{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:52px;
-      height:52px;
-      border-radius:18px;
-      background:rgba(16,185,129,.14);
-      border:2px solid rgba(16,185,129,.28);
-      box-shadow:0 18px 38px rgba(16,185,129,.15);
-      animation: pulse 1.9s ease-in-out infinite;
-    }
-    @keyframes pulse{
-      0%,100%{ transform:scale(1); }
-      50%{ transform:scale(1.04); }
-    }
-
-    .subtitle{
-      margin:0 0 12px;
-      color:#334155;
-      font-weight:900;
-    }
-
-    /* ======== Identitas (urutan kamu) ======== */
-    .info{
-      margin-top:10px;
-      padding:14px;
-      border-radius:18px;
-      background:rgba(241,245,249,.70);
-      border:2px solid rgba(226,232,240,.85);
-      display:grid;
-      grid-template-columns: 160px 1fr;
-      gap:10px 14px;
-    }
-    .info .k{ font-weight:1000; color:#0f172a; }
-    .info .v{ font-weight:1000; color:#0f172a; letter-spacing:.2px; }
-
-    /* ======== Skor per level -> bintang ***** ======== */
-    .levelsBox{
-      margin-top:14px;
-      padding:14px;
-      border-radius:18px;
-      background:#fff;
-      border:2px solid rgba(226,232,240,.90);
-    }
-    .levelsBox h3{
-      margin:0 0 10px;
-      font-size:14px;
-      font-weight:1100;
-      color:#0f172a;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:10px;
-    }
-    @media (max-width:640px){
-      .grid{ grid-template-columns:1fr; }
-      .info{ grid-template-columns: 120px 1fr; }
-      .lulusBig{ font-size:40px; }
-    }
-
-    .lvlRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:16px;
-      background:rgba(248,250,252,.88);
-      border:2px solid rgba(226,232,240,.85);
-      animation: pop .55s ease-out both;
-    }
-    .lvlRow:nth-child(1){ animation-delay:.06s; }
-    .lvlRow:nth-child(2){ animation-delay:.12s; }
-    .lvlRow:nth-child(3){ animation-delay:.18s; }
-    .lvlRow:nth-child(4){ animation-delay:.24s; }
-    .lvlRow:nth-child(5){ animation-delay:.30s; }
-    .lvlRow:nth-child(6){ animation-delay:.36s; }
-    @keyframes pop{
-      from{ transform:translateY(10px) scale(.985); opacity:0; }
-      to{ transform:translateY(0) scale(1); opacity:1; }
-    }
-
-    .lvlRow .left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:1000;
-      color:#0f172a;
-    }
-    .pill{
-      font-size:12px;
-      font-weight:1000;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(59,130,246,.10);
-      border:2px solid rgba(59,130,246,.20);
-      color:#1d4ed8;
-      white-space:nowrap;
-    }
-
-    .stars{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      letter-spacing:2px;
-      font-weight:1100;
-      font-size:14px;
-      color:#0f172a;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-    }
-    .stars .on{ color:#f59e0b; text-shadow:0 10px 18px rgba(245,158,11,.18); }
-    .stars .off{ color:#cbd5e1; }
-
-    /* ======== Footer ringkasan (tanpa total skor) ======== */
-    .footerChips{
-      margin-top:14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-    .chip{
-      background:#f1f5f9;
-      border:2px solid #e2e8f0;
-      padding:10px 12px;
-      border-radius:16px;
-      font-weight:1000;
-      color:#0f172a;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:16px;
-    }
-    .btn{
-      flex:1;
-      border:none;
-      border-radius:16px;
-      padding:12px 14px;
-      font-size:15px;
-      font-weight:1100;
-      cursor:pointer;
-      transition: transform .15s ease, filter .15s ease;
-    }
-    .btn:hover{ filter:brightness(1.02); transform:translateY(-2px); }
-    .btn:active{ transform:scale(.98); }
-
-    .btn-yellow{ background:var(--gold); color:#1f2a44; box-shadow:0 16px 28px rgba(255,183,3,.22); }
-    .btn-dark{ background:var(--dark); color:#fff; box-shadow:0 16px 28px rgba(15,23,42,.22); }
-
-    /* ======== PRINT: cuma sertifikat, full color, tanpa animasi ======== */
-    @media print{
-      .fx-bg,.confetti,.hero,.actions{ display:none !important; }
-      body{ background:#fff !important; }
-      .cert-wrap{ margin:0 !important; padding:0 !important; max-width:none !important; }
-      .cert{
-        box-shadow:none !important;
-        border-radius:0 !important;
-        padding:22px !important;
-      }
-      /* tetap warna */
-      .cert::before,.cert::after{ display:block !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="./css/reward.css?v=1">
 </head>
 
 <body class="home">
@@ -380,13 +33,18 @@
           <div class="badge">🏅 AHLI EMOSI</div>
         </div>
 
-        <div class="lulusBig">
-          <span class="seal">✅</span>
-          LULUS
+        <div class="lulusRow">
+          <div class="checkBadge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 7L10 17L4 11" stroke="#16a34a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="lulusText">
+            <div class="lulusWord">LULUS</div>
+            <p class="lulusSub">Telah menyelesaikan Level 1 sampai Level 6 pada GESYA.</p>
+          </div>
         </div>
-        <div class="subtitle">Telah menyelesaikan Level 1 sampai Level 6 pada GESYA.</div>
 
-        <!-- Identitas -->
         <div class="info">
           <div class="k">Nama Anak :</div>
           <div class="v" id="cNama">-</div>
@@ -398,7 +56,6 @@
           <div class="v" id="cSekolah">-</div>
         </div>
 
-        <!-- Skor level -> bintang ***** -->
         <div class="levelsBox">
           <h3>🌟 Pencapaian per Level</h3>
 
@@ -435,112 +92,20 @@
           </div>
         </div>
 
-        <!-- Footer tanpa total skor -->
         <div class="footerChips">
           <div class="chip" id="cDate">📅 Tanggal: -</div>
           <div class="chip">🎉 Hasil: <b style="margin-left:6px;">LULUS</b></div>
-          <div class="chip">🖨️ Print: Full Color</div>
         </div>
 
         <div class="actions">
-          <button class="btn btn-yellow" onclick="window.print()">Cetak / Simpan</button>
-          <button class="btn btn-dark" onclick="window.location.href='index.html'">Kembali</button>
+          <button class="btn btn-yellow" type="button" onclick="window.print()">Cetak / Simpan</button>
+          <button class="btn btn-dark" type="button" onclick="window.location.href='index.html'">Kembali</button>
         </div>
 
       </div>
     </div>
   </main>
 
-  <script>
-    const KEY_UNLOCK = "gesya_unlocked";
-
-    // keamanan: kalau belum unlock PIN, balik
-    if (localStorage.getItem(KEY_UNLOCK) !== "1") {
-      window.location.href = "index.html";
-    }
-
-    function isAllLevelDone(){
-      for (let i = 1; i <= 6; i++){
-        const done = localStorage.getItem(`ek_level${i}_selesai`);
-        if (done !== "1") return false;
-      }
-      return true;
-    }
-
-    // kalau belum tamat 1-6, balik
-    if (!isAllLevelDone()){
-      window.location.href = "index.html";
-    }
-
-    // ===== Identitas =====
-    const nama = (localStorage.getItem("ek_nama") || "").trim();
-    const umur = (localStorage.getItem("ek_umur") || "").trim();
-    const sekolah = (localStorage.getItem("ek_sekolah") || "").trim();
-
-    document.getElementById("cNama").textContent = nama ? nama.toUpperCase() : "TEMAN";
-    document.getElementById("cUmur").textContent = umur ? `${umur} tahun` : "-";
-    document.getElementById("cSekolah").textContent = sekolah ? sekolah.toUpperCase() : "-";
-
-    // ===== Skor tiap level =====
-    const s1 = parseInt(localStorage.getItem("ek_level1_skor") || "0", 10);
-    const s2 = parseInt(localStorage.getItem("ek_level2_skor") || "0", 10);
-    const s3 = parseInt(localStorage.getItem("ek_level3_skor") || "0", 10);
-    const s4 = parseInt(localStorage.getItem("ek_level4_skor") || "0", 10);
-    const s5 = parseInt(localStorage.getItem("ek_level5_skor") || "0", 10);
-    const s6 = parseInt(localStorage.getItem("ek_level6_skor") || "0", 10);
-
-    /**
-     * Konversi skor -> bintang ***** (5 bintang)
-     * Karena max tiap level bisa beda-beda, kita pakai mapping aman:
-     * 0 = 0⭐
-     * 1-2 = 1⭐
-     * 3-5 = 2⭐
-     * 6-8 = 3⭐
-     * 9-11 = 4⭐
-     * 12+ = 5⭐
-     */
-    function toStars(score){
-      let n = 0;
-      if (score <= 0) n = 0;
-      else if (score <= 2) n = 1;
-      else if (score <= 5) n = 2;
-      else if (score <= 8) n = 3;
-      else if (score <= 11) n = 4;
-      else n = 5;
-
-      const on = "★".repeat(n);
-      const off = "★".repeat(5-n);
-      return `<span class="on">${on}</span><span class="off">${off}</span>`;
-    }
-
-    document.getElementById("star1").innerHTML = toStars(s1);
-    document.getElementById("star2").innerHTML = toStars(s2);
-    document.getElementById("star3").innerHTML = toStars(s3);
-    document.getElementById("star4").innerHTML = toStars(s4);
-    document.getElementById("star5").innerHTML = toStars(s5);
-    document.getElementById("star6").innerHTML = toStars(s6);
-
-    // ===== Tanggal =====
-    const now = new Date();
-    const tgl = now.toLocaleDateString("id-ID", { day:"2-digit", month:"long", year:"numeric" });
-    document.getElementById("cDate").textContent = `📅 Tanggal: ${tgl}`;
-
-    // ===== Confetti generator =====
-    const confetti = document.getElementById("confetti");
-    const colors = ["#ffb703","#3b82f6","#10b981","#ef4444","#a855f7","#f59e0b"];
-
-    for (let i=0; i<44; i++){
-      const p = document.createElement("i");
-      p.style.left = (Math.random()*100) + "vw";
-      p.style.animationDuration = (4 + Math.random()*4.5) + "s";
-      p.style.animationDelay = (Math.random()*2.2) + "s";
-      p.style.width  = (7 + Math.random()*7) + "px";
-      p.style.height = (10 + Math.random()*12) + "px";
-      p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      p.style.opacity = (0.65 + Math.random()*0.35).toFixed(2);
-      confetti.appendChild(p);
-    }
-  </script>
-
+  <script src="./js/reward.js?v=1"></script>
 </body>
 </html>
