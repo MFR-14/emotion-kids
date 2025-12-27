@@ -331,7 +331,7 @@ window.addEventListener("DOMContentLoaded", () => {
     } else {
       btn.classList.add("bad");
       feedbackEl.classList.add("bad");
-      feedbackEl.textContent = "🙂 Itu boleh kepikiran… tapi ayo coba versi yang lebih positif ya.";
+      feedbackEl.textContent = "🙂 Itu boleh kepikiran… tapi ayo coba cari yang lebih positif ya.";
       pulse(feedbackEl);
       setHint("bad", "Lanjut soal berikutnya ya 👇");
     }
