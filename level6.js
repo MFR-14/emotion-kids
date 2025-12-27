@@ -31,7 +31,7 @@ const QUESTIONS = [
   {
     emoji:"🚲",
     title:"Kamu ngajak teman sepedaan, tapi dia menolak.",
-    neg:"“Dia males main sama aku.”",
+    neg:"“Dia gak suka main sama aku.”",
     options:[
       {emoji:"😴", text:"Mungkin dia capek karena baru pulang sekolah.", score:1},
       {emoji:"📅", text:"Mungkin dia ada kegiatan lain hari ini.", score:1},
@@ -51,7 +51,7 @@ const QUESTIONS = [
   {
     emoji:"📱",
     title:"Teleponmu tidak diangkat temanmu.",
-    neg:"“Dia ngabaikan aku.”",
+    neg:"“Dia gak mau angkat telponku.”",
     options:[
       {emoji:"🏫", text:"Mungkin dia sedang aktivitas yang nggak bisa angkat telepon.", score:1},
       {emoji:"🔋", text:"Mungkin HP-nya mati atau habis baterai.", score:1},
@@ -101,7 +101,7 @@ const QUESTIONS = [
   {
     emoji:"🍱",
     title:"Temanmu tidak mau mencicipi bekalmu.",
-    neg:"“Bekalku jelek.”",
+    neg:"“Bekalku tidak enak.”",
     options:[
       {emoji:"🥗", text:"Mungkin dia sudah kenyang atau ada pantangan makanan.", score:1},
       {emoji:"😷", text:"Mungkin dia lagi kurang enak badan.", score:1},
@@ -110,10 +110,10 @@ const QUESTIONS = [
   },
   {
     emoji:"⚽",
-    title:"Kamu nggak dapat operan saat main bola.",
+    title:"Kamu nggak dapat umpan saat main bola.",
     neg:"“Mereka sengaja nggak mau kasih aku.”",
     options:[
-      {emoji:"👀", text:"Mungkin mereka belum lihat aku kosong.", score:1},
+      {emoji:"👀", text:"Mungkin mereka belum lihat posisiku bebas.", score:1},
       {emoji:"📣", text:"Aku bisa teriak sopan: “Aku di sini!”", score:1},
       {emoji:"💢", text:"Aku marah dan keluar dari permainan.", score:0},
     ]
