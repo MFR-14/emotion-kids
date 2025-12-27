@@ -422,4 +422,167 @@ body.home{ overflow-x:hidden; }
   }
   .lulusWord{ font-weight:900 !important; }
 }
+/* =========================================================
+   MOBILE 1 LAYAR (REWARD)
+   ========================================================= */
+@media (max-width: 480px){
+
+  /* tinggi layar HP yang bener */
+  body.home{
+    min-height: 100svh;
+    overflow: hidden; /* supaya halaman nggak scroll panjang */
+  }
+
+  /* wrap jadi layout 1 layar */
+  .wrap{
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* hero diperkecil supaya gak makan tempat */
+  .hero{
+    padding: 8px 12px;
+    margin: 0;
+  }
+  .hero .mascot{
+    width: 74px;
+    border-width: 4px;
+    border-radius: 14px;
+  }
+  .hero-title h1{
+    font-size: 22px;
+    margin: 0;
+    line-height: 1.05;
+  }
+  .hero-title p{
+    margin: 6px 0 0;
+    font-size: 13px;
+  }
+
+  /* container sertifikat supaya pas layar */
+  .cert-wrap{
+    margin: 0;
+    padding: 10px 12px 12px;
+    flex: 1;                /* ambil sisa tinggi */
+    overflow: hidden;
+    display: flex;
+  }
+
+  .cert{
+    width: 100%;
+    padding: 14px;
+    border-radius: 18px;
+    overflow: hidden;       /* biar rapi */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* header atas rapetin */
+  .topRow{
+    margin-bottom: 0;
+  }
+  .brand .t1{ font-weight: 900; }
+  .brand .t2{ font-size: 11px; }
+  .badge{
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  /* bagian LULUS diperkecil */
+  .lulusRow{
+    margin: 4px 0 0;
+    gap: 10px;
+  }
+  .checkBadge{
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+  .checkBadge svg{ width: 32px; height: 32px; }
+
+  .lulusWord{
+    font-size: 40px;
+  }
+  .lulusSub{
+    font-size: 13px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* identitas lebih rapet */
+  .info{
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 14px;
+    grid-template-columns: 110px 1fr;
+    gap: 8px 10px;
+  }
+  .info .k, .info .v{ font-weight: 900; font-size: 13px; }
+
+  /* box level dibuat "scroll mini" supaya 1 layar */
+  .levelsBox{
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 14px;
+    flex: 1;               /* ini yang bikin bagian level ngisi sisa */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .levelsBox h3{
+    margin: 0 0 8px;
+    font-size: 13px;
+  }
+
+  /* grid level jadi 1 kolom dan bisa scroll di dalam */
+  .grid{
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+    overflow: auto;        /* scroll di dalam box */
+    -webkit-overflow-scrolling: touch;
+    padding-right: 4px;
+  }
+
+  .lvlRow{
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+  .pill{
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+  .stars{
+    font-size: 12px;
+    letter-spacing: 1px;
+    gap: 6px;
+  }
+
+  /* footer & tombol rapetin */
+  .footerChips{
+    margin-top: 0;
+    gap: 8px;
+  }
+  .chip{
+    padding: 8px 10px;
+    border-radius: 14px;
+    font-size: 12px;
+  }
+
+  .actions{
+    margin-top: 0;
+    gap: 8px;
+  }
+  .btn{
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+
+  /* confetti tetap ada, tapi jangan ganggu */
+  .confetti{ z-index: 2; }
+  .cert-wrap, .cert{ z-index: 4; }
+}
 
