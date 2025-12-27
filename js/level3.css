@@ -138,17 +138,19 @@
    (ini yang bikin notif ga ketutup)
    ========================= */
 @media (max-width: 420px){
-
-  /* kecilkan item muka dikit */
   .face-item{
-    width: 108px;
-    height: 108px;
-    border-radius: 18px;
+    width: 96px;          /* lebih kecil */
+    height: 96px;
+    border-radius: 14px;
+    padding: 4px;         /* ⬅️ ini bikin putihnya tipis */
   }
+
   .face-item img{
-    width: 92px;
-    height: 92px;
+    width: 100%;
+    height: 100%;
   }
+}
+
 
   /* ✅ inti solusi: kecilkan "kepala" */
   .head-slot{
