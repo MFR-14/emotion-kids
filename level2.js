@@ -163,7 +163,7 @@ function setQuestion(){
   const q = QUESTIONS[idx];
   const t1 = document.getElementById("qTitle");
   const t2 = document.getElementById("qText");
-  if (t1) t1.textContent = `Question ${idx + 1}`;
+  if (t1) t1.textContent = `Soal ${idx + 1}`;
   if (t2) t2.textContent = q.text;
 
   const wrap = document.getElementById("options");
