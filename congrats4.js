@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const cgMsg    = document.getElementById("cgMsg");
 
   if (cgName) cgName.textContent = nama.toUpperCase();
-  if (cgMeta) cgMeta.textContent = `Level ${level} • Skor ${skor}/12`;
+  if (cgMeta) cgMeta.textContent = `Level ${level} • Skor ${skor}/8`;
   if (cgAvatar) cgAvatar.textContent = pickAvatarByName(nama);
 
   const msg =
