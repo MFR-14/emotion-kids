@@ -33,16 +33,16 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
   // Ambil dari URL dulu (paling pasti), kalau kosong baru dari localStorage
   const nama   = (p.get("nama")   || localStorage.getItem("ek_nama") || "Teman").trim();
-  const level  = (p.get("level")  || localStorage.getItem("ek_last_level") || "1").trim();
+  const level  = (p.get("level")  || localStorage.getItem("ek_last_level") || "4").trim();
 
   // skor bisa beda tiap level, jadi fallback-nya kita cek berdasarkan level terakhir
   const skorUrl = (p.get("skor") || "").trim();
-  const skorLs  = (level === "1")
-    ? (localStorage.getItem("ek_level1_skor") || "0")
+  const skorLs  = (level === "4")
+    ? (localStorage.getItem("ek_level4_skor") || "0")
     : (localStorage.getItem(`ek_level${level}_skor`) || "0");
 
   const skor   = (skorUrl || skorLs).trim();
-  const alasan = (p.get("alasan") || localStorage.getItem("ek_level1_alasan") || "Selesai").trim();
+  const alasan = (p.get("alasan") || localStorage.getItem("ek_level4_alasan") || "Selesai").trim();
 
   const cgName   = document.getElementById("cgName");
   const cgMeta   = document.getElementById("cgMeta");
