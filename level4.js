@@ -6,13 +6,9 @@ const GAS_URL =
 
 // ====== KONFIG ======
 const LEVEL = 4;
-const TOTAL = 8;
 const DURATION_SEC = 180;        // 3 menit
-const FEEDBACK_DELAY_MS = 1800;
+const FEEDBACK_DELAY_MS = 1400;  // sedikit dipercepat biar flow enak di HP
 
-// soal ramah disleksia: pendek + ikon
-// zone: "BISA" atau "TIDAK"
-// jika "TIDAK", munculkan sikap bijak (att)
 const QUESTIONS = [
   { emoji:"😡", text:"PERASAANKU", zone:"BISA",
     att:{ prompt:"Kalau aku marah, aku bisa…", options:[
@@ -72,6 +68,8 @@ const QUESTIONS = [
   },
 ];
 
+const TOTAL = QUESTIONS.length;
+
 // ====== STATE ======
 let idx = 0;
 let score = 0;
@@ -80,19 +78,20 @@ let timerId = null;
 let ended = false;
 let lockInput = false;
 let soalStart = 0;
-
-let picked = false; // untuk mode tap kartu (HP)
+let picked = false;
 
 // ====== UTIL ======
 function pad(n){ return String(n).padStart(2,"0"); }
 
 function shake(el){
+  if (!el) return;
   el.classList.remove("shake");
   void el.offsetWidth;
   el.classList.add("shake");
 }
 
 function flashOk(el){
+  if (!el) return;
   el.classList.remove("ok");
   void el.offsetWidth;
   el.classList.add("ok");
@@ -115,7 +114,6 @@ function sendRekapToGAS({ level, nama, umur, sekolah, soal, emosi, waktu }) {
   beacon.src = u.toString();
 }
 
-// ====== MAIN ======
 window.addEventListener("DOMContentLoaded", () => {
   const introEl = document.getElementById("intro");
   const gameEl  = document.getElementById("game");
@@ -171,10 +169,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function resetFeedback(){
     feedbackEl.className = "answer-feedback";
     feedbackEl.textContent = "";
-    feedbackEl.style.display = "block";
-    feedbackEl.style.opacity = "1";
-    feedbackEl.style.visibility = "visible";
-    feedbackEl.style.transform = "none";
   }
 
   function setHint(type, text){
@@ -184,7 +178,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function setRoundTitle(){
-    roundEl.textContent = `Soal ${idx+1} / ${TOTAL}`;
+    roundEl.textContent = `Soal ${Math.min(idx+1, TOTAL)} / ${TOTAL}`;
   }
 
   function hideAttitude(){
@@ -192,8 +186,20 @@ window.addEventListener("DOMContentLoaded", () => {
     attOptionsEl.innerHTML = "";
   }
 
+  // klik backdrop buat nutup (biar nggak ganggu notif)
+  attitudePanel.addEventListener("click", (e) => {
+    if (e.target === attitudePanel) {
+      hideAttitude();
+      // kalau panel ketutup tanpa pilih, lanjut aja biar nggak stuck
+      setTimeout(() => nextQuestion(), 200);
+    }
+  });
+
   function showAttitude(q, afterPickCb){
-    // tampilkan panel sikap (3 tombol besar)
+    // reset mode tap biar nggak nyangkut
+    cardEl.classList.remove("picked");
+    picked = false;
+
     attitudePanel.classList.remove("hidden");
     attOptionsEl.innerHTML = "";
 
@@ -211,8 +217,13 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function setQuestion(){
-    const q = QUESTIONS[idx];
+    // guard biar nggak error separo
+    if (idx >= QUESTIONS.length) {
+      finishLevel("Selesai!");
+      return;
+    }
 
+    const q = QUESTIONS[idx];
     lockInput = false;
     picked = false;
 
@@ -226,9 +237,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     setHint(null, "Tarik kartu ke lingkaran yang benar");
 
-    // reset zone state
     zoneBisa.classList.remove("over");
     zoneTidak.classList.remove("over");
+    cardEl.classList.remove("picked");
 
     soalStart = Date.now();
   }
@@ -258,7 +269,6 @@ window.addEventListener("DOMContentLoaded", () => {
       alasan: alasan || "Selesai"
     });
 
-    // congrats4 
     window.location.href = "./congrats4.html?" + qs.toString();
   }
 
@@ -299,7 +309,7 @@ window.addEventListener("DOMContentLoaded", () => {
   function nextQuestion(){
     idx++;
     if (idx >= TOTAL){
-      setTimeout(() => finishLevel("Selesai!"), 700);
+      setTimeout(() => finishLevel("Selesai!"), 500);
     } else {
       setQuestion();
     }
@@ -311,21 +321,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const q = QUESTIONS[idx];
     const benar = (zone === q.zone);
-
     const waktuRespon = ((Date.now() - soalStart) / 1000).toFixed(2);
 
-    // rekap utama: klasifikasi kontrol
     const status = benar ? "BENAR" : "SALAH";
     logToGAS(idx + 1, `KONTROL:${q.text} -> ${zone} (${status})`, waktuRespon);
 
-    // feedback klasifikasi
     resetFeedback();
     feedbackEl.classList.add(benar ? "good" : "bad");
     feedbackEl.textContent = benar ? "✅ Tepat!" : "❌ Coba lagi ya 🙂";
-
     setHint(benar ? "good" : "bad", benar ? "Bagus! lanjut ya 👇" : "Pelan-pelan, yuk coba lagi 👇");
 
-    // kalau salah: unlock setelah sebentar (anak boleh ulang)
     if (!benar){
       shake(zone === "BISA" ? zoneBisa : zoneTidak);
       setTimeout(() => {
@@ -336,33 +341,35 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // kalau benar dan zone "TIDAK": munculkan sikap bijak (bonus skor)
+    // skor dasar untuk BENAR (baik BISA maupun TIDAK)
+    score += 1;
+    renderScore();
+
+    // benar dan zone TIDAK -> munculkan sikap (bonus)
     if (q.zone === "TIDAK" && q.att){
       setTimeout(() => {
         showAttitude(q, (opt, btn) => {
-          // nilai sikap
           const good = !!opt.good;
           btn.classList.add(good ? "good" : "bad");
 
-          // bonus kecil kalau pilih sikap baik
-          if (good) score += 1;
+          if (good) score += 1; // bonus
           renderScore();
 
           const waktu2 = ((Date.now() - soalStart) / 1000).toFixed(2);
           logToGAS(idx + 1, `SIKAP:${q.text} -> ${opt.text} (${good ? "BAIK" : "KURANG"})`, waktu2);
 
           setHint(good ? "good" : "bad", good ? "Mantap! sikapnya keren 😄" : "Yuk pilih yang bikin tenang 🌿");
-          setTimeout(() => nextQuestion(), 900);
+          setTimeout(() => {
+            hideAttitude();
+            nextQuestion();
+          }, 700);
         });
-      }, 600);
+      }, 350);
       return;
     }
 
-    // kalau benar dan zone "BISA": langsung lanjut
-    score += 1;
-    renderScore();
+    // benar dan zone BISA
     flashOk(zone === "BISA" ? zoneBisa : zoneTidak);
-
     setTimeout(() => nextQuestion(), FEEDBACK_DELAY_MS);
   }
 
@@ -372,7 +379,6 @@ window.addEventListener("DOMContentLoaded", () => {
     e.dataTransfer.setData("text/plain", "CARD");
   });
 
-  // tap kartu (HP) → mode picked
   cardEl.addEventListener("click", () => {
     if (ended || lockInput) return;
     picked = true;
@@ -409,7 +415,6 @@ window.addEventListener("DOMContentLoaded", () => {
       handleDrop(zone);
     });
 
-    // tap zone (HP)
     zoneEl.addEventListener("click", () => {
       if (ended || lockInput) return;
       if (!picked){
