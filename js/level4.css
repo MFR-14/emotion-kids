@@ -1,20 +1,19 @@
 /* =========================
    GESYA - Level 4 CSS (FINAL)
-   1 layar HP + notif aman + bottom sheet
+   Panel sikap mengganti kotak pilihan
    ========================= */
 
 .lvl4-layout{
   padding: 8px 16px 18px;
-  min-height: calc(100svh - 70px);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
 }
 
 .lvl4-wrap{
-  width: 100%;
+  width:100%;
   display:grid;
-  gap:12px;
+  gap:14px;
   justify-items:center;
 }
 
@@ -23,7 +22,7 @@
   width:min(520px, 96vw);
   background:#fff;
   border-radius:18px;
-  padding:10px 16px;
+  padding:12px 16px;
   font-weight:900;
   box-shadow:0 10px 26px rgba(0,0,0,.06);
   text-align:center;
@@ -34,7 +33,7 @@
   width:min(360px, 92vw);
   background:#fff;
   border-radius:22px;
-  padding:12px 14px 10px;
+  padding:14px 14px 12px;
   box-shadow:0 10px 26px rgba(0,0,0,.08);
   display:grid;
   justify-items:center;
@@ -42,34 +41,32 @@
   cursor:grab;
   user-select:none;
 }
-
 .situation-card:active{ cursor:grabbing; }
+
 .situation-card.picked{
-  outline: 4px solid rgba(255,183,3,.55);
-  transform: scale(1.01);
+  outline:4px solid rgba(255,183,3,.55);
+  transform:scale(1.01);
 }
 
-.sit-emoji{
-  font-size:54px;
-  line-height:1;
-}
+.sit-emoji{ font-size:56px; line-height:1; }
 .sit-text{
   font-weight:950;
   letter-spacing:1px;
   font-size:18px;
   text-align:center;
 }
-.sit-mini{
-  font-size:13px;
-  opacity:.75;
-  text-align:center;
+.sit-mini{ font-size:13px; opacity:.75; text-align:center; }
+
+/* swap area (tempat kotak merah / panel sikap) */
+.swap-area{
+  width:min(520px, 96vw);
 }
 
 /* area dua pilihan */
 .choice-area{
-  width:min(520px, 96vw);
+  width:100%;
   display:flex;
-  gap:14px;
+  gap:18px;
   justify-content:center;
   align-items:stretch;
   flex-wrap:wrap;
@@ -77,11 +74,11 @@
 
 .choice-circle{
   width:min(240px, 46vw);
-  min-height:132px;
+  min-height:150px;
   background:#fff;
   border-radius:24px;
   box-shadow:0 10px 26px rgba(0,0,0,.06);
-  padding:12px 12px;
+  padding:14px 12px;
   display:grid;
   gap:6px;
   justify-items:center;
@@ -89,7 +86,7 @@
 }
 
 .cz-emoji{ font-size:28px; }
-.cz-title{ font-weight:950; font-size:14px; }
+.cz-title{ font-weight:950; font-size:15px; }
 .cz-mini{ font-size:12px; opacity:.75; }
 
 /* efek drop */
@@ -98,55 +95,15 @@
   transform:scale(1.01);
 }
 
-/* notif: dibuat sticky biar tidak ketutup */
-.hint, .answer-feedback{
-  width:min(520px, 96vw);
-  position: sticky;
-  bottom: 10px;
-  z-index: 20;
-}
-
-.hint{
-  border-radius: 16px;
-  padding: 10px 12px;
-  background: #ffffff;
-  box-shadow: 0 10px 26px rgba(0,0,0,.08);
-  text-align: center;
-  font-weight: 800;
-}
-
-.answer-feedback{
-  min-height: 22px;
-  margin-top: 6px;
-  text-align:center;
-  font-weight: 900;
-}
-
-/* PANEL SIKAP: bottom sheet overlay */
+/* PANEL SIKAP (muncul menggantikan choice-area) */
 .attitude-panel{
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 10px;
-  z-index: 999;
-  width: min(520px, 96vw);
-  max-height: 46vh;
-  overflow: auto;
-  background:#fff;
+  width:100%;
+  background:#d7d7d7;
   border-radius:22px;
   padding:14px 12px;
-  box-shadow:0 14px 40px rgba(0,0,0,.20);
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
   display:grid;
   gap:12px;
-}
-
-/* backdrop (klik area gelap = nutup) */
-.attitude-panel::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.18);
-  z-index: -1;
 }
 
 .att-title{
@@ -164,7 +121,7 @@
 .att-btn{
   width:min(150px, 44vw);
   border:none;
-  background:#f7f7f7;
+  background:#fff;
   border-radius:18px;
   padding:12px 10px;
   box-shadow:0 8px 18px rgba(0,0,0,.06);
@@ -182,10 +139,32 @@
 .att-btn.good{ outline:4px solid rgba(27,127,58,.35); }
 .att-btn.bad{ outline:4px solid rgba(249,65,68,.28); }
 
+/* notif */
+.hint{
+  width:min(520px, 96vw);
+  text-align:center;
+  font-weight:900;
+  border-radius:18px;
+  padding:12px 14px;
+  background:#e2f8e9;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+}
+
+.answer-feedback{
+  width:min(520px, 96vw);
+  text-align:center;
+  font-weight:950;
+  border-radius:18px;
+  padding:12px 14px;
+  background:#e2f8e9;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+  min-height: 22px;
+}
+
 /* helper */
 .hidden{ display:none !important; }
 
 @media (max-width:420px){
   .choice-area{ gap:12px; }
-  .choice-circle{ min-height:124px; }
+  .choice-circle{ min-height:140px; }
 }
