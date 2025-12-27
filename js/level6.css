@@ -1,235 +1,56 @@
-/* =========================
-   GESYA - Level 6 CSS (FINAL)
-   Reframing + Bottom Notif Bar
-   ========================= */
+/* ======================================
+   FINAL FIX LEVEL 6 (HP):
+   - notif kecil & gak nabrak opsi
+   - jarak kosong dipendekin
+   ====================================== */
 
-.lvl6-layout{
-  padding: 8px 16px 20px;
-  /* ruang bawah supaya konten gak ketutup notif bar */
-  padding-bottom: calc(180px + env(safe-area-inset-bottom));
-}
-
-.lvl6-wrap{
-  display:grid;
-  gap:16px;
-  justify-items:center;
-}
-
-.lvl6-round{
-  width:min(560px, 96vw);
-  background:#fff;
-  border-radius:18px;
-  padding:12px 16px;
-  font-weight:900;
-  box-shadow:0 10px 26px rgba(0,0,0,.06);
-  text-align:center;
-}
-
-.lvl6-card{
-  width:min(560px, 96vw);
-  background:#fff;
-  border-radius:22px;
-  padding:14px 14px 12px;
-  box-shadow:0 10px 26px rgba(0,0,0,.08);
-  display:grid;
-  justify-items:center;
-  gap:10px;
-  user-select:none;
-}
-
-.q-emoji{ font-size:56px; line-height:1; }
-
-.q-title{
-  font-weight:950;
-  font-size:17px;
-  text-align:center;
-  line-height:1.25;
-}
-
-.q-box{
-  width:100%;
-  background: rgba(255,210,125,.22);
-  border-radius:18px;
-  padding:10px 12px;
-  display:grid;
-  gap:6px;
-}
-
-.q-label{
-  font-size:12px;
-  font-weight:900;
-  opacity:.75;
-}
-
-.q-neg{
-  font-weight:950;
-  line-height:1.25;
-}
-
-.q-mini{
-  font-size:13px;
-  opacity:.75;
-  text-align:center;
-}
-
-/* opsi */
-.lvl6-options{
-  width:min(560px, 96vw);
-  display:grid;
-  gap:12px;
-}
-
-.opt-btn{
-  width:100%;
-  border:none;
-  background:#fff;
-  border-radius:18px;
-  padding:14px 12px;
-  box-shadow:0 10px 22px rgba(0,0,0,.06);
-  cursor:pointer;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  text-align:left;
-}
-
-.opt-btn .emo{
-  width:44px;
-  height:44px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:#f6f6f6;
-  font-size:24px;
-  flex:0 0 44px;
-}
-
-.opt-btn .txt{
-  font-weight:900;
-  font-size:14px;
-  line-height:1.25;
-}
-
-.opt-btn:active{ transform:scale(.99); }
-
-.opt-btn.good{ outline:4px solid rgba(27,127,58,.35); }
-.opt-btn.bad { outline:4px solid rgba(249,65,68,.28); }
-
-/* tujuan */
-.lvl6-goal{
-  width:min(560px, 96vw);
-  font-size:12px;
-  opacity:.75;
-  text-align:center;
-  margin-top:4px;
-  line-height:1.35;
-}
-
-/* =========================
-   BOTTOM NOTIF BAR
-   ========================= */
-
-.lvl6-bottom{
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(10px + env(safe-area-inset-bottom));
-  width: min(560px, 96vw);
-  z-index: 999;
-  display: grid;
-  gap: 10px;
-}
-
-.lvl6-bottom .hint,
-.lvl6-bottom .answer-feedback{
-  width: 100%;
-  border-radius: 18px;
-  padding: 14px 14px;
-  background: #e2f8e9;
-  box-shadow: 0 12px 28px rgba(0,0,0,.12);
-  text-align: center;
-  font-weight: 950;
-  border: 3px solid rgba(27,127,58,.20);
-}
-
-.lvl6-bottom .answer-feedback{
-  background: #ffffff;
-  border-color: rgba(249,65,68,.25);
-}
-
-.lvl6-bottom .answer-feedback.good{
-  border-color: rgba(27,127,58,.35);
-}
-
-.lvl6-bottom .answer-feedback.bad{
-  border-color: rgba(249,65,68,.35);
-}
-
-.lvl6-bottom .answer-feedback:empty{
-  display: none;
-}
-
-/* animasi pulse */
-@keyframes pulseBorder {
-  0%   { transform: translateZ(0) scale(1); }
-  50%  { transform: translateZ(0) scale(1.02); }
-  100% { transform: translateZ(0) scale(1); }
-}
-
-.pulse{
-  animation: pulseBorder .55s ease-in-out 2;
-}
-
-/* =========================
-   FIX OVERRIDE dari level1.css
-   ========================= */
-#game .lvl6-options{
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-}
-
-#game .opt-btn{
-  width: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-}
-
-/* penting: JANGAN hapus border/background notif */
-#game .answer-feedback{
-  margin: 0 !important;
-  height: auto !important;
-}
-
-@media (max-width:420px){
-  .opt-btn .txt{ font-size:13px; }
-}
-/* =========================
-   FIX NOTIF HP KECIL
-   ========================= */
 @media (max-width: 420px){
 
+  /* 1) Kurangi "padang pasir" sebelum notif */
+  .lvl6-layout{
+    padding-bottom: calc(110px + env(safe-area-inset-bottom)) !important;
+    /* sebelumnya 180px */
+  }
+
+  /* tujuan biar gak terlalu jauh */
+  .lvl6-goal{
+    margin-top: 2px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* 2) Bottom bar lebih rapet ke bawah */
   .lvl6-bottom{
-    gap: 6px;
-    bottom: calc(6px + env(safe-area-inset-bottom));
+    gap: 6px !important;
+    bottom: calc(4px + env(safe-area-inset-bottom)) !important;
   }
 
-  .lvl6-bottom .hint,
-  .lvl6-bottom .answer-feedback{
-    padding: 8px 10px;        /* ← diperkecil */
-    border-radius: 14px;
-    font-size: 13px;          /* ← teks lebih kecil */
-    line-height: 1.25;
+  /* 3) Hint diperkecil */
+  .lvl6-bottom .hint{
+    padding: 8px 10px !important;
+    font-size: 12.5px !important;
+    line-height: 1.2 !important;
+    border-radius: 14px !important;
+
+    max-height: 42px !important;          /* 1–2 baris */
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1 !important;     /* hint cukup 1 baris */
+    -webkit-box-orient: vertical !important;
   }
 
-  /* batasi tinggi supaya gak makan layar */
-  .lvl6-bottom .hint,
+  /* 4) Feedback salah/benar diperkecil + max 2 baris */
   .lvl6-bottom .answer-feedback{
-    max-height: 64px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;    /* max 2 baris */
-    -webkit-box-orient: vertical;
+    padding: 10px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.15 !important;
+    border-radius: 14px !important;
+
+    max-height: 64px !important;          /* max 2 baris */
+    overflow: hidden !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+
+    word-break: break-word;
   }
 }
