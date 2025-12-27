@@ -205,3 +205,31 @@
 @media (max-width:420px){
   .opt-btn .txt{ font-size:13px; }
 }
+/* =========================
+   FIX NOTIF HP KECIL
+   ========================= */
+@media (max-width: 420px){
+
+  .lvl6-bottom{
+    gap: 6px;
+    bottom: calc(6px + env(safe-area-inset-bottom));
+  }
+
+  .lvl6-bottom .hint,
+  .lvl6-bottom .answer-feedback{
+    padding: 8px 10px;        /* ← diperkecil */
+    border-radius: 14px;
+    font-size: 13px;          /* ← teks lebih kecil */
+    line-height: 1.25;
+  }
+
+  /* batasi tinggi supaya gak makan layar */
+  .lvl6-bottom .hint,
+  .lvl6-bottom .answer-feedback{
+    max-height: 64px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;    /* max 2 baris */
+    -webkit-box-orient: vertical;
+  }
+}
