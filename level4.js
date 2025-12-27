@@ -7,8 +7,9 @@ const GAS_URL =
 // ====== KONFIG ======
 const LEVEL = 4;
 const DURATION_SEC = 180;        // 3 menit
-const FEEDBACK_DELAY_MS = 1400;  // sedikit dipercepat biar flow enak di HP
+const FEEDBACK_DELAY_MS = 1200;
 
+// ====== DATA ======
 const QUESTIONS = [
   { emoji:"😡", text:"PERASAANKU", zone:"BISA",
     att:{ prompt:"Kalau aku marah, aku bisa…", options:[
@@ -97,6 +98,15 @@ function flashOk(el){
   el.classList.add("ok");
 }
 
+// scroll halus ke area atas game (kartu + pilihan)
+function scrollToTopArea(roundEl){
+  try{
+    roundEl.scrollIntoView({ behavior:"smooth", block:"start" });
+  }catch(e){
+    window.scrollTo(0, 0);
+  }
+}
+
 // ====== REKAP KE GAS (anti CORS) ======
 function sendRekapToGAS({ level, nama, umur, sekolah, soal, emosi, waktu }) {
   if (!GAS_URL) return;
@@ -138,13 +148,18 @@ window.addEventListener("DOMContentLoaded", () => {
   const zoneBisa  = document.getElementById("zoneBisa");
   const zoneTidak = document.getElementById("zoneTidak");
 
+  // swap area ids (WAJIB ADA)
+  const swapArea     = document.getElementById("swapArea");
+  const choiceArea   = document.getElementById("choiceArea");
+
   const attitudePanel = document.getElementById("attitudePanel");
   const attOptionsEl  = document.getElementById("attOptions");
 
   if (!introEl || !gameEl || !namaInput || !umurInput || !sekolahInput || !btnMulai ||
       !timerEl || !scoreEl || !roundEl || !hintEl || !feedbackEl ||
-      !cardEl || !sitEmojiEl || !sitTextEl || !zoneBisa || !zoneTidak || !attitudePanel || !attOptionsEl) {
-    alert("Ada elemen HTML yang tidak ketemu. Cek id level4.html kamu.");
+      !cardEl || !sitEmojiEl || !sitTextEl || !zoneBisa || !zoneTidak ||
+      !swapArea || !choiceArea || !attitudePanel || !attOptionsEl) {
+    alert("Ada elemen HTML yang tidak ketemu. Pastikan id swapArea & choiceArea ada di level4.html.");
     return;
   }
 
@@ -181,27 +196,21 @@ window.addEventListener("DOMContentLoaded", () => {
     roundEl.textContent = `Soal ${Math.min(idx+1, TOTAL)} / ${TOTAL}`;
   }
 
-  function hideAttitude(){
+  function hideAttitudeSwapBack(){
+    // panel sikap hilang, pilihan muncul lagi
     attitudePanel.classList.add("hidden");
     attOptionsEl.innerHTML = "";
+    choiceArea.classList.remove("hidden");
   }
 
-  // klik backdrop buat nutup (biar nggak ganggu notif)
-  attitudePanel.addEventListener("click", (e) => {
-    if (e.target === attitudePanel) {
-      hideAttitude();
-      // kalau panel ketutup tanpa pilih, lanjut aja biar nggak stuck
-      setTimeout(() => nextQuestion(), 200);
-    }
-  });
-
-  function showAttitude(q, afterPickCb){
-    // reset mode tap biar nggak nyangkut
-    cardEl.classList.remove("picked");
-    picked = false;
-
+  function showAttitudeReplaceChoice(q, afterPickCb){
+    // "GANTI" area pilihan -> panel sikap
+    choiceArea.classList.add("hidden");
     attitudePanel.classList.remove("hidden");
     attOptionsEl.innerHTML = "";
+
+    // auto scroll ke atas (sesuai maumu)
+    scrollToTopArea(roundEl);
 
     const title = attitudePanel.querySelector(".att-title");
     if (title) title.textContent = q.att?.prompt || "Aku bisa pilih sikap:";
@@ -217,19 +226,19 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function setQuestion(){
-    // guard biar nggak error separo
-    if (idx >= QUESTIONS.length) {
+    if (idx >= QUESTIONS.length){
       finishLevel("Selesai!");
       return;
     }
 
     const q = QUESTIONS[idx];
+
     lockInput = false;
     picked = false;
 
     setRoundTitle();
     resetFeedback();
-    hideAttitude();
+    hideAttitudeSwapBack();
 
     sitEmojiEl.textContent = q.emoji;
     sitTextEl.textContent  = q.text;
@@ -329,6 +338,7 @@ window.addEventListener("DOMContentLoaded", () => {
     resetFeedback();
     feedbackEl.classList.add(benar ? "good" : "bad");
     feedbackEl.textContent = benar ? "✅ Tepat!" : "❌ Coba lagi ya 🙂";
+
     setHint(benar ? "good" : "bad", benar ? "Bagus! lanjut ya 👇" : "Pelan-pelan, yuk coba lagi 👇");
 
     if (!benar){
@@ -341,34 +351,38 @@ window.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // skor dasar untuk BENAR (baik BISA maupun TIDAK)
+    // skor dasar untuk jawaban benar
     score += 1;
     renderScore();
 
-    // benar dan zone TIDAK -> munculkan sikap (bonus)
+    // sesuai konsep kamu: setelah pilih kotak merah, auto scroll & ganti jadi prompt sikap
+    // kalau zona TIDAK: prompt sikap wajib muncul
+    // kalau zona BISA: lanjut normal tanpa prompt
     if (q.zone === "TIDAK" && q.att){
       setTimeout(() => {
-        showAttitude(q, (opt, btn) => {
+        showAttitudeReplaceChoice(q, (opt, btn) => {
           const good = !!opt.good;
           btn.classList.add(good ? "good" : "bad");
 
-          if (good) score += 1; // bonus
+          // bonus kalau sikap baik
+          if (good) score += 1;
           renderScore();
 
           const waktu2 = ((Date.now() - soalStart) / 1000).toFixed(2);
           logToGAS(idx + 1, `SIKAP:${q.text} -> ${opt.text} (${good ? "BAIK" : "KURANG"})`, waktu2);
 
           setHint(good ? "good" : "bad", good ? "Mantap! sikapnya keren 😄" : "Yuk pilih yang bikin tenang 🌿");
+
           setTimeout(() => {
-            hideAttitude();
+            hideAttitudeSwapBack();
             nextQuestion();
-          }, 700);
+          }, 650);
         });
-      }, 350);
+      }, 250);
       return;
     }
 
-    // benar dan zone BISA
+    // BENAR dan BISA -> lanjut
     flashOk(zone === "BISA" ? zoneBisa : zoneTidak);
     setTimeout(() => nextQuestion(), FEEDBACK_DELAY_MS);
   }
@@ -379,6 +393,7 @@ window.addEventListener("DOMContentLoaded", () => {
     e.dataTransfer.setData("text/plain", "CARD");
   });
 
+  // tap kartu (HP) → mode picked
   cardEl.addEventListener("click", () => {
     if (ended || lockInput) return;
     picked = true;
