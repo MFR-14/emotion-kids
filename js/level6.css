@@ -1,13 +1,13 @@
 /* =========================
-   GESYA - Level 6 CSS
-   Reframing (ubah jadi positif)
-   FINAL FIX HP
+   GESYA - Level 6 CSS (FINAL)
+   Reframing + Bottom Notif Bar
+   HP & Desktop friendly
    ========================= */
 
 /* ====== LAYOUT ====== */
 .lvl6-layout{
   padding: 8px 16px 20px;
-  padding-bottom: calc(180px + env(safe-area-inset-bottom));
+  padding-bottom: calc(180px + env(safe-area-inset-bottom)); /* ruang untuk bottom notif (HP) */
 }
 
 .lvl6-wrap{
@@ -79,6 +79,7 @@
   width:min(560px, 96vw);
   display:grid;
   gap:12px;
+  grid-template-columns: 1fr; /* default 1 kolom (HP) */
 }
 
 .opt-btn{
@@ -128,7 +129,7 @@
 }
 
 /* =========================
-   BOTTOM NOTIF BAR
+   BOTTOM NOTIF BAR (HP)
    ========================= */
 .lvl6-bottom{
   position: fixed;
@@ -161,13 +162,17 @@
 .lvl6-bottom .answer-feedback.good{
   border-color: rgba(27,127,58,.35);
 }
-
 .lvl6-bottom .answer-feedback.bad{
   border-color: rgba(249,65,68,.35);
 }
 
-.lvl6-bottom .answer-feedback:empty{
-  display:none;
+/* feedback kosong: hilang total */
+.answer-feedback:empty{
+  display: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
 }
 
 /* animasi pulse */
@@ -176,19 +181,13 @@
   50%  { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
-
 .pulse{
   animation: pulseBorder .55s ease-in-out 2;
 }
 
 /* =========================
-   OVERRIDE level1.css
+   OVERRIDE level1.css (aman)
    ========================= */
-#game .lvl6-options{
-  display:grid !important;
-  grid-template-columns:1fr !important;
-}
-
 #game .opt-btn{
   width:100% !important;
   display:flex !important;
@@ -197,17 +196,39 @@
   text-align:left !important;
 }
 
-#game .answer-feedback{
-  margin:0 !important;
-  height:auto !important;
+/* =========================
+   DESKTOP / LAYAR LEBAR
+   - bottom bar kembali normal (ga fixed)
+   - opsi jadi 2 kolom biar rapi
+   ========================= */
+@media (min-width: 421px){
+
+  .lvl6-layout{
+    padding-bottom: 20px; /* desktop gak perlu ruang bottom fixed */
+  }
+
+  .lvl6-bottom{
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    bottom: auto !important;
+    width: min(560px, 96vw) !important;
+    margin: 16px auto 0;
+    z-index: auto !important;
+  }
+
+  .lvl6-options{
+    grid-template-columns: 1fr 1fr; /* desktop 2 kolom */
+  }
 }
 
 /* =========================
-   FIX KHUSUS HP KECIL
+   HP KECIL
+   - jarak gak jauh
+   - notif kecil biar ga nabrak
    ========================= */
 @media (max-width: 420px){
 
-  /* kurangi jarak kosong */
   .lvl6-layout{
     padding-bottom: calc(110px + env(safe-area-inset-bottom)) !important;
   }
