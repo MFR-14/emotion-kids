@@ -1,9 +1,13 @@
 /* =========================
-   GESYA - Level 6 CSS
-   Reframing (ubah jadi positif)
+   GESYA - Level 6 CSS (FINAL)
+   Reframing + Bottom Notif Bar
    ========================= */
 
-.lvl6-layout{ padding: 8px 16px 20px; }
+.lvl6-layout{
+  padding: 8px 16px 20px;
+  /* ruang bawah supaya konten gak ketutup notif bar */
+  padding-bottom: calc(180px + env(safe-area-inset-bottom));
+}
 
 .lvl6-wrap{
   display:grid;
@@ -121,67 +125,83 @@
   line-height:1.35;
 }
 
-@media (max-width:420px){
-  .opt-btn .txt{ font-size:13px; }
+/* =========================
+   BOTTOM NOTIF BAR
+   ========================= */
+
+.lvl6-bottom{
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  width: min(560px, 96vw);
+  z-index: 999;
+  display: grid;
+  gap: 10px;
 }
+
+.lvl6-bottom .hint,
+.lvl6-bottom .answer-feedback{
+  width: 100%;
+  border-radius: 18px;
+  padding: 14px 14px;
+  background: #e2f8e9;
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+  text-align: center;
+  font-weight: 950;
+  border: 3px solid rgba(27,127,58,.20);
+}
+
+.lvl6-bottom .answer-feedback{
+  background: #ffffff;
+  border-color: rgba(249,65,68,.25);
+}
+
+.lvl6-bottom .answer-feedback.good{
+  border-color: rgba(27,127,58,.35);
+}
+
+.lvl6-bottom .answer-feedback.bad{
+  border-color: rgba(249,65,68,.35);
+}
+
+.lvl6-bottom .answer-feedback:empty{
+  display: none;
+}
+
+/* animasi pulse */
+@keyframes pulseBorder {
+  0%   { transform: translateZ(0) scale(1); }
+  50%  { transform: translateZ(0) scale(1.02); }
+  100% { transform: translateZ(0) scale(1); }
+}
+
+.pulse{
+  animation: pulseBorder .55s ease-in-out 2;
+}
+
 /* =========================
    FIX OVERRIDE dari level1.css
    ========================= */
-
-/* pastikan opsi selalu turun ke bawah (1 kolom) */
 #game .lvl6-options{
-  width: min(560px, 96vw);
   display: grid !important;
   grid-template-columns: 1fr !important;
-  gap: 12px !important;
 }
 
-/* pastikan button opsi gak ketiban style tombol global */
 #game .opt-btn{
   width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
   text-align: left !important;
-
-  border: none !important;
-  background: #fff !important;
-  border-radius: 18px !important;
-  padding: 14px 12px !important;
-  box-shadow: 0 10px 22px rgba(0,0,0,.06) !important;
-  cursor: pointer;
 }
 
-/* HILANGKAN kotak kosong gede: biasanya answer-feedback kena style lama */
+/* penting: JANGAN hapus border/background notif */
 #game .answer-feedback{
-  width: min(560px, 96vw);
   margin: 0 !important;
-  padding: 0 !important;
-
-  background: transparent !important;
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
-
-  min-height: 0 !important;
   height: auto !important;
 }
 
-/* hint biar jadi chip kecil, bukan kotak aneh */
-#game .hint{
-  width: min(560px, 96vw);
-  margin-top: 2px;
-  padding: 10px 12px;
-
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 22px rgba(0,0,0,.06);
-
-  text-align: center;
-  font-weight: 900;
-}
-
-/* kalau kamu memang pakai state tampil/sembunyi */
-#game .answer-feedback:empty{
-  display: none !important;
+@media (max-width:420px){
+  .opt-btn .txt{ font-size:13px; }
 }
