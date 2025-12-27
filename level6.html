@@ -2,11 +2,11 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>GESYA - Level 6</title>
 
   <link rel="stylesheet" href="./js/level1.css?v=1" />
-  <link rel="stylesheet" href="./js/level6.css?v=1" />
+  <link rel="stylesheet" href="./js/level6.css?v=final" />
 </head>
 
 <body class="level-page">
@@ -63,10 +63,6 @@
         <!-- PILIHAN -->
         <div class="lvl6-options" id="options"></div>
 
-        <!-- notif -->
-        <div class="hint" id="hint">Pilih satu jawaban ya 👆</div>
-        <div class="answer-feedback" id="answerFeedback"></div>
-
         <!-- tujuan level -->
         <div class="lvl6-goal">
           Tujuan: kamu belajar memilih pikiran yang membuat hati lebih tenang,
@@ -75,8 +71,14 @@
 
       </section>
     </main>
+
+    <!-- BOTTOM NOTIF BAR (anti kepotong) -->
+    <div class="lvl6-bottom" id="lvl6Bottom">
+      <div class="hint" id="hint">Pilih satu jawaban ya 👆</div>
+      <div class="answer-feedback" id="answerFeedback"></div>
+    </div>
   </div>
 
-  <script src="./level6.js?v=1"></script>
+  <script src="./level6.js?v=final"></script>
 </body>
 </html>
