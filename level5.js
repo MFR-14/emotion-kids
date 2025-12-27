@@ -19,9 +19,10 @@ const QUESTIONS = [
     emoji: "😢",
     title: "Kamu sedih karena nilai ulanganmu jelek.",
     options: [
+      { emoji: "😡", text: "Marah-marah dan nyalahin semua orang.", score: 0 },
       { emoji: "🗣️", text: "Cerita ke orang tua/guru dan minta saran belajar.", score: 1 },
       { emoji: "📘", text: "Coba belajar pelan-pelan lagi, besok latihan sedikit.", score: 1 },
-      { emoji: "😡", text: "Marah-marah dan nyalahin semua orang.", score: 0 },
+   
     ],
   },
   {
@@ -29,26 +30,29 @@ const QUESTIONS = [
     title: "Kamu bingung harus mengerjakan PR yang mana dulu.",
     options: [
       { emoji: "📝", text: "Bikin daftar PR, kerjakan yang paling mudah dulu.", score: 1 },
-      { emoji: "⏱️", text: "Pasang timer 10 menit, fokus satu PR dulu.", score: 1 },
       { emoji: "🌀", text: "Ditinggal main saja biar lupa.", score: 0 },
+      { emoji: "⏱️", text: "Pasang timer 10 menit, fokus satu PR dulu.", score: 1 },
+      
     ],
   },
   {
     emoji: "🧍",
     title: "Tidak ada teman yang mengajakmu bermain.",
     options: [
+       { emoji: "💢", text: "Ngambek dan bilang semua orang jahat.", score: 0 },
       { emoji: "🙋", text: "Kamu duluan yang ngajak: “Main bareng yuk?”", score: 1 },
       { emoji: "🎨", text: "Main kegiatan sendiri dulu (gambar/baca), nanti coba lagi.", score: 1 },
-      { emoji: "💢", text: "Ngambek dan bilang semua orang jahat.", score: 0 },
+     
     ],
   },
   {
     emoji: "🗯️",
     title: "Teman-teman tidak setuju dengan pendapatmu.",
     options: [
-      { emoji: "👂", text: "Dengar alasan mereka dulu, baru bicara lagi pelan.", score: 1 },
+    
       { emoji: "🤝", text: "Cari jalan tengah yang adil buat semua.", score: 1 },
       { emoji: "📢", text: "Ngomel keras biar semua ikut kamu.", score: 0 },
+      { emoji: "👂", text: "Dengar alasan mereka dulu, baru bicara lagi pelan.", score: 1 },
     ],
   },
   {
@@ -64,9 +68,10 @@ const QUESTIONS = [
     emoji: "😣",
     title: "Kamu takut salah saat maju ke depan kelas.",
     options: [
+      { emoji: "🏃", text: "Kabur dan pura-pura sakit.", score: 0 },
       { emoji: "🌬️", text: "Tarik napas 3 kali, lalu coba pelan-pelan.", score: 1 },
       { emoji: "🧠", text: "Ingat: salah itu biasa, yang penting berani.", score: 1 },
-      { emoji: "🏃", text: "Kabur dan pura-pura sakit.", score: 0 },
+    
     ],
   },
   {
@@ -74,8 +79,8 @@ const QUESTIONS = [
     title: "Kamu marah karena adik mengacak mainanmu.",
     options: [
       { emoji: "🗣️", text: "Bilang baik-baik: “Tolong rapikan bareng ya.”", score: 1 },
-      { emoji: "📦", text: "Rapikan dulu, lalu simpan mainan di tempat aman.", score: 1 },
       { emoji: "🤬", text: "Bentak adik terus-terusan.", score: 0 },
+      { emoji: "📦", text: "Rapikan dulu, lalu simpan mainan di tempat aman.", score: 1 },
     ],
   },
   {
@@ -83,8 +88,9 @@ const QUESTIONS = [
     title: "Kamu malu karena salah jawab saat pelajaran.",
     options: [
       { emoji: "🙂", text: "Senyum: “Oh iya, aku salah. Makasih ya.”", score: 1 },
-      { emoji: "❓", text: "Tanya: “Yang benar gimana?” biar kamu ngerti.", score: 1 },
       { emoji: "😖", text: "Ngunci mulut dan nggak mau belajar lagi.", score: 0 },
+      { emoji: "❓", text: "Tanya: “Yang benar gimana?” biar kamu ngerti.", score: 1 },
+      
     ],
   },
   {
@@ -92,17 +98,18 @@ const QUESTIONS = [
     title: "Kamu merasa iri karena temanmu punya barang baru.",
     options: [
       { emoji: "🧡", text: "Ucap selamat, lalu ingat barang kamu juga banyak gunanya.", score: 1 },
-      { emoji: "🎯", text: "Kalau ingin, kamu bisa nabung atau minta di waktu yang tepat.", score: 1 },
       { emoji: "😒", text: "Ngomong jelek tentang barangnya.", score: 0 },
+      { emoji: "🎯", text: "Kalau ingin, kamu bisa nabung atau minta di waktu yang tepat.", score: 1 },
     ],
   },
   {
     emoji: "😵‍💫",
     title: "Kamu lagi capek dan gampang bad mood.",
     options: [
+      { emoji: "💢", text: "Lampiaskan ke orang rumah.", score: 0 },
       { emoji: "💧", text: "Minum air, istirahat sebentar, baru lanjut aktivitas.", score: 1 },
       { emoji: "🌿", text: "Tarik napas + peregangan ringan 1 menit.", score: 1 },
-      { emoji: "💢", text: "Lampiaskan ke orang rumah.", score: 0 },
+      
     ],
   },
 ];
