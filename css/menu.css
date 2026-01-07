@@ -385,4 +385,170 @@ body.home::after{
   letter-spacing:.2px;
   border-radius:18px;
 }
+/* ===========================
+   INTRO FX (WAH VERSION)
+   =========================== */
+
+/* card intro masuk: pop + sedikit "tada" */
+.gate-intro{
+  position:relative;
+  overflow:hidden;
+  animation: introTada .65s cubic-bezier(.2,.95,.25,1.05) both;
+}
+
+@keyframes introTada{
+  0%{ opacity:0; transform: translateY(16px) scale(.92); }
+  60%{ opacity:1; transform: translateY(0) scale(1.02); }
+  75%{ transform: scale(.995); }
+  100%{ transform: scale(1); }
+}
+
+/* gelombang / ring menyebar dari tengah */
+.gate-intro::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:56%;
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(255,183,3,.35), rgba(255,183,3,0) 65%);
+  filter: blur(0.2px);
+  opacity:0;
+  animation: introRing 1.05s ease-out .08s both;
+  pointer-events:none;
+}
+
+@keyframes introRing{
+  0%{ opacity:0; transform: translate(-50%,-50%) scale(.4); }
+  15%{ opacity:1; }
+  100%{ opacity:0; transform: translate(-50%,-50%) scale(18); }
+}
+
+/* wadah efek partikel (anti klik) */
+.intro-fx{
+  position:absolute;
+  inset:0;
+  pointer-events:none !important;
+  z-index:1;
+}
+
+/* partikel bintang */
+.fx-star{
+  position:absolute;
+  left:50%;
+  top:56%;
+  width:10px;
+  height:10px;
+  transform: translate(-50%,-50%);
+  opacity:0;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.12));
+  animation: starBurst .9s ease-out forwards;
+}
+
+/* bentuk bintang pakai clip-path */
+.fx-star::before{
+  content:"";
+  display:block;
+  width:100%;
+  height:100%;
+  background: var(--c, #ffb703);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  border-radius:2px;
+}
+
+/* animasi burst menyebar */
+@keyframes starBurst{
+  0%{
+    opacity:0;
+    transform: translate(-50%,-50%) scale(.6) rotate(0deg);
+  }
+  15%{ opacity:1; }
+  100%{
+    opacity:0;
+    transform:
+      translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px)))
+      scale(var(--s, 1.1))
+      rotate(220deg);
+  }
+}
+
+/* sparkle yang muter halus di pinggir card */
+.gate-intro::before{
+  content:"";
+  position:absolute;
+  inset:-30px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,183,3,.20), transparent 35%),
+    radial-gradient(circle at 80% 25%, rgba(142,202,230,.18), transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(255,210,125,.20), transparent 40%),
+    radial-gradient(circle at 30% 85%, rgba(142,202,230,.14), transparent 38%);
+  opacity:.0;
+  animation: sparkleGlow 2.6s ease-in-out .15s infinite;
+  pointer-events:none;
+}
+
+@keyframes sparkleGlow{
+  0%,100%{ opacity:.15; transform: rotate(0deg); }
+  50%{ opacity:.35; transform: rotate(2deg); }
+}
+
+/* tombol lanjut: sedikit bounce + shine lebih kuat */
+.gate-btn-primary{
+  position:relative;
+  overflow:hidden;
+  animation: btnBop 1.9s ease-in-out infinite;
+  box-shadow: 0 14px 30px rgba(0,0,0,.16);
+}
+
+@keyframes btnBop{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-2px); }
+}
+
+.gate-btn-primary::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-90%;
+  width:55%;
+  height:190%;
+  transform: rotate(18deg);
+  background: rgba(255,255,255,.55);
+  filter: blur(1px);
+  opacity:0;
+  animation: btnShine2 2.8s ease-in-out infinite;
+}
+
+@keyframes btnShine2{
+  0%{ left:-90%; opacity:0; }
+  18%{ opacity:.55; }
+  40%{ left:140%; opacity:0; }
+  100%{ left:140%; opacity:0; }
+}
+
+/* biar konten intro di atas efek */
+.gate-intro > *:not(.intro-fx){
+  position:relative;
+  z-index:2;
+}
+
+/* kalau user prefer reduced motion, kita hormati */
+@media (prefers-reduced-motion: reduce){
+  .gate-intro, .gate-intro::before, .gate-intro::after, .gate-btn-primary{
+    animation:none !important;
+  }
+}
 
