@@ -321,3 +321,68 @@ body.home::after{
   font-weight:800;
   text-align:center;
 }
+/* ===========================
+   WOW BUTTON (anak SD vibes)
+   =========================== */
+
+/* tombol utama */
+.gate-btn-primary{
+  position:relative;
+  overflow:hidden;
+  transform: translateZ(0);
+  animation: btnFloat 2.2s ease-in-out infinite;
+}
+
+/* efek kilau lewat */
+.gate-btn-primary::before{
+  content:"";
+  position:absolute;
+  top:-30%;
+  left:-80%;
+  width:60%;
+  height:160%;
+  transform: rotate(18deg);
+  background: rgba(255,255,255,.55);
+  filter: blur(1px);
+  opacity:.0;
+  animation: btnShine 2.6s ease-in-out infinite;
+}
+
+/* efek bayangan lebih hidup */
+.gate-btn-primary{
+  box-shadow: 0 12px 26px rgba(0,0,0,.14);
+}
+
+/* hover (untuk device yang punya mouse) */
+.gate-btn-primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0,0,0,.18);
+}
+
+/* klik */
+.gate-btn-primary:active{
+  transform: translateY(1px) scale(.99);
+  box-shadow: 0 10px 20px rgba(0,0,0,.14);
+}
+
+/* animasi pantul lembut */
+@keyframes btnFloat{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-3px); }
+}
+
+/* animasi kilau lewat */
+@keyframes btnShine{
+  0%{ left:-80%; opacity:0; }
+  20%{ opacity:.55; }
+  45%{ left:130%; opacity:0; }
+  100%{ left:130%; opacity:0; }
+}
+
+/* biar anak SD makin "ngeh": teks tombol sedikit lebih besar di intro */
+#introStep .gate-btn-primary{
+  font-size:17px;
+  letter-spacing:.2px;
+  border-radius:18px;
+}
+
