@@ -3,86 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GESYA - Level 1</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="./js/level1.css?v=11" />
+  <title>GESYA - Cara Bermain</title>
+  <link rel="stylesheet" href="./css/menu.css?v=6" />
 </head>
 
-<body class="level-page">
+<body class="home">
 
-  <!-- INTRO SCREEN -->
-  <div class="intro" id="intro">
-    <div class="intro-card">
-      <div class="intro-title">Level 1</div>
-      <div class="intro-subtitle">Petualangan Wajah Emosi</div>
+  <!-- =========================
+       OVERLAY: PIN -> INTRO -> MENU
+       ========================= -->
+  <div id="gateOverlay" class="gate-overlay">
 
-      <div class="intro-form">
-        <label for="namaAnak">Nama Anak</label>
-        <input id="namaAnak" name="namaAnak" type="text" placeholder="contoh: Andi" autocomplete="name" />
+    <!-- STEP 1: PIN -->
+    <div id="pinStep" class="gate-card">
+      <h2 class="gate-title">🔐 Akses GESYA</h2>
+      <p class="gate-desc">Masukkan PIN dari guru / admin</p>
 
-        <label for="umurAnak">Umur</label>
-        <input id="umurAnak" name="umurAnak" type="number" inputmode="numeric" min="1" max="18" placeholder="contoh: 7" />
+      <input
+        id="pinInput"
+        class="gate-input"
+        type="password"
+        inputmode="numeric"
+        placeholder="••••"
+        autocomplete="off"
+      />
 
-        <label for="namaSekolah">Nama Sekolah</label>
-        <input id="namaSekolah" name="namaSekolah" type="text" placeholder="contoh: SDN Sukabumi 1" />
+      <button id="btnPin" class="gate-btn" type="button">Masuk</button>
 
-        <button id="btnMulai" type="button">Mulai</button>
+      <p id="pinError" class="gate-error">PIN salah. Coba lagi ya 🙂</p>
+
+      <div class="gate-footer">
+        Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.
       </div>
     </div>
-  </div>
 
-  <!-- GAME -->
-  <div id="game" class="hidden">
+    <!-- STEP 2: INTRO (selalu muncul di awal setelah unlock) -->
+    <div id="introStep" class="gate-card gate-intro" style="display:none;">
+      <div class="intro-badge">🎒 Untuk Anak SD</div>
 
-    <!-- HUD -->
-    <div class="hud">
-      <div class="timer" id="timer">03:00</div>
-      <div class="score" id="score">Skor: 0 / 8</div>
-      <button class="btn-selesai" id="btnSelesai" type="button">Selesai</button>
+      <h2 class="gate-title" style="margin-top:8px;">Selamat datang di GESYA! 🌟</h2>
+
+      <p class="intro-text">
+        Game GESYA ini ditujukan bagi anak dengan disleksia usia <b>9–12 tahun</b> sebagai media pembelajaran
+        untuk membantu anak mengenali emosi yang mereka rasakan serta melatih keterampilan mengelola emosi
+        secara tepat dalam kehidupan sehari-hari.
+      </p>
+
+      <div class="intro-tip">
+        Siap? Yuk lanjut ke menu dan mulai petualangannya! 😄
+      </div>
+
+      <button id="btnLanjut" class="gate-btn gate-btn-primary" type="button">
+        Lanjut ke Menu 🚀
+      </button>
+
+      <div class="intro-mini">
+        Kamu bisa main pelan-pelan ya. Yang penting paham 😊
+      </div>
+
+      <!-- efek partikel intro (anti nyolong klik) -->
+      <div class="intro-fx" id="introFx" aria-hidden="true"></div>
     </div>
 
-    <main class="lvl1-layout">
-
-      <!-- ATAS: soal kiri + space kanan -->
-      <section class="top-area">
-        <div class="question">
-          <div class="question-card">
-            <div class="question-title" id="questionTitle">Tarik gambar ke emosi yang benar</div>
-
-            <div class="drag-area">
-              <!-- ✅ default pakai WEBP biar awalnya ringan -->
-              <img id="questionImg" class="question-img drag-img" draggable="true" src="./img/bahagia.webp" alt="Soal" />
-            </div>
-
-            <div class="hint" id="hint">Tarik / tap gambar ke emosi yang benar</div>
-
-            <!-- notif BESAR -->
-            <div class="answer-feedback" id="answerFeedback"></div>
-          </div>
-        </div>
-
-        <div class="top-space"></div>
-      </section>
-
-      <!-- BAWAH: kartu emosi -->
-      <section class="bottom-area">
-        <section class="cards drop-cards" id="dropCards">
-          <div class="emotion-card drop-target" data-emosi="BAHAGIA">BAHAGIA</div>
-          <div class="emotion-card drop-target" data-emosi="SEDIH">SEDIH</div>
-          <div class="emotion-card drop-target" data-emosi="TAKUT">TAKUT</div>
-          <div class="emotion-card drop-target" data-emosi="TERKEJUT">TERKEJUT</div>
-          <div class="emotion-card drop-target" data-emosi="BINGUNG">BINGUNG</div>
-          <div class="emotion-card drop-target" data-emosi="MALU">MALU</div>
-          <div class="emotion-card drop-target" data-emosi="MARAH">MARAH</div>
-          <div class="emotion-card drop-target" data-emosi="CINTA">CINTA</div>
-        </section>
-      </section>
-
-    </main>
   </div>
 
-  <!-- JS -->
-  <script src="./level1.js?v=2027"></script>
+  <main class="wrap">
+
+    <!-- GAMBAR ATAS -->
+    <section class="hero">
+      <img src="./img/12.jpg" class="mascot" alt="Maskot GESYA" />
+      <div class="hero-title">
+        <h1>Cara Bermain Game GESYA</h1>
+        <p>Yuk main sambil belajar mengenali emosi 😊</p>
+      </div>
+    </section>
+
+    <!-- PERATURAN -->
+    <section class="card rules-card">
+      <h2>Aturannya Mudah!</h2>
+      <ul class="rules">
+        <li>✅ Cocokkan emosi sesuai level yang tersedia</li>
+        <li>✅ Klik atau geser jawaban sesuai pertanyaan</li>
+        <li>✅ Main sesuai waktu yang disediakan</li>
+        <li>✅ Setiap level ada nilai bintang ⭐</li>
+        <li>✅ Selesaikan semua level untuk dapat lencana <b>Ahli Emosi GESYA</b></li>
+      </ul>
+    </section>
+
+    <!-- LEVEL -->
+    <section class="card level-card">
+      <h2>Pilih Level</h2>
+
+      <div class="levels">
+        <button class="lvl" data-lvl="1" type="button">
+          <span class="no">1</span>
+          <span class="txt">Level 1<br><small>Kenali Emosi</small></span>
+          <span class="emo">🎯</span>
+        </button>
+
+        <button class="lvl" data-lvl="2" type="button">
+          <span class="no">2</span>
+          <span class="txt">Level 2<br><small>Pasangkan</small></span>
+          <span class="emo">🧩</span>
+        </button>
+
+        <button class="lvl" data-lvl="3" type="button">
+          <span class="no">3</span>
+          <span class="txt">Level 3<br><small>Tempel Wajah</small></span>
+          <span class="emo">🙂</span>
+        </button>
+
+        <button class="lvl" data-lvl="4" type="button">
+          <span class="no">4</span>
+          <span class="txt">Level 4<br><small>Perasaanku</small></span>
+          <span class="emo">😁</span>
+        </button>
+
+        <button class="lvl" data-lvl="5" type="button">
+          <span class="no">5</span>
+          <span class="txt">Level 5<br><small>Aku Pilih Apa?</small></span>
+          <span class="emo">🙋‍♂️</span>
+        </button>
+
+        <button class="lvl" data-lvl="6" type="button">
+          <span class="no">6</span>
+          <span class="txt">Level 6<br><small>Situasi</small></span>
+          <span class="emo">🔥</span>
+        </button>
+
+        <button class="lvl" id="btnReward" data-reward="1" type="button" disabled style="opacity:.55">
+          <span class="no">🏅</span>
+          <span class="txt">Pencapaian<br><small>Sertifikat</small></span>
+          <span class="emo">📜</span>
+        </button>
+      </div>
+
+      <div class="bottom-note" id="progressNote">
+        Tips: isi nama, umur, dan sekolah di Level 1 dulu ya ✨
+      </div>
+
+      <button class="reset" id="btnReset" type="button">Reset Data</button>
+    </section>
+
+  </main>
+
+  <!-- Semua logic + animasi ada di sini -->
+  <script src="./js/menu.js?v=1"></script>
 </body>
 </html>
