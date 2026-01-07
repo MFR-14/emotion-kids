@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Cara Bermain</title>
-  <link rel="stylesheet" href="./css/menu.css?v=6">
+  <link rel="stylesheet" href="./css/menu.css?v=6" />
 </head>
 
 <body class="home">
@@ -32,10 +32,12 @@
 
       <p id="pinError" class="gate-error">PIN salah. Coba lagi ya 🙂</p>
 
-      <div class="gate-footer">Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.</div>
+      <div class="gate-footer">
+        Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.
+      </div>
     </div>
 
-    <!-- STEP 2: INTRO (muncul SETIAP KALI awal halaman, setelah unlock) -->
+    <!-- STEP 2: INTRO (selalu muncul di awal setelah unlock) -->
     <div id="introStep" class="gate-card gate-intro" style="display:none;">
       <div class="intro-badge">🎒 Untuk Anak SD</div>
 
@@ -58,9 +60,9 @@
       <div class="intro-mini">
         Kamu bisa main pelan-pelan ya. Yang penting paham 😊
       </div>
-      <!-- efek partikel intro (anti nyolong klik) -->
-<div class="intro-fx" id="introFx" aria-hidden="true"></div>
 
+      <!-- efek partikel intro (anti nyolong klik) -->
+      <div class="intro-fx" id="introFx" aria-hidden="true"></div>
     </div>
 
   </div>
@@ -69,7 +71,7 @@
 
     <!-- GAMBAR ATAS -->
     <section class="hero">
-      <img src="./img/12.jpg" class="mascot" alt="Maskot GESYA">
+      <img src="./img/12.jpg" class="mascot" alt="Maskot GESYA" />
       <div class="hero-title">
         <h1>Cara Bermain Game GESYA</h1>
         <p>Yuk main sambil belajar mengenali emosi 😊</p>
@@ -93,202 +95,59 @@
       <h2>Pilih Level</h2>
 
       <div class="levels">
-        <button class="lvl" onclick="goLevel(1)">
+        <button class="lvl" data-lvl="1" type="button">
           <span class="no">1</span>
           <span class="txt">Level 1<br><small>Kenali Emosi</small></span>
           <span class="emo">🎯</span>
         </button>
 
-        <button class="lvl" onclick="goLevel(2)">
+        <button class="lvl" data-lvl="2" type="button">
           <span class="no">2</span>
           <span class="txt">Level 2<br><small>Pasangkan</small></span>
           <span class="emo">🧩</span>
         </button>
 
-        <button class="lvl" onclick="goLevel(3)">
+        <button class="lvl" data-lvl="3" type="button">
           <span class="no">3</span>
           <span class="txt">Level 3<br><small>Tempel Wajah</small></span>
           <span class="emo">🙂</span>
         </button>
 
-        <button class="lvl" onclick="goLevel(4)">
+        <button class="lvl" data-lvl="4" type="button">
           <span class="no">4</span>
           <span class="txt">Level 4<br><small>Perasaanku</small></span>
           <span class="emo">😁</span>
         </button>
 
-        <button class="lvl" onclick="goLevel(5)">
+        <button class="lvl" data-lvl="5" type="button">
           <span class="no">5</span>
           <span class="txt">Level 5<br><small>Aku Pilih Apa?</small></span>
           <span class="emo">🙋‍♂️</span>
         </button>
 
-        <button class="lvl" onclick="goLevel(6)">
+        <button class="lvl" data-lvl="6" type="button">
           <span class="no">6</span>
           <span class="txt">Level 6<br><small>Situasi</small></span>
           <span class="emo">🔥</span>
         </button>
 
-        <button class="lvl" id="btnReward" onclick="goReward()" disabled style="opacity:.55">
+        <button class="lvl" id="btnReward" data-reward="1" type="button" disabled style="opacity:.55">
           <span class="no">🏅</span>
           <span class="txt">Pencapaian<br><small>Sertifikat</small></span>
           <span class="emo">📜</span>
         </button>
       </div>
 
-      <div class="bottom-note" id="progressNote">Tips: isi nama, umur, dan sekolah di Level 1 dulu ya ✨</div>
+      <div class="bottom-note" id="progressNote">
+        Tips: isi nama, umur, dan sekolah di Level 1 dulu ya ✨
+      </div>
 
       <button class="reset" id="btnReset" type="button">Reset Data</button>
     </section>
 
   </main>
 
-  <script>
-    // =====================
-    // KONFIG PIN
-    // =====================
-    const PIN_BENAR = "2025"; // ⬅️ GANTI PIN DI SINI
-    const KEY_UNLOCK = "gesya_unlocked";
-
-    const gateOverlay = document.getElementById("gateOverlay");
-    const pinStep = document.getElementById("pinStep");
-    const introStep = document.getElementById("introStep");
-
-    const input = document.getElementById("pinInput");
-    const btnPin = document.getElementById("btnPin");
-    const err = document.getElementById("pinError");
-    const btnLanjut = document.getElementById("btnLanjut");
-
-    function showPin(){
-      pinStep.style.display = "block";
-      introStep.style.display = "none";
-      gateOverlay.style.display = "flex";
-      setTimeout(()=> input && input.focus(), 150);
-    }
-
-    function showIntro(){
-      pinStep.style.display = "none";
-      introStep.style.display = "block";
-      gateOverlay.style.display = "flex";
-    }
-
-    function hideGate(){
-      gateOverlay.style.display = "none";
-    }
-
-    function cekPin(){
-      const val = (input.value || "").trim();
-      if (val === PIN_BENAR) {
-        err.style.display = "none";
-        localStorage.setItem(KEY_UNLOCK, "1"); // ingat perangkat sudah unlock
-        showIntro(); // ✅ setelah PIN benar, jangan langsung menu. Tampilkan intro dulu.
-      } else {
-        err.style.display = "block";
-        input.value = "";
-        input.focus();
-      }
-    }
-
-    btnPin.addEventListener("click", cekPin);
-    input.addEventListener("keydown", (e)=>{
-      if (e.key === "Enter") cekPin();
-    });
-
-    // tombol lanjut -> baru tampil menu
-    btnLanjut.addEventListener("click", hideGate);
-
-    // =====================
-    // LOGIKA SAAT LOAD
-    // =====================
-    const unlocked = localStorage.getItem(KEY_UNLOCK) === "1";
-
-    if (!unlocked) {
-      showPin();     // belum unlock -> minta PIN
-    } else {
-      showIntro();   // ✅ sudah unlock -> tetap tampil intro di awal
-    }
-
-    // =====================
-    // MENU GAME
-    // =====================
-    function goLevel(lvl){
-      if (lvl >= 7) {
-        alert("Level ini masih dikunci ya 😄");
-        return;
-      }
-      window.location.href = `level${lvl}.html`;
-    }
-
-    function isAllLevelDone(){
-      for (let i = 1; i <= 6; i++){
-        const done = localStorage.getItem(`ek_level${i}_selesai`);
-        if (done !== "1") return false;
-      }
-      return true;
-    }
-
-    function goReward(){
-      if (!isAllLevelDone()){
-        alert("Selesaikan dulu sampai Level 6 ya, baru sertifikatnya kebuka 😁");
-        return;
-      }
-      window.location.href = "reward.html";
-    }
-
-    // ======= PROGRES / IDENTITAS =======
-    const s1 = parseInt(localStorage.getItem("ek_level1_skor") || "0", 10);
-    const s2 = parseInt(localStorage.getItem("ek_level2_skor") || "0", 10);
-    const s3 = parseInt(localStorage.getItem("ek_level3_skor") || "0", 10);
-    const s4 = parseInt(localStorage.getItem("ek_level4_skor") || "0", 10);
-    const s5 = parseInt(localStorage.getItem("ek_level5_skor") || "0", 10);
-    const s6 = parseInt(localStorage.getItem("ek_level6_skor") || "0", 10);
-    const total = s1 + s2 + s3 + s4 + s5 + s6;
-
-    const nama = (localStorage.getItem("ek_nama") || "").trim();
-    const umur = (localStorage.getItem("ek_umur") || "").trim();
-    const sekolah = (localStorage.getItem("ek_sekolah") || "").trim();
-
-    const note = document.getElementById("progressNote");
-    if (nama || umur || sekolah || total) {
-      const namaTampil = nama ? nama.toUpperCase() : "TEMAN";
-      const umurTampil = umur ? `${umur} tahun` : "-";
-      const sekolahTampil = sekolah || "-";
-      note.textContent = `Halo ${namaTampil}! Umur ${umurTampil} • Sekolah ${sekolahTampil} • Skor sementara ${total} ⭐`;
-    }
-
-    // AKTIFKAN TOMBOL SERTIFIKAT
-    const btnReward = document.getElementById("btnReward");
-    if (btnReward){
-      if (isAllLevelDone()){
-        btnReward.disabled = false;
-        btnReward.style.opacity = "1";
-      } else {
-        btnReward.disabled = true;
-        btnReward.style.opacity = ".55";
-      }
-    }
-
-    // ======= RESET =======
-    document.getElementById("btnReset").addEventListener("click", ()=>{
-      if (!confirm("Reset nama, umur, sekolah, dan semua skor?")) return;
-
-      localStorage.removeItem("ek_nama");
-      localStorage.removeItem("ek_umur");
-      localStorage.removeItem("ek_sekolah");
-
-      const keys = [
-        "ek_level1_skor","ek_level2_skor","ek_level3_skor","ek_level4_skor","ek_level5_skor","ek_level6_skor",
-        "ek_level1_selesai","ek_level2_selesai","ek_level3_selesai","ek_level4_selesai","ek_level5_selesai","ek_level6_selesai",
-        "ek_level1_alasan","ek_level2_alasan","ek_level3_alasan","ek_level4_alasan","ek_level5_alasan","ek_level6_alasan"
-      ];
-      keys.forEach(k => localStorage.removeItem(k));
-
-      // reset PIN juga (jadi balik minta PIN)
-      localStorage.removeItem(KEY_UNLOCK);
-
-      location.reload();
-    });
-  </script>
-<script src="./js/menu.js"></script>
+  <!-- Semua logic + animasi ada di sini -->
+  <script src="./js/menu.js?v=1"></script>
 </body>
 </html>
