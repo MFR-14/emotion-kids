@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Cara Bermain</title>
-  <link rel="stylesheet" href="./css/menu.css?v=3">
+  <link rel="stylesheet" href="./css/menu.css?v=4">
 </head>
 
 <body class="home">
@@ -12,78 +12,37 @@
   <!-- =========================
        PIN / PASSWORD OVERLAY
        ========================= -->
-  <div id="pinOverlay" style="
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,.92);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-  ">
-    <div style="
-      background:#ffffff;
-      padding:24px;
-      border-radius:18px;
-      max-width:360px;
-      width:92%;
-      text-align:center;
-      box-shadow:0 20px 45px rgba(0,0,0,.35);
-    ">
-      <h2 style="margin:0 0 6px;">🔐 Akses GESYA</h2>
-      <p style="margin:0 0 14px;font-size:14px;color:#475569;">
-        Masukkan PIN dari guru / admin
-      </p>
+  <div id="pinOverlay" class="pin-overlay">
+    <div class="pin-card">
+      <h2 class="pin-title">🔐 Akses GESYA</h2>
+
+      <!-- ✅ INTRO SEBELUM INPUT PIN -->
+      <div class="pin-intro">
+        <div class="pin-intro-title">Hai, selamat datang di GESYA! 🌟</div>
+        <div class="pin-intro-text">
+          Game GESYA ini ditujukan bagi anak dengan disleksia usia <b>9–12 tahun</b> sebagai media pembelajaran
+          untuk membantu anak mengenali emosi yang mereka rasakan serta melatih keterampilan mengelola emosi
+          secara tepat dalam kehidupan sehari-hari.
+        </div>
+        <div class="pin-intro-tip">Kalau sudah siap, minta PIN ke guru ya 😊</div>
+      </div>
+
+      <p class="pin-desc">Masukkan PIN dari guru / admin</p>
 
       <input
         id="pinInput"
+        class="pin-input"
         type="password"
         inputmode="numeric"
         placeholder="••••"
         autocomplete="off"
-        style="
-          width:100%;
-          padding:12px 14px;
-          font-size:18px;
-          text-align:center;
-          letter-spacing:7px;
-          border-radius:12px;
-          border:2px solid #e2e8f0;
-          outline:none;
-          box-sizing:border-box;
-        "
       />
 
-      <button
-        id="btnPin"
-        type="button"
-        style="
-          width:100%;
-          margin-top:12px;
-          padding:12px 14px;
-          font-size:16px;
-          font-weight:900;
-          border-radius:14px;
-          border:none;
-          background:#ffb703;
-          color:#1f2a44;
-          cursor:pointer;
-        "
-      >
-        Masuk
-      </button>
+      <button id="btnPin" class="pin-btn" type="button">Masuk</button>
 
-      <p id="pinError" style="
-        display:none;
-        margin:10px 0 0;
-        color:#dc2626;
-        font-size:13px;
-        font-weight:700;
-      ">
-        PIN salah. Coba lagi ya 🙂
-      </p>
+      <p id="pinError" class="pin-error">PIN salah. Coba lagi ya 🙂</p>
 
-      <div style="margin-top:14px;font-size:12px;color:#94a3b8;">
+      <div class="pin-footer">
         Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.
       </div>
     </div>
