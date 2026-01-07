@@ -4,48 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GESYA - Cara Bermain</title>
-  <link rel="stylesheet" href="./css/menu.css?v=4">
+  <link rel="stylesheet" href="./css/menu.css?v=5">
 </head>
 
 <body class="home">
 
   <!-- =========================
-       PIN / PASSWORD OVERLAY
+       OVERLAY: PIN -> INTRO -> MENU
        ========================= -->
-  <div id="pinOverlay" class="pin-overlay">
-    <div class="pin-card">
-      <h2 class="pin-title">🔐 Akses GESYA</h2>
+  <div id="gateOverlay" class="gate-overlay">
 
-      <!-- ✅ INTRO SEBELUM INPUT PIN -->
-      <div class="pin-intro">
-        <div class="pin-intro-title">Hai, selamat datang di GESYA! 🌟</div>
-        <div class="pin-intro-text">
-          Game GESYA ini ditujukan bagi anak dengan disleksia usia <b>9–12 tahun</b> sebagai media pembelajaran
-          untuk membantu anak mengenali emosi yang mereka rasakan serta melatih keterampilan mengelola emosi
-          secara tepat dalam kehidupan sehari-hari.
-        </div>
-        <div class="pin-intro-tip">Kalau sudah siap, minta PIN ke guru ya 😊</div>
-      </div>
-
-      <p class="pin-desc">Masukkan PIN dari guru / admin</p>
+    <!-- STEP 1: PIN -->
+    <div id="pinStep" class="gate-card">
+      <h2 class="gate-title">🔐 Akses GESYA</h2>
+      <p class="gate-desc">Masukkan PIN dari guru / admin</p>
 
       <input
         id="pinInput"
-        class="pin-input"
+        class="gate-input"
         type="password"
         inputmode="numeric"
         placeholder="••••"
         autocomplete="off"
       />
 
-      <button id="btnPin" class="pin-btn" type="button">Masuk</button>
+      <button id="btnPin" class="gate-btn" type="button">Masuk</button>
 
-      <p id="pinError" class="pin-error">PIN salah. Coba lagi ya 🙂</p>
+      <p id="pinError" class="gate-error">PIN salah. Coba lagi ya 🙂</p>
 
-      <div class="pin-footer">
-        Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.
+      <div class="gate-footer">Tips: kalau sudah masuk, PIN tidak diminta lagi di perangkat ini.</div>
+    </div>
+
+    <!-- STEP 2: INTRO (muncul setelah PIN benar) -->
+    <div id="introStep" class="gate-card gate-intro" style="display:none;">
+      <div class="intro-badge">🎒 Untuk Anak SD</div>
+
+      <h2 class="gate-title" style="margin-top:8px;">Selamat datang di GESYA! 🌟</h2>
+
+      <p class="intro-text">
+        Game GESYA ini ditujukan bagi anak dengan disleksia usia <b>9–12 tahun</b> sebagai media pembelajaran untuk membantu anak mengenali emosi yang mereka rasakan serta melatih keterampilan mengelola emosi secara tepat dalam kehidupan sehari-hari.
+      </p>
+
+      <div class="intro-tip">
+        Siap? Yuk lanjut ke menu dan mulai petualangannya! 😄
+      </div>
+
+      <button id="btnLanjut" class="gate-btn gate-btn-primary" type="button">
+        Lanjut ke Menu 🚀
+      </button>
+
+      <div class="intro-mini">
+        Kamu bisa main pelan-pelan ya. Yang penting paham 😊
       </div>
     </div>
+
   </div>
 
   <main class="wrap">
@@ -112,7 +124,7 @@
           <span class="emo">🔥</span>
         </button>
 
-        <!-- ✅ MENU SERTIFIKAT (TERKUNCI SAMPAI 6 LEVEL SELESAI) -->
+        <!-- MENU SERTIFIKAT (TERKUNCI SAMPAI 6 LEVEL SELESAI) -->
         <button class="lvl" id="btnReward" onclick="goReward()" disabled style="opacity:.55">
           <span class="no">🏅</span>
           <span class="txt">Pencapaian<br><small>Sertifikat</small></span>
@@ -133,22 +145,42 @@
     // =====================
     const PIN_BENAR = "2025"; // ⬅️ GANTI PIN DI SINI
     const KEY_UNLOCK = "gesya_unlocked";
+    const KEY_INTRO_SHOWN = "gesya_intro_shown";
 
-    const overlay = document.getElementById("pinOverlay");
-    const input   = document.getElementById("pinInput");
-    const btn     = document.getElementById("btnPin");
-    const err     = document.getElementById("pinError");
+    const gateOverlay = document.getElementById("gateOverlay");
+    const pinStep = document.getElementById("pinStep");
+    const introStep = document.getElementById("introStep");
 
-    function openAccess(){
-      localStorage.setItem(KEY_UNLOCK, "1");
-      overlay.style.display = "none";
+    const input = document.getElementById("pinInput");
+    const btnPin = document.getElementById("btnPin");
+    const err = document.getElementById("pinError");
+
+    const btnLanjut = document.getElementById("btnLanjut");
+
+    function showPin(){
+      pinStep.style.display = "block";
+      introStep.style.display = "none";
+      gateOverlay.style.display = "flex";
+      setTimeout(()=> input && input.focus(), 150);
+    }
+
+    function showIntro(){
+      pinStep.style.display = "none";
+      introStep.style.display = "block";
+      gateOverlay.style.display = "flex";
+    }
+
+    function hideGate(){
+      gateOverlay.style.display = "none";
     }
 
     function cekPin(){
       const val = (input.value || "").trim();
       if (val === PIN_BENAR) {
         err.style.display = "none";
-        openAccess();
+        localStorage.setItem(KEY_UNLOCK, "1");     // ingat perangkat ini sudah lolos
+        localStorage.removeItem(KEY_INTRO_SHOWN);  // pastikan intro muncul setelah PIN benar
+        showIntro();
       } else {
         err.style.display = "block";
         input.value = "";
@@ -156,23 +188,34 @@
       }
     }
 
-    // kalau sudah pernah lolos, langsung masuk
-    if (localStorage.getItem(KEY_UNLOCK) === "1") {
-      overlay.style.display = "none";
-    } else {
-      setTimeout(()=> input && input.focus(), 200);
-    }
-
-    btn.addEventListener("click", cekPin);
+    btnPin.addEventListener("click", cekPin);
     input.addEventListener("keydown", (e)=>{
       if (e.key === "Enter") cekPin();
     });
+
+    btnLanjut.addEventListener("click", ()=>{
+      localStorage.setItem(KEY_INTRO_SHOWN, "1");
+      hideGate();
+    });
+
+    // =====================
+    // LOGIKA GATE SAAT LOAD
+    // =====================
+    const unlocked = localStorage.getItem(KEY_UNLOCK) === "1";
+    const introShown = localStorage.getItem(KEY_INTRO_SHOWN) === "1";
+
+    if (!unlocked) {
+      showPin();           // belum pernah lolos -> minta PIN
+    } else if (!introShown) {
+      showIntro();         // sudah lolos, tapi intro belum ditutup -> tampilkan intro
+    } else {
+      hideGate();          // sudah beres semua -> langsung menu
+    }
 
     // =====================
     // MENU GAME
     // =====================
     function goLevel(lvl){
-      // kunci level 7 dulu biar anak gak bingung
       if (lvl >= 7) {
         alert("Level ini masih dikunci ya 😄");
         return;
@@ -211,7 +254,6 @@
 
     const note = document.getElementById("progressNote");
 
-    // tampilkan note kalau sudah pernah isi data atau sudah ada skor
     if (nama || umur || sekolah || total) {
       const namaTampil = nama ? nama.toUpperCase() : "TEMAN";
       const umurTampil = umur ? `${umur} tahun` : "-";
@@ -219,7 +261,7 @@
       note.textContent = `Halo ${namaTampil}! Umur ${umurTampil} • Sekolah ${sekolahTampil} • Skor sementara ${total} ⭐`;
     }
 
-    // ✅ AKTIFKAN TOMBOL SERTIFIKAT KALAU SUDAH SELESAI LEVEL 1-6
+    // AKTIFKAN TOMBOL SERTIFIKAT KALAU SUDAH SELESAI LEVEL 1-6
     const btnReward = document.getElementById("btnReward");
     if (btnReward){
       if (isAllLevelDone()){
@@ -235,12 +277,10 @@
     document.getElementById("btnReset").addEventListener("click", ()=>{
       if (!confirm("Reset nama, umur, sekolah, dan semua skor?")) return;
 
-      // identitas
       localStorage.removeItem("ek_nama");
       localStorage.removeItem("ek_umur");
       localStorage.removeItem("ek_sekolah");
 
-      // skor & status level
       const keys = [
         "ek_level1_skor","ek_level2_skor","ek_level3_skor","ek_level4_skor","ek_level5_skor","ek_level6_skor",
         "ek_level1_selesai","ek_level2_selesai","ek_level3_selesai","ek_level4_selesai","ek_level5_selesai","ek_level6_selesai",
@@ -248,8 +288,9 @@
       ];
       keys.forEach(k => localStorage.removeItem(k));
 
-      // reset PIN biar kalau perangkat dipakai orang lain, minta PIN lagi
+      // reset akses + intro
       localStorage.removeItem(KEY_UNLOCK);
+      localStorage.removeItem(KEY_INTRO_SHOWN);
 
       location.reload();
     });
