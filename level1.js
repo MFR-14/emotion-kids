@@ -10,16 +10,25 @@ const DURATION_SEC = 180;        // 3 menit
 const FEEDBACK_DELAY_MS = 2200;  // lama tampil notif benar/salah
 const LEVEL = 1;
 
+// ✅ GANTI PNG -> WEBP (lebih ringan)
 const ROUNDS = [
-  { emosi: "BAHAGIA",  img: "./img/bahagia.png" },
-  { emosi: "SEDIH",    img: "./img/sedih.png" },
-  { emosi: "TAKUT",    img: "./img/takut.png" },
-  { emosi: "TERKEJUT", img: "./img/terkejut.png" },
-  { emosi: "BINGUNG",  img: "./img/bingung.png" },
-  { emosi: "MALU",     img: "./img/malu.png" },
-  { emosi: "MARAH",    img: "./img/marah.png" },
-  { emosi: "CINTA",    img: "./img/cinta.png" },
+  { emosi: "BAHAGIA",  img: "./img/bahagia.webp" },
+  { emosi: "SEDIH",    img: "./img/sedih.webp" },
+  { emosi: "TAKUT",    img: "./img/takut.webp" },
+  { emosi: "TERKEJUT", img: "./img/terkejut.webp" },
+  { emosi: "BINGUNG",  img: "./img/bingung.webp" },
+  { emosi: "MALU",     img: "./img/malu.webp" },
+  { emosi: "MARAH",    img: "./img/marah.webp" },
+  { emosi: "CINTA",    img: "./img/cinta.webp" },
 ];
+
+// ✅ PRELOAD gambar biar pas mulai nggak lag
+function preloadImages(list){
+  list.forEach(item => {
+    const im = new Image();
+    im.src = item.img;
+  });
+}
 
 // ====== STATE ======
 let pool = [];
@@ -150,7 +159,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function setQuestion() {
     const q = pool[idx];
-    imgEl.src = q.img + "?v=" + Date.now();
+
+    // ✅ HAPUS cache-busting Date.now (biar gak download ulang berkali-kali)
+    imgEl.src = q.img;
     imgEl.alt = `Soal ${idx + 1}`;
 
     lockInput = false;
@@ -373,6 +384,9 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("ek_nama", nama);
     localStorage.setItem("ek_umur", String(umur));
     localStorage.setItem("ek_sekolah", sekolah);
+
+    // ✅ preload pas mulai biar gak lag
+    preloadImages(ROUNDS);
 
     introEl.classList.add("hidden");
     gameEl.classList.remove("hidden");
