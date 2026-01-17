@@ -4,7 +4,7 @@
 
 (() => {
   // ===== KONFIG =====
-  const PIN_BENAR = "2025";               // ganti kalau mau
+  const PIN_BENAR = "esya";               // ganti kalau mau
   const KEY_UNLOCK = "gesya_unlocked";
 
   // ===== AMBIL ELEMEN =====
